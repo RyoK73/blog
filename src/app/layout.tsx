@@ -63,23 +63,30 @@ export default async function RootLayout({
                 >
                     <div className="col-span-1 flex flex-col gap-5 m-5">
                         <CustomCard title={"About"}>
-                            <img src="" alt="" />
-                            <h1 className="text-3xl font-semibold mb-2">DEV活</h1>
-                            <p>
+                            <div className="flex flex-col items-center gap-3 mb-3">
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-vivid to-vivid-end flex items-center justify-center text-white text-2xl font-bold select-none">
+                                    D
+                                </div>
+                                <h1 className="text-xl font-bold bg-gradient-to-r from-vivid to-vivid-end bg-clip-text text-transparent">
+                                    DEV活
+                                </h1>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed text-center">
                                 Web系ソフトウェアエンジニアを志望。
-                                <br />
                                 開発記録や個人的な技術に対する思いを綴ります。
-                                <br />
-                                個人開発・Arch Linux・設計
                             </p>
-                            <hr className="m-2"/>
+                            <div className="flex flex-wrap gap-1.5 justify-center mt-3 mb-1">
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">個人開発</span>
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">Arch Linux</span>
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">設計</span>
+                            </div>
                         </CustomCard>
                         <CustomCard title={"Tag"}>
                             <TagList tags={allTags} />
                         </CustomCard>
                     </div>
                     <div className="col-span-2">
-                        <div className="w-full border-b flex flex-row justify-between items-center ">
+                        <div className="w-full border-b flex flex-row justify-between items-center sticky top-0 z-10 backdrop-blur-md bg-background/80">
                             <div className="flex flex-row items-center gap-0.5">
                                 <CustomTabs params={TabProps} />
                             </div>

@@ -9,20 +9,18 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 const PostList = (posts: PostData[]) => {
     const sortedPost = posts.sort((a, b) => b.date.localeCompare(a.date));
     return (
-        <ul className="">
+        <ul className="flex flex-col gap-3">
             {sortedPost.map((post) => {
                 return (
-                    // liはカード形式？かリスト形式にしたい
-                    <li key={post.slug} className="">
-                        <Card className="rounded-sm">
+                    <li key={post.slug}>
+                        <Card className="rounded-sm group transition-all duration-200 shadow shadow-vivid/30 hover:-translate-y-1 hover:shadow-md hover:shadow-vivid/50 hover:ring-vivid/40">
                             <CardHeader>
                                 <Link
                                     key={post.slug}
                                     href={path.join("/blog", post.slug)}
-                                    className=""
                                 >
-                                    <time className="">{post.date}</time>
-                                    <CardTitle className="text-foreground">{post.title}</CardTitle>
+                                    <time className="text-xs font-mono text-muted-foreground tracking-wider">{post.date}</time>
+                                    <CardTitle className="text-foreground transition-colors group-hover:text-vivid">{post.title}</CardTitle>
                                 </Link>
                                 <TagList tags={post.tag} />
                             </CardHeader>

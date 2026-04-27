@@ -6,9 +6,9 @@ type CardProps = {
 };
 export const CustomCard = ({ title, children }: CardProps) => {
     return (
-        <Card className="">
+        <Card className="transition-all duration-300 shadow shadow-vivid/30">
             <CardHeader>
-                <CardTitle className="text-foreground" >{title}</CardTitle>
+                <CardTitle className="text-foreground">{title}</CardTitle>
             </CardHeader>
             <CardContent>{children}</CardContent>
         </Card>
