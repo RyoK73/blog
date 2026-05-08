@@ -41,8 +41,19 @@ export const getAllPosts = async (): Promise<PostData[]> => {
     return await Promise.all(postContents);
 };
 
-// tagを受け取って、そのtagがついた記事のPostData[]を返す関数
 export const getPostsByTag = async (tag: string): Promise<PostData[]> => {
-    throw new Error("not implemeted");
+    const posts = await getAllPosts();
+    return posts.filter((post) => post.tag.includes(tag));
+};
+
+export const getAllTagsWithCounts = async (): Promise<Map<string, number>> => {
+    const posts = await getAllPosts();
+    const counts = new Map<string, number>();
+    posts.forEach((post) => {
+        post.tag.forEach((tag) => {
+            counts.set(tag, (counts.get(tag) ?? 0) + 1);
+        });
+    });
+    return counts;
 };
 export default getPostData;
