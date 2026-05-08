@@ -4,7 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SwitchTheme } from "@/components/common/SwitchThemeButton";
 import { CustomTabs, type TabProp, NonEmptyArray } from "@/components/common/CustomTabs";
-import Link from "next/link";
+import { CustomCard } from "@/components/common/CustomCard";
+import TagList from "@/components/common/TagList";
+import { getAllPosts } from "@/lib/post";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
 
 const TabProps: NonEmptyArray<TabProp> = [
     {
-        tabName: "All",
+        tabName: "Home",
         tabLink: "/",
     },
     {
@@ -36,15 +38,22 @@ const TabProps: NonEmptyArray<TabProp> = [
     },
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    // Tag Cardに表示するタグを取得する
+    const allPosts = await getAllPosts();
+    const allTags = allPosts
+        .map((post) => {
+            return post.tag;
+        })
+        .flat();
     return (
         <html lang="ja" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark grid grid-cols-3 `}
             >
                 <ThemeProvider
                     attribute="class"
@@ -52,18 +61,39 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <header className="h-auto flex flex-col w-full ">
-                        <div className="w-full border-b flex flex-row justify-between items-center px-10">
-                            <Link href={"/"} className=" flex flex-row items-center text-3xl gap-4">
-                                <span>$ME ../</span>
-                            </Link>
-                            <div className="flex flex-row items-center gap-3">
-                                <CustomTabs params={TabProps} />
-                                <SwitchTheme />
+                    <div className="col-span-1 flex flex-col gap-5 m-5">
+                        <CustomCard title={"About"}>
+                            <div className="flex flex-col items-center gap-3 mb-3">
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-vivid to-vivid-end flex items-center justify-center text-white text-2xl font-bold select-none">
+                                    D
+                                </div>
+                                <h1 className="text-xl font-bold bg-gradient-to-r from-vivid to-vivid-end bg-clip-text text-transparent">
+                                    DEV活
+                                </h1>
                             </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed text-center">
+                                Web系ソフトウェアエンジニアを志望。
+                                開発記録や個人的な技術に対する思いを綴ります。
+                            </p>
+                            <div className="flex flex-wrap gap-1.5 justify-center mt-3 mb-1">
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">個人開発</span>
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">Arch Linux</span>
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-vivid/10 text-vivid border border-vivid/20">設計</span>
+                            </div>
+                        </CustomCard>
+                        <CustomCard title={"Tag"}>
+                            <TagList tags={allTags} />
+                        </CustomCard>
+                    </div>
+                    <div className="col-span-2">
+                        <div className="w-full border-b flex flex-row justify-between items-center sticky top-0 z-10 backdrop-blur-md bg-background/80">
+                            <div className="flex flex-row items-center gap-0.5">
+                                <CustomTabs params={TabProps} />
+                            </div>
+                            <SwitchTheme />
                         </div>
-                    </header>
-                    <div className="container mx-auto my-5">{children}</div>
+                        <div className="container mx-auto my-5">{children}</div>
+                    </div>
                 </ThemeProvider>
             </body>
         </html>

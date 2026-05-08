@@ -39,6 +39,8 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+    --color-vivid: var(--vivid);
+    --color-vivid-end: var(--vivid-end);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
@@ -49,9 +51,11 @@
 }
 
 :root {
-    --background: oklch(100/98%);
+    --background: oklch(94% 0.005 265);
     --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
+    --vivid: oklch(52% 0.22 260);
+    --vivid-end: oklch(58% 0.2 300);
+    --card: oklch(97% 0.008 260 / 0.65);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
@@ -64,7 +68,7 @@
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(71.39% 0.00229 15.262);
+    --border: oklch(74% 0.018 260 / 0.45);
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
     --chart-1: oklch(0.87 0 0);
@@ -84,10 +88,12 @@
 }
 
 .dark {
-    --background: oklch(0.26 0 0);
+    --background: oklch(26.033% 0.00003 271.152);
     --foreground: oklch(0.91 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
+    --vivid: oklch(68% 0.18 260);
+    --vivid-end: oklch(72% 0.16 300);
+    --card: oklch(38.666% 0.00004 271.152 / 0.304);
+    --card-foreground: oklch(0.985 0 0 / 0.7);
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
     --primary: oklch(0.922 0 0);
@@ -99,7 +105,7 @@
     --accent: oklch(0.269 0 0);
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(0.45 0.03 256.84);
+    --border: oklch(94.611% 0.00011 271.152 / 0.634);
     --input: oklch(1 0 0 / 15%);
     --ring: oklch(0.556 0 0);
     --chart-1: oklch(0.87 0 0);
@@ -134,7 +140,7 @@
     background-repeat: repeat;
 }
 .grid-bg-light {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cline x1='0' y1='0' x2='160' y2='0' stroke='black' stroke-opacity='0.2' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='160' stroke='black' stroke-opacity='0.2' stroke-width='1'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cline x1='0' y1='0' x2='160' y2='0' stroke='white' stroke-opacity='0.2' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='160' stroke='white' stroke-opacity='0.2' stroke-width='1'/%3E%3C/svg%3E");
     background-size: 160px 160px;
     background-repeat: repeat;
 }

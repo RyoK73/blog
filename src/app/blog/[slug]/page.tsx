@@ -1,5 +1,5 @@
 import getPostData from "@/lib/post";
-import TagList from "@/components/common/tag-list";
+import TagList from "@/components/common/TagList";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { consola } from "consola";
