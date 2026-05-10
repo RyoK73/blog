@@ -27,7 +27,7 @@ export const CustomTabs = ({ tabs, className }: Params) => {
                             " bg-background flex justify-center items-center",
                             isActive
                                 ? "bg-foreground text-background"
-                                : "bg-background/0 text-foreground",
+                                : "bg-background/0 text-input",
                             className,
                         )}
                     >
