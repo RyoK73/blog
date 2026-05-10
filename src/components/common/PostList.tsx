@@ -1,6 +1,6 @@
 import type { PostData } from "@/lib/post";
 import { getAllPosts } from "@/lib/post";
-import TagList from "@/components/common/TagList";
+import { TagList } from "./TagList";
 import Link from "next/link";
 import path from "path";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
