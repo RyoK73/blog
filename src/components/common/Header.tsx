@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import localImage from "../../../public/topImage.png";
 import { SwitchTheme } from "@/components/common/SwitchTheme";
 import {
@@ -25,7 +26,7 @@ export const Header = () => {
   const tabSize = "w-35 h-auto";
   return (
     <header className="col-span-2 flex items-center border border-border m-8 h-25 divide-x divide-border bg-background/20 text-input">
-      <div className="flex-1 flex p-4 h-full">
+      <Link href={"/"} className="flex-1 flex p-4 h-full">
         <Image
           src={localImage}
           alt="トップ画像"
@@ -40,7 +41,7 @@ export const Header = () => {
             <p>RyoK73@omarchy</p>
           </div>
         </div>
-      </div>
+      </Link>
       <div className="flex h-full justify-end item-center ">
         <CustomTabs tabs={TabProps} className={`${tabSize}`} />
       </div>
