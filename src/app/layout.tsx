@@ -44,11 +44,11 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="w-screen flex flex-col p-5 overflow-hidden gap-5">
+                    <div className="w-screen flex flex-col p-5  gap-5">
                         <Header />
-                        <div className="grid grid-cols-3 gap-5">
+                        <div className="grid grid-cols-5 gap-5">
                             <Sidebar />
-                            <main className="container col-span-2">
+                            <main className="container col-span-4">
                                 {children}
                             </main>
                         </div>

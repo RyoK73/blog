@@ -155,3 +155,27 @@ body {
         @apply font-sans;
     }
 }
+
+@layer components {
+    .border-flow {
+        --border-flow-color: var(--vivid);
+        --border-flow-duration: 700ms;
+        position: relative;
+        border: 1px solid transparent;
+        padding: 5px;
+    }
+    .border-flow:hover {
+        color: var(--border-flow-color);
+    }
+    .border-flow::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--border-flow-color);
+        clip-path: inset(0 100% 0 0);
+        transition: clip-path var(--border-flow-duration) ease;
+    }
+    .border-flow:hover::before {
+        clip-path: inset(0 0% 0 0);
+    }
+}
