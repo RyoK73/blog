@@ -35,21 +35,21 @@ export const Author = () => {
                     <ExternalLink
                         href="https://x.com/RyoK73EG"
                         className="border-flow"
-
+                        ariaLabel="X(ホーム)に飛ぶ"
                     >
                         <SiX />
                     </ExternalLink>
                     <ExternalLink
                         href="https://github.com/RyoK73"
                         className="border-flow"
-
+                        ariaLabel="GitHub(ホーム)に飛ぶ"
                     >
                         <SiGithub />
                     </ExternalLink>
                     <ExternalLink
                         href="https://zenn.dev/taruroma"
-
                         className="border-flow"
+                        ariaLabel="Zenn(ホーム)に飛ぶ"
                     >
                         <SiZenn />
                     </ExternalLink>
@@ -57,6 +57,7 @@ export const Author = () => {
                 <Link
                     href="/about"
                     className="border-flow text-base ml-auto px-1"
+                    aria-label="About詳細ページへ飛ぶ"
                 >
                     [ About → ]
                 </Link>
