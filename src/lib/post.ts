@@ -30,11 +30,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
 };
 
 // ./posts/のコンテンツを取得して、PostData[]を返す
-export const getPosts = async (): Promise<PostData[]> => {
-    const postFiles = await fs.readdir(postDirectory);
-    const postContents = postFiles.map(async (postFile) => {
-        const slug = path.parse(postFile).name;
-        return await getPostData(slug);
-    });
-    return await Promise.all(postContents);
+export const getSlugs = async (): Promise<string[]> => {
+    const posts = await fs.readdir(postDirectory);
+    return posts.map((post) => path.parse(post).name);
 };
