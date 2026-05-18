@@ -22,13 +22,13 @@ export const CustomCard = ({
     return (
         <Card
             className={cn(
-                "relative border border-border rounded-none bg-content-background p-4",
+                "relative border border-border rounded-none bg-content-background p-3",
                 className,
             )}
         >
             <CardHeader className="">
                 <CardTitle>{title}</CardTitle>
-                <CardDescription className="absolute -top-3 px-1 z-10 bg-background text-foreground font-medium">
+                <CardDescription className="absolute -top-3 px-1 z-10 bg-background text-vivid font-medium">
                     {label}
                 </CardDescription>
             </CardHeader>
