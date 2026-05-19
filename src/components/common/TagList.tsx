@@ -20,7 +20,7 @@ export const TagList = ({ tags, className }: TagProps) => {
                             <Badge
                                 variant={"outline"}
                                 className={cn(
-                                    "cursor-pointer rounded-none text-card-foreground border border-border p-2",
+                                    "cursor-pointer rounded-none text-card-foreground p-2",
                                     className,
                                 )}
                             >
