@@ -8,41 +8,35 @@ const postDirectory = path.join(process.cwd(), "posts");
 // 関数の戻り値の型宣言
 export type PostData = {
     slug: string;
-    contentMarkdown: string;
+    markdown: string;
     date: string;
     title: string;
-    tag: string[];
+    tags: string[];
 };
 // mdファイルをreactコンポーネントに変換する関数
-const getPostData = async (slug: string): Promise<PostData> => {
+export const getPostData = async (slug: string): Promise<PostData> => {
     const fullPath = path.join(postDirectory, `${slug}.md`);
-    // mdファイルの取得
     const fileContent = await fs.readFile(fullPath);
-    // gray-matterでmdファイルのfrontmatterを取得
-    const mdData = matter(fileContent);
+    const postData = matter(fileContent);
 
     // PostDataを返す
     return {
         slug,
-        contentMarkdown: mdData.content,
-        date: mdData.data.date,
-        title: mdData.data.title,
-        tag: (mdData.data.tag as string[]).sort(),
+        markdown: postData.content,
+        date: postData.data.date,
+        title: postData.data.title,
+        tags: (postData.data.tag as string[]).sort(),
     };
 };
 
 // ./posts/のコンテンツを取得して、PostData[]を返す
-export const getAllPosts = async (): Promise<PostData[]> => {
-    const postFiles = await fs.readdir(postDirectory);
-    const postContents = postFiles.map(async (postFile) => {
-        const slug = path.parse(postFile).name;
-        return await getPostData(slug);
-    });
-    return await Promise.all(postContents);
+export const getSlugs = async (): Promise<string[]> => {
+    const posts = await fs.readdir(postDirectory);
+    return posts.map((post) => path.parse(post).name);
 };
 
-// tagを受け取って、そのtagがついた記事のPostData[]を返す関数
-export const getPostsByTag = async (tag: string): Promise<PostData[]> => {
-    throw new Error("not implemeted");
+export const getAllPostData = async (): Promise<PostData[]> => {
+    const slugs = await getSlugs();
+    const postDatasPromise = slugs.map(async (slug) => await getPostData(slug));
+    return Promise.all(postDatasPromise);
 };
-export default getPostData;

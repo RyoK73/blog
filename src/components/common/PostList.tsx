@@ -1,44 +1,39 @@
-import type { PostData } from "@/lib/post";
-import { getAllPosts } from "@/lib/post";
+import { getAllPostData } from "@/lib/post";
+import { CustomCard } from "./CustomCard";
 import { TagList } from "./TagList";
 import Link from "next/link";
 import path from "path";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
-// postsで./posts/のコンテンツ一覧を受け取りリストを表示する
-const PostList = (posts: PostData[]) => {
-    const sortedPost = posts.sort((a, b) => b.date.localeCompare(a.date));
+export const Posts = async ({ tag }: { tag?: string }) => {
+    const posts = await getAllPostData();
+    const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
+    const filteredPosts = tag
+        ? sortedPosts.filter((sortedPost) => sortedPost.tags.includes(tag))
+        : sortedPosts;
     return (
-        <ul className="flex flex-col gap-3">
-            {sortedPost.map((post) => {
-                return (
-                    <li key={post.slug}>
-                        <Card className="rounded-none">
-                            <CardHeader>
-                                <Link
-                                    key={post.slug}
-                                    href={path.join("/blog", post.slug)}
-                                >
-                                    <time className="text-xs font-mono text-muted-foreground tracking-wider">{post.date}</time>
-                                    <CardTitle className="text-foreground transition-colors group-hover:text-vivid">{post.title}</CardTitle>
-                                </Link>
-                                <TagList tags={post.tag} />
-                            </CardHeader>
-                        </Card>
-                    </li>
-                );
-            })}
+        <ul>
+            {filteredPosts.map((post, index) => (
+                <li key={post.slug}>
+                    <CustomCard
+                        label={`P${(index + 1).toString().padStart(3, "0")}`}
+                        className="relative hover:bg-card hover:transition-colors duration-500"
+                    >
+                        <time>{post.date}</time>
+                        <Link
+                            href={path.join("/blog", post.slug)}
+                            className="after:absolute after:inset-0"
+                        >
+                            <h2 className="text-foreground font-bold text-lg">
+                                {post.title}
+                            </h2>
+                        </Link>
+                        <TagList
+                            tags={post.tags}
+                            className="relative z-1 border-flow text-sm hover:text-vivid border-border"
+                        />
+                    </CustomCard>
+                </li>
+            ))}
         </ul>
     );
-};
-
-// tagで./posts/*.mdをフィルターし適合するpostsをリストで表示する
-export const PostListByTag = async ({ tag }: { tag?: string }) => {
-    const posts = await getAllPosts();
-    const postsByTag = tag
-        ? posts.filter((post) => {
-              return post.tag.includes(tag);
-          })
-        : posts;
-    return PostList(postsByTag);
 };
