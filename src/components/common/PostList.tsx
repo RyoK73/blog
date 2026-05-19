@@ -14,13 +14,12 @@ export const Posts = async ({ tag }: { tag?: string }) => {
     const filteredPosts = tag
         ? sortedPosts.filter((sortedPost) => sortedPost.tags.includes(tag))
         : sortedPosts;
-    let postCount = 0;
     return (
         <ul>
-            {filteredPosts.map((post) => (
+            {filteredPosts.map((post, index) => (
                 <li key={post.slug}>
                     <CustomCard
-                        label={`P${(++postCount).toString().padStart(3, "0")}`}
+                        label={`P${(index + 1).toString().padStart(3, "0")}`}
                         className="relative hover:bg-card hover:transition-colors duration-500"
                     >
                         <time>{post.date}</time>
