@@ -1,16 +1,13 @@
-import { getSlugs, getPostData } from "@/lib/post";
+import { getAllPostData } from "@/lib/post";
 import { CustomCard } from "./CustomCard";
 import { TagList } from "./TagList";
 import Link from "next/link";
 import path from "path";
 
 export const Posts = async ({ tag }: { tag?: string }) => {
-    const slugs = await getSlugs();
-    const posts = slugs.map(async (slug) => await getPostData(slug));
-    const postsPromised = await Promise.all(posts);
-    const sortedPosts = postsPromised.sort((a, b) =>
-        b.date.localeCompare(a.date),
-    );
+    const postsPromised = await getAllPostData();
+    const posts = await Promise.all(postsPromised);
+    const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
     const filteredPosts = tag
         ? sortedPosts.filter((sortedPost) => sortedPost.tags.includes(tag))
         : sortedPosts;

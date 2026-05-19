@@ -34,3 +34,9 @@ export const getSlugs = async (): Promise<string[]> => {
     const posts = await fs.readdir(postDirectory);
     return posts.map((post) => path.parse(post).name);
 };
+
+export const getAllPostData = async (): Promise<PostData[]> => {
+    const slugs = await getSlugs();
+    const postDatasPromise = slugs.map(async (slug) => await getPostData(slug));
+    return Promise.all(postDatasPromise);
+};
