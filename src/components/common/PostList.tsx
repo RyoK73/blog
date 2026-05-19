@@ -5,8 +5,7 @@ import Link from "next/link";
 import path from "path";
 
 export const Posts = async ({ tag }: { tag?: string }) => {
-    const postsPromised = await getAllPostData();
-    const posts = await Promise.all(postsPromised);
+    const posts = await getAllPostData();
     const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
     const filteredPosts = tag
         ? sortedPosts.filter((sortedPost) => sortedPost.tags.includes(tag))
