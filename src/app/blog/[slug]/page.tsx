@@ -12,7 +12,7 @@ const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <header>
                 <h1>{postData.title}</h1>
                 <time>{postData.date}</time>
-                <TagList tags={postData.tag} />
+                <TagList tags={postData.tags} />
             </header>
             <Markdown remarkPlugins={[remarkGfm]}>{postData.markdown}</Markdown>
         </article>
