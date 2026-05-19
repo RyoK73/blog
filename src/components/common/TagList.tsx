@@ -13,9 +13,7 @@ export const TagList = ({ tags, className }: TagProps) => {
     return (
         <div className="flex flex-wrap gap-1.5 mt-1">
             {tags
-                .filter((tag) => {
-                    Object.keys(tagJson).includes(tag);
-                })
+                .filter((tag) => Object.keys(tagJson).includes(tag))
                 .map((tag) => {
                     return (
                         <Link key={tag} href={path.join("/blog/tag", tag)}>
