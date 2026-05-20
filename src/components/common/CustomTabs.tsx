@@ -12,33 +12,19 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     };
 
     const tabs = [
-        { href: "/", name: "HOME" },
+        { href: "/", name: "HOME", prefix: true },
         ...Object.keys(userTags).map((tag) => ({
-            href: `/blog/tag/${tag}`,
+            href: `/blog/${tag}`,
             name: tag.toUpperCase(),
+            prefix: true,
         })),
+        { href: "/about", name: "ABOUT", prefix: false },
     ];
 
     return (
-<<<<<<< HEAD
-        <nav
-            className={cn("flex h-auto justify-center divide-x divide-border")}
-        >
-            <Link
-                key="home"
-                href="/"
-                className={cn(getLinkClass("/"), className)}
-            >
-                {"01.HOME"}
-            </Link>
-            {Object.keys(userTags).map((tag, index) => {
-                const tabLink: string = `/blog/tag/${tag}`;
-                const tabName: string = `${(index + 2).toString().padStart(2, "0")}.${tag.toUpperCase()}`;
-=======
         <nav className="flex h-auto justify-center divide-x divide-border">
             {tabs.map((tab, index) => {
-                const label = `${(index + 1).toString().padStart(2, "0")}.${tab.name}`;
->>>>>>> main
+                const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
                 return (
                     <Link
                         key={tab.href}
@@ -55,13 +41,6 @@ export const CustomTabs = ({ className }: { className?: string }) => {
                     </Link>
                 );
             })}
-            <Link
-                key="About"
-                href="/about"
-                className={cn(getLinkClass("/"), className)}
-            >
-                {".ABOUT"}
-            </Link>
         </nav>
     );
 };
