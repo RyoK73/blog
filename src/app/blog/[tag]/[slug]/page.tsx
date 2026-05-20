@@ -1,4 +1,4 @@
-import { getPostData } from "@/lib/post";
+import { getAllPostData, getPostData } from "@/lib/post";
 import { TagList } from "@/components/common/TagList";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -8,8 +8,14 @@ type Props = {
     tag: string;
     slug: string;
 };
+export const generateStaticParams = async () => {
+    const posts = await getAllPostData();
+    return posts.map((post) => ({
+        tag: post.tags[0],
+        slug: post.slug,
+    }));
+};
 
-// ブログ記事の個別ページ
 const BlogPage = async ({ params }: { params: Promise<Props> }) => {
     const { tag, slug } = await params;
     const postData = await getPostData(slug);
