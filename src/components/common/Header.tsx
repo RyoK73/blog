@@ -59,7 +59,7 @@ export const Header = () => {
                     <CustomTabs tabs={tabProps} className={tabSize} />
                 </div>
                 <SwitchTheme
-                    className={`flex justify-center items-center ${tabSize}`}
+                    className={`flex justify-center items-center text-vivid ${tabSize}`}
                 />
             </div>
         </header>
