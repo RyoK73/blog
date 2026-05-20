@@ -19,8 +19,8 @@ export const CustomTabs = ({ className }: { className?: string }) => {
             className={cn("flex h-auto justify-center divide-x divide-border")}
         >
             <Link
-                key={"home"}
-                href={"/"}
+                key="home"
+                href="/"
                 className={cn(getLinkClass("/"), className)}
             >
                 {"01.HOME"}
@@ -38,6 +38,13 @@ export const CustomTabs = ({ className }: { className?: string }) => {
                     </Link>
                 );
             })}
+            <Link
+                key="About"
+                href="/about"
+                className={cn(getLinkClass("/"), className)}
+            >
+                {".ABOUT"}
+            </Link>
         </nav>
     );
 };
