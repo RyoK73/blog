@@ -36,10 +36,8 @@ export const Header = () => {
                     </div>
                 </Link>
             </CustomCard>
-            <div className="flex divide-x divide-border border-l">
-                <div className="flex h-full justify-end">
-                    <CustomTabs className={tabSize} />
-                </div>
+            <div className="flex divide-x divide-border border-l justify-end">
+                <CustomTabs className={tabSize} />
                 <SwitchTheme
                     className={`flex justify-center items-center text-vivid ${tabSize}`}
                 />
