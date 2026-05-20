@@ -8,42 +8,34 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     const pathName = usePathname();
 
     const isActiveTab = (href: string): boolean => {
-        return (
-            href === pathName ||
-            (href !== "/" && pathName.startsWith(`/blog/tag/${href}`))
-        );
+        return href === pathName || (href !== "/" && pathName.startsWith(href));
     };
 
-    const getLinkClass = (href: string): string[] => {
-        return [
-            " bg-background flex justify-center items-center",
-            isActiveTab(href)
-                ? "border border-vivid text-vivid"
-                : "bg-background/0 text-input",
-        ];
-    };
+    const tabs = [
+        { href: "/", name: "HOME" },
+        ...Object.keys(userTags).map((tag) => ({
+            href: `/blog/tag/${tag}`,
+            name: tag.toUpperCase(),
+        })),
+    ];
 
     return (
-        <nav
-            className={cn("flex h-auto justify-center divide-x divide-border")}
-        >
-            <Link
-                key={"home"}
-                href={"/"}
-                className={cn(getLinkClass("/"), className)}
-            >
-                {"01.HOME"}
-            </Link>
-            {Object.keys(userTags).map((tag, index) => {
-                const tagHref: string = `/blog/tag/${tag}`;
-                const tabName: string = `${(index + 2).toString().padStart(2, "0")}.${tag.toUpperCase()}`;
+        <nav className="flex h-auto justify-center divide-x divide-border">
+            {tabs.map((tab, index) => {
+                const label = `${(index + 1).toString().padStart(2, "0")}.${tab.name}`;
                 return (
                     <Link
-                        key={tag}
-                        href={tagHref}
-                        className={cn(getLinkClass(tagHref), className)}
+                        key={tab.href}
+                        href={tab.href}
+                        className={cn(
+                            " bg-background flex justify-center items-center",
+                            isActiveTab(tab.href)
+                                ? "border border-vivid text-vivid"
+                                : "bg-background/0 text-input",
+                            className,
+                        )}
                     >
-                        {tabName}
+                        {label}
                     </Link>
                 );
             })}
