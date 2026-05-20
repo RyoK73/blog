@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import userTags from "@/user-tag.json";
 
 export type TabProp = {
     name: string;
@@ -22,19 +23,19 @@ export const CustomTabs = ({ tabs, className }: Params) => {
                 const isActive =
                     tab.link === pathName ||
                     (tab.link !== "/" && pathName.startsWith(tab.link));
+                const linkClass: string[] = [
+                    " bg-background flex justify-center items-center",
+                    isActive
+                        ? "border border-vivid text-vivid"
+                        : "bg-background/0 text-input",
+                ];
                 return (
                     <Link
-                        key={tab.name}
-                        href={tab.link}
-                        className={cn(
-                            " bg-background flex justify-center items-center",
-                            isActive
-                                ? "border border-vivid text-vivid"
-                                : "bg-background/0 text-input",
-                            className,
-                        )}
+                        key={"home"}
+                        href={"/"}
+                        className={cn(linkClass, className)}
                     >
-                        {tab.name}
+                        {"01.HOME"}
                     </Link>
                 );
             })}

@@ -4,7 +4,7 @@ import { CustomCard } from "./CustomCard";
 import Link from "next/link";
 export const Author = () => {
     return (
-        <CustomCard label={"Author"} className="p-2">
+        <CustomCard label={"Author"} className="p-6">
             <p className="text-sm text-foreground leading-relaxed text-left">
                 Web系ソフトウェアエンジニアを志望。
                 <br />
