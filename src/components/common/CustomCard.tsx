@@ -4,7 +4,7 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "../ui/card";
+} from "../ui/card"; // CardConentのpaddingをリセットするため、p-0を適用している
 import { cn } from "@/lib/utils";
 
 type CardProps = {
