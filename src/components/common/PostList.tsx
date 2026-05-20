@@ -20,7 +20,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                     >
                         <time>{post.date}</time>
                         <Link
-                            href={path.join("/blog", post.slug)}
+                            href={path.join("/blog", post.tags[0], post.slug)}
                             className="after:absolute after:inset-0"
                         >
                             <h2 className="text-foreground font-bold text-lg">

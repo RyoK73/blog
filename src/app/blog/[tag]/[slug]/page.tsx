@@ -2,16 +2,20 @@ import { getPostData } from "@/lib/post";
 import { TagList } from "@/components/common/TagList";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { notFound } from "next/navigation";
 
 type Props = {
     tag: string;
     slug: string;
 };
+
 // ブログ記事の個別ページ
 const BlogPage = async ({ params }: { params: Promise<Props> }) => {
     const { tag, slug } = await params;
     const postData = await getPostData(slug);
-    isValidTag(tag, postData.tags);
+
+    if (postData.tags[0] !== tag) notFound();
+
     return (
         <article className="prose">
             <header>
@@ -24,7 +28,4 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
     );
 };
 
-const isValidTag = (tag: string, postTag: string[]): Boolean => {
-    return tag == postTag[0];
-};
 export default BlogPage;
