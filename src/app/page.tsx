@@ -2,7 +2,7 @@ import { Posts } from "@/components/common/PostList";
 
 const App = async () => {
     return (
-        <main className="border border-border bg-content-background">
+        <main className="bg-content-background">
             <Posts />
         </main>
     );

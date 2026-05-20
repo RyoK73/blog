@@ -4,7 +4,7 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "../ui/card";
+} from "../ui/card"; // CardConentのpaddingをリセットするため、p-0を適用している
 import { cn } from "@/lib/utils";
 
 type CardProps = {
@@ -26,13 +26,13 @@ export const CustomCard = ({
                 className,
             )}
         >
-            <CardHeader className="">
+            <CardHeader className="gap-0">
                 <CardTitle>{title}</CardTitle>
                 <CardDescription className="absolute -top-3 px-1 z-10 bg-background text-vivid font-medium">
                     {label}
                 </CardDescription>
             </CardHeader>
-            <CardContent>{children}</CardContent>
+            <CardContent className="p-0">{children}</CardContent>
         </Card>
     );
 };

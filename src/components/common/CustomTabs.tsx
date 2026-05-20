@@ -2,36 +2,40 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import userTags from "@/user-tag.json";
 
-export type TabProp = {
-    name: string;
-    link: string;
-};
-
-type Params = { tabs: NonEmptyArray<TabProp> } & { className?: string };
-
-export type NonEmptyArray<T> = [T, ...T[]];
-
-export const CustomTabs = ({ tabs, className }: Params) => {
+export const CustomTabs = ({ className }: { className?: string }) => {
     const pathName = usePathname();
+
+    const isActiveTab = (href: string): boolean => {
+        return href === pathName || (href !== "/" && pathName.startsWith(href));
+    };
+
+    const tabs = [
+        { href: "/", name: "HOME" },
+        ...Object.keys(userTags).map((tag) => ({
+            href: `/blog/tag/${tag}`,
+            name: tag.toUpperCase(),
+        })),
+    ];
+
     return (
-        <nav className={cn("flex h-auto justify-center divide-x divide-border")}>
-            {tabs.map((tab) => {
-                const isActive =
-                    tab.link === pathName || (tab.link !== "/" && pathName.startsWith(tab.link));
+        <nav className="flex h-auto justify-center divide-x divide-border">
+            {tabs.map((tab, index) => {
+                const label = `${(index + 1).toString().padStart(2, "0")}.${tab.name}`;
                 return (
                     <Link
-                        key={tab.name}
-                        href={tab.link}
+                        key={tab.href}
+                        href={tab.href}
                         className={cn(
                             " bg-background flex justify-center items-center",
-                            isActive
-                                ? "bg-foreground text-background"
+                            isActiveTab(tab.href)
+                                ? "border border-vivid text-vivid"
                                 : "bg-background/0 text-input",
                             className,
                         )}
                     >
-                        {tab.name}
+                        {label}
                     </Link>
                 );
             })}
