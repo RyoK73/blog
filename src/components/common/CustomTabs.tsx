@@ -15,10 +15,13 @@ export type NonEmptyArray<T> = [T, ...T[]];
 export const CustomTabs = ({ tabs, className }: Params) => {
     const pathName = usePathname();
     return (
-        <nav className={cn("flex h-auto justify-center divide-x divide-border")}>
+        <nav
+            className={cn("flex h-auto justify-center divide-x divide-border")}
+        >
             {tabs.map((tab) => {
                 const isActive =
-                    tab.link === pathName || (tab.link !== "/" && pathName.startsWith(tab.link));
+                    tab.link === pathName ||
+                    (tab.link !== "/" && pathName.startsWith(tab.link));
                 return (
                     <Link
                         key={tab.name}
@@ -26,7 +29,7 @@ export const CustomTabs = ({ tabs, className }: Params) => {
                         className={cn(
                             " bg-background flex justify-center items-center",
                             isActive
-                                ? "bg-foreground text-background"
+                                ? "border border-vivid text-vivid"
                                 : "bg-background/0 text-input",
                             className,
                         )}
