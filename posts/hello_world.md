@@ -1,7 +1,7 @@
 ---
 title: "Hello World ! 一番最初の記事です！"
 date: "2026-04-07"
-tag: [blog, tech]
+tag: [life]
 ---
 
 # 最初の記事です！
