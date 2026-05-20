@@ -2,26 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import localImage from "../../../public/topImage.png";
 import { SwitchTheme } from "@/components/common/SwitchTheme";
-import {
-    CustomTabs,
-    type TabProp,
-    NonEmptyArray,
-} from "@/components/common/CustomTabs";
+import { CustomTabs } from "@/components/common/CustomTabs";
 import { CustomCard } from "./CustomCard";
-const tabProps: NonEmptyArray<TabProp> = [
-    {
-        name: "01.HOME",
-        link: "/",
-    },
-    {
-        name: "02.WORK",
-        link: "/blog/tag/works",
-    },
-    {
-        name: "03.ABOUT",
-        link: "/about",
-    },
-];
 const tabSize = "size-25";
 
 export const Header = () => {
@@ -56,7 +38,7 @@ export const Header = () => {
             </CustomCard>
             <div className="flex divide-x divide-border border-l">
                 <div className="flex h-full justify-end">
-                    <CustomTabs tabs={tabProps} className={tabSize} />
+                    <CustomTabs className={tabSize} />
                 </div>
                 <SwitchTheme
                     className={`flex justify-center items-center text-vivid ${tabSize}`}
