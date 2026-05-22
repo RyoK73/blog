@@ -16,7 +16,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                 <li key={post.slug}>
                     <CustomCard
                         label={`P${(index + 1).toString().padStart(3, "0")}`}
-                        className="relative hover:bg-card hover:transition-colors duration-500"
+                        className="relative hover:border-foreground hover:transition-colors duration-500"
                     >
                         <time>{post.date}</time>
                         <Link
@@ -29,7 +29,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                         </Link>
                         <TagList
                             tags={post.tags}
-                            className="relative z-1 border-flow text-sm hover:text-vivid border-border"
+                            className="relative z-1 border-border border-flow text-sm hover:text-vivid"
                         />
                     </CustomCard>
                 </li>
