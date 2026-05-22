@@ -19,11 +19,7 @@ const tabStyle = {
 export const CustomTabs = ({ className }: { className?: string }) => {
     const pathName = usePathname();
 
-    const isActiveTab = (href: string): boolean => {
-        return href === pathName || (href !== "/" && pathName.startsWith(href));
-    };
     const getTabStyle = (tab: Tab): string => {
-        const tag = tab.name.toLowerCase();
         if (pathName == tab.href) {
             return tabStyle.active;
         } else if (tab.href !== "/" && pathName.startsWith(tab.href)) {
