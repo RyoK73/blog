@@ -1,8 +1,7 @@
-import { cn } from "@/lib/utils";
 type AboutProp = { className?: string };
-const AboutPage = ({ className }: AboutProp) => {
+const AboutPage = () => {
     return (
-        <div className={cn("", className)}>
+        <div>
             <h1>Aboutページです。</h1>
         </div>
     );
