@@ -27,6 +27,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
         } else return tabStyle.inactive;
     };
 
+    // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
     const tabs: Tab[] = [
         { href: "/", name: "HOME", prefix: true },
         ...Object.keys(userTags).map((tag) => ({
