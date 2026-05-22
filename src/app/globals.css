@@ -156,6 +156,7 @@ body {
     }
 }
 
+/* 利用時には付与先に必ずborderを付与する必要あり */
 @layer components {
     .border-flow {
         --border-flow-color: var(--vivid);
