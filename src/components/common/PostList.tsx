@@ -29,7 +29,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                         </Link>
                         <TagList
                             tags={post.tags}
-                            className="relative z-1 border-border border-flow text-sm hover:text-vivid"
+                            className="relative z-1 text-sm"
                         />
                     </CustomCard>
                 </li>
