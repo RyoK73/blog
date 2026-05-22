@@ -8,7 +8,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
     const posts = await getAllPostData();
     const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
     const filteredPosts = tag
-        ? sortedPosts.filter((sortedPost) => sortedPost.tags.includes(tag))
+        ? sortedPosts.filter((sortedPost) => sortedPost.tag.includes(tag))
         : sortedPosts;
     return (
         <ul>
@@ -20,7 +20,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                     >
                         <time>{post.date}</time>
                         <Link
-                            href={path.join("/blog", post.tags[0], post.slug)}
+                            href={path.join("/blog", post.tag, post.slug)}
                             className="after:absolute after:inset-0"
                         >
                             <h2 className="text-foreground font-bold text-lg">
@@ -28,7 +28,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                             </h2>
                         </Link>
                         <TagList
-                            tags={post.tags}
+                            tag={post.tag}
                             className="relative z-1 text-sm"
                         />
                     </CustomCard>
