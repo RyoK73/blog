@@ -9,11 +9,17 @@ type TagProps = {
     tags: string[];
     className?: string;
 };
+const tagOrderMap = new Map(Object.keys(tagJson).map((item, i) => [item, i]));
 export const TagList = ({ tags, className }: TagProps) => {
     return (
         <div className="flex flex-wrap gap-1.5 mt-1">
             {tags
                 .filter((tag) => Object.keys(tagJson).includes(tag))
+                .sort(
+                    (a, b) =>
+                        (tagOrderMap.get(a) ?? Infinity) -
+                        (tagOrderMap.get(b) ?? Infinity),
+                )
                 .map((tag) => {
                     return (
                         <Link key={tag} href={path.join("/blog", tag)}>
