@@ -16,7 +16,7 @@ export const TagList = ({ tags, className }: TagProps) => {
                 .filter((tag) => Object.keys(tagJson).includes(tag))
                 .map((tag) => {
                     return (
-                        <Link key={tag} href={path.join("/blog/tag", tag)}>
+                        <Link key={tag} href={path.join("/blog", tag)}>
                             <Badge
                                 variant={"outline"}
                                 className={cn(
