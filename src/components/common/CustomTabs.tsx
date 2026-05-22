@@ -26,11 +26,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
         const tag = tab.name.toLowerCase();
         if (pathName == tab.href) {
             return tabStyle.active;
-        } else if (
-            tab.href !== "/" &&
-            pathName !== tab.href &&
-            pathName.startsWith(tab.href)
-        ) {
+        } else if (tab.href !== "/" && pathName.startsWith(tab.href)) {
             return tabStyle.semiactive;
         } else return tabStyle.inactive;
     };
