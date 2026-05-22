@@ -162,7 +162,6 @@ body {
         --border-flow-duration: 700ms;
         position: relative;
         padding: 5px;
-        border: 1px solid transparent;
     }
     .border-flow::before {
         content: "";
