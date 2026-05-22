@@ -1,10 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
-type ErrorProps = { className?: string };
-const ErrorPage = ({ className }: ErrorProps) => {
+const ErrorPage = ({ error, reset }: { error: Error; reset: () => void }) => {
     return (
-        <div className={cn("", className)}>
+        <div>
             <h1>500</h1>
+            <button onClick={reset}>再試行</button>
         </div>
     );
 };
