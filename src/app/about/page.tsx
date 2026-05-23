@@ -1,4 +1,3 @@
-type AboutProp = { className?: string };
 const AboutPage = () => {
     return (
         <div>
