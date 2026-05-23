@@ -8,7 +8,7 @@ export const Posts = async ({ tag }: { tag?: string }) => {
     const posts = await getAllPostData();
     const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
     const filteredPosts = tag
-        ? sortedPosts.filter((sortedPost) => sortedPost.tag.includes(tag))
+        ? sortedPosts.filter((sortedPost) => sortedPost.tag === tag)
         : sortedPosts;
     return (
         <ul>
