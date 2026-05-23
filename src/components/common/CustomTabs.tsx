@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import userTags from "@/user-tag.json";
+import userCategories from "@/user-category.json";
 
 type Tab = {
     href: string;
@@ -30,9 +30,9 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
     const tabs: Tab[] = [
         { href: "/", name: "HOME", prefix: true },
-        ...Object.keys(userTags).map((tag) => ({
-            href: `/blog/${tag}`,
-            name: tag.toUpperCase(),
+        ...Object.keys(userCategories).map((category) => ({
+            href: `/blog/${category}`,
+            name: category.toUpperCase(),
             prefix: true,
         })),
         { href: "/about", name: "ABOUT", prefix: false },

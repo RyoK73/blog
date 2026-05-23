@@ -11,7 +11,7 @@ export type PostData = {
     markdown: string;
     date: string;
     title: string;
-    tag: string;
+    category: string;
 };
 // mdファイルをreactコンポーネントに変換する関数
 export const getPostData = async (slug: string): Promise<PostData> => {
@@ -25,7 +25,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         markdown: postData.content,
         date: postData.data.date,
         title: postData.data.title,
-        tag: postData.data.tag,
+        category: postData.data.category,
     };
 };
 

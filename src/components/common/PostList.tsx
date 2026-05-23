@@ -1,14 +1,14 @@
 import { getAllPostData } from "@/lib/post";
 import { CustomCard } from "./CustomCard";
-import { TagList } from "./TagList";
+import { CustomCategory } from "./CustomCategory";
 import Link from "next/link";
 import path from "path";
 
-export const Posts = async ({ tag }: { tag?: string }) => {
+export const Posts = async ({ category }: { category?: string }) => {
     const posts = await getAllPostData();
     const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
-    const filteredPosts = tag
-        ? sortedPosts.filter((sortedPost) => sortedPost.tag === tag)
+    const filteredPosts = category
+        ? sortedPosts.filter((sortedPost) => sortedPost.category === category)
         : sortedPosts;
     return (
         <ul>
@@ -20,15 +20,15 @@ export const Posts = async ({ tag }: { tag?: string }) => {
                     >
                         <time>{post.date}</time>
                         <Link
-                            href={path.join("/blog", post.tag, post.slug)}
+                            href={path.join("/blog", post.category, post.slug)}
                             className="after:absolute after:inset-0"
                         >
                             <h2 className="text-foreground font-bold text-lg">
                                 {post.title}
                             </h2>
                         </Link>
-                        <TagList
-                            tag={post.tag}
+                        <CustomCategory
+                            category={post.category}
                             className="relative z-1 text-sm"
                         />
                     </CustomCard>

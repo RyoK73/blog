@@ -1,33 +1,33 @@
 import { getAllPostData, getPostData } from "@/lib/post";
-import { TagList } from "@/components/common/TagList";
+import { CustomCategory } from "@/components/common/CustomCategory";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
 
 type Props = {
-    tag: string;
+    category: string;
     slug: string;
 };
 export const generateStaticParams = async () => {
     const posts = await getAllPostData();
     return posts.map((post) => ({
-        tag: post.tag,
+        category: post.category,
         slug: post.slug,
     }));
 };
 
 const BlogPage = async ({ params }: { params: Promise<Props> }) => {
-    const { tag, slug } = await params;
+    const { category, slug } = await params;
     const postData = await getPostData(slug);
 
-    if (postData.tag !== tag) notFound();
+    if (postData.category !== category) notFound();
 
     return (
         <article className="prose">
             <header>
                 <h1>{postData.title}</h1>
                 <time>{postData.date}</time>
-                <TagList tag={postData.tag} />
+                <CustomCategory category={postData.category} />
             </header>
             <Markdown remarkPlugins={[remarkGfm]}>{postData.markdown}</Markdown>
         </article>

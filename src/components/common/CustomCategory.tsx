@@ -3,14 +3,14 @@ import path from "path";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
-// tagsを受け取って、Linkをバッジ表示する。各リンク先は、./@/app/blog/tag/[tag]へ
-type TagProps = {
-    tag: string;
+// categoryを受け取って、Linkをバッジ表示する。各リンク先は、./@/app/blog/category/[category]へ
+type CategoryProps = {
+    category: string;
     className?: string;
 };
-export const TagList = ({ tag, className }: TagProps) => {
+export const CustomCategory = ({ category, className }: CategoryProps) => {
     return (
-        <Link key={tag} href={path.join("/blog", tag)}>
+        <Link href={path.join("/blog", category)}>
             <Badge
                 variant={"outline"}
                 className={cn(
@@ -18,7 +18,7 @@ export const TagList = ({ tag, className }: TagProps) => {
                     className,
                 )}
             >
-                {tag}
+                {category}
             </Badge>
         </Link>
     );
