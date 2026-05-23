@@ -20,7 +20,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     const pathName = usePathname();
 
     const getTabStyle = (tab: Tab): string => {
-        if (pathName == tab.href) {
+        if (pathName === tab.href) {
             return tabStyle.active;
         } else if (tab.href !== "/" && pathName.startsWith(tab.href)) {
             return tabStyle.semiactive;
