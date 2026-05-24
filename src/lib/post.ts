@@ -2,6 +2,7 @@ import matter from "gray-matter";
 import fs from "fs/promises";
 import path from "path";
 import z from "zod";
+import { format } from "date-fns";
 import userCategories from "@/user-category.json";
 
 // contentsのpathの宣言
@@ -10,10 +11,10 @@ const postDirectory = path.join(process.cwd(), "posts");
 // 関数の戻り値の型宣言
 export type PostData = {
     slug: string;
-    markdown: string;
-    date: string;
     title: string;
+    date: string;
     category: string;
+    markdown: string;
 };
 
 const categoryKeys = Object.keys(userCategories);
@@ -22,9 +23,7 @@ const frontMatterSchema = z.object({
     category: z.enum(categoryKeys, {
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
-    date: z.string("日付は必須です").regex(/^\d{4}-\d{2}-\d{2}$/, {
-        error: "YYYY-MM-DD形式で入力してください",
-    }),
+    date: z.date({ error: "日付は必須です" }),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
@@ -34,7 +33,9 @@ export const getPostData = async (slug: string): Promise<PostData> => {
 
     const result = frontMatterSchema.safeParse(postData.data);
     if (!result.success) {
-        throw new Error(`記事のfrontmatterが不正です。${result.error.message}`);
+        throw new Error(
+            `${postData.data.title}のfrontmatterが不正です。${result.error.message}`,
+        );
     }
 
     // PostDataを返す
@@ -42,7 +43,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         slug,
         title: postData.data.title,
         category: postData.data.category,
-        date: postData.data.date,
+        date: format(postData.data.date, "yyyy-MM-dd"),
         markdown: postData.content,
     };
 };

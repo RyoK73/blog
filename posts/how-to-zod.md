@@ -1,7 +1,7 @@
 ---
-title: "TypeScript Zodの使い方 まとめ"
-date: "2026-05-24"
-category: "tech"
+title: TypeScript Zodの使い方 まとめ
+date: 2026-05-24
+category: tech
 ---
 # ZODとは
 データの検証用ライブラリ
