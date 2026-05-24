@@ -56,10 +56,9 @@ title: ${result.title}
 date: ${format(result.date, "yyyy-MM-dd")}
 category: ${result.category}
 ---
-const
     `;
     try {
-        fs.writeFile(postFullPath, frontmatter);
+        await fs.writeFile(postFullPath, frontmatter);
     } catch (e) {
         consola.warn(e);
     }
