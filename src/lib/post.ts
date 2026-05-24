@@ -1,6 +1,8 @@
 import matter from "gray-matter";
 import fs from "fs/promises";
 import path from "path";
+import z from "zod";
+import userCategories from "@/user-category.json";
 
 // contentsのpathの宣言
 const postDirectory = path.join(process.cwd(), "posts");
@@ -13,19 +15,35 @@ export type PostData = {
     title: string;
     category: string;
 };
-// mdファイルをreactコンポーネントに変換する関数
+
+const categoryKeys = Object.keys(userCategories);
+const frontMatterSchema = z.object({
+    title: z.string({ error: "タイトルは必須です" }),
+    category: z.enum(categoryKeys, {
+        error: `${categoryKeys.join(",")}のいずれかが必須です`,
+    }),
+    date: z.string("日付は必須です").regex(/^\d{4}-\d{2}-\d{2}$/, {
+        error: "YYYY-MM-DD形式で入力してください",
+    }),
+});
+
 export const getPostData = async (slug: string): Promise<PostData> => {
     const fullPath = path.join(postDirectory, `${slug}.md`);
     const fileContent = await fs.readFile(fullPath);
     const postData = matter(fileContent);
 
+    const result = frontMatterSchema.safeParse(postData.data);
+    if (!result.success) {
+        throw new Error(`記事のfrontmatterが不正です。${result.error.message}`);
+    }
+
     // PostDataを返す
     return {
         slug,
-        markdown: postData.content,
-        date: postData.data.date,
         title: postData.data.title,
         category: postData.data.category,
+        date: postData.data.date,
+        markdown: postData.content,
     };
 };
 
