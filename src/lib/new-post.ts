@@ -14,12 +14,22 @@ const main = async () => {
                 p.text({
                     message: "slugを入力してください",
                     placeholder: "input-slug-title",
+                    validate(value) {
+                        if (!value) return "slugを入力してください";
+                        if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)) {
+                            return "英小文字・数字・ハイフンのみ使用可";
+                        }
+                        return;
+                    },
                 }),
 
             title: () =>
                 p.text({
                     message: "ブログタイトルを入力してください",
                     placeholder: "ブログタイトル...",
+                    validate(value) {
+                        if (!value) return "タイトルを入力してください";
+                    },
                 }),
 
             date: () =>
