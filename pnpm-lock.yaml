@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@clack/prompts':
-        specifier: ^1.4.0
-        version: 1.4.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -63,6 +60,9 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
+      '@clack/prompts':
+        specifier: ^1.4.0
+        version: 1.4.0
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.2.1
