@@ -1,6 +1,6 @@
 ## ブログ記事の作成方法
 
 ```ts
-npx tsx src/lib/new-post.ts
+npm run post
 // 表示されるCLに従う
 ```
