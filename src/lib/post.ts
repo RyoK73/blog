@@ -17,7 +17,8 @@ export type PostData = {
     markdown: string;
 };
 
-const categoryKeys = Object.keys(userCategories);
+const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
+
 const frontMatterSchema = z.object({
     title: z.string({ error: "タイトルは必須です" }),
     category: z.enum(categoryKeys, {
