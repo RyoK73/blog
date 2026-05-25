@@ -27,6 +27,9 @@ export default async function RootLayout({
 }>) {
     return (
         <html lang="ja" suppressHydrationWarning>
+            <head>
+                <script src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark   `}
             >

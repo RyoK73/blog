@@ -71,8 +71,8 @@ body {
     --content-background: oklch(91.599% 0.00696 88.615 / 0.2);
     --grid-line: oklch(0 0 0 / 0.07);
     --grid-subline: oklch(0 0 0 / 0.03);
-    --vivid: oklch(50% 0.19 38);
-    --vivid-end: oklch(56% 0.18 50);
+    --vivid: oklch(72% 0.15 230);
+    --vivid-end: oklch(78% 0.12 230);
     --card: rgba(255, 255, 255, 0.4);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
@@ -153,6 +153,24 @@ body {
     }
     html {
         @apply font-sans;
+    }
+}
+
+@layer utilities {
+    .prose h1 {
+        color: var(--foreground);
+    }
+
+    .prose h2 {
+        color: var(--foreground);
+        border-bottom: 2px solid var(--vivid);
+        padding-bottom: 0.25rem;
+    }
+
+    .prose h3 {
+        color: var(--foreground);
+        border-left: 4px solid var(--vivid);
+        padding-left: 0.75rem;
     }
 }
 

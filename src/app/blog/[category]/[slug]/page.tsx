@@ -1,7 +1,7 @@
 import { getAllPostData, getPostData } from "@/lib/post";
 import { CustomCategory } from "@/components/common/CustomCategory";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import markdownToHtml from "zenn-markdown-html";
+import "zenn-content-css";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -22,14 +22,15 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
 
     if (postData.category !== category) notFound();
 
+    const html = await markdownToHtml(postData.markdown);
     return (
-        <article className="prose">
+        <article className="">
             <header>
                 <h1>{postData.title}</h1>
                 <time>{postData.date}</time>
                 <CustomCategory category={postData.category} />
             </header>
-            <Markdown remarkPlugins={[remarkGfm]}>{postData.markdown}</Markdown>
+            <div className="znc" dangerouslySetInnerHTML={{ __html: html }} />
         </article>
     );
 };
