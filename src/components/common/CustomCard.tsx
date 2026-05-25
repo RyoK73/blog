@@ -22,7 +22,7 @@ export const CustomCard = ({
     return (
         <Card
             className={cn(
-                "relative border border-border rounded-none bg-content-background p-3",
+                "relative border border-border rounded-none bg-content-background p-3 ring-0",
                 className,
             )}
         >
