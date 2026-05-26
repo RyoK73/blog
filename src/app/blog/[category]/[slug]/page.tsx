@@ -3,6 +3,7 @@ import { CustomCategory } from "@/components/common/CustomCategory";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
+import consola from "consola";
 
 type Props = {
     category: string;
@@ -29,7 +30,17 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
                 <time>{postData.date}</time>
                 <CustomCategory category={postData.category} />
             </header>
-            <Markdown remarkPlugins={[remarkGfm]}>{postData.markdown}</Markdown>
+            <Markdown
+                remarkPlugins={[[remarkGfm]]}
+                components={{
+                    pre: (props) => {
+                        consola.info(props);
+                        return <code>{props.children}</code>;
+                    },
+                }}
+            >
+                {postData.markdown}
+            </Markdown>
         </article>
     );
 };
