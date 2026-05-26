@@ -60,8 +60,7 @@ const main = async () => {
     const postFullPath = path.join(process.cwd(), "posts", `${result.slug}.md`);
 
     // frontmatter生成用にインデントをコード中のインデントを削除
-    const frontmatter = `
----
+    const frontmatter = `---
 title: ${result.title}
 date: ${format(result.date, "yyyy-MM-dd")}
 category: ${result.category}
