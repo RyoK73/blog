@@ -23,7 +23,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
     if (postData.category !== category) notFound();
 
     return (
-        <article className="prose dark:prose-invert">
+        <article className="prose dark:prose-invert max-w-full border border-border p-5">
             <header>
                 <h1>{postData.title}</h1>
                 <time>{postData.date}</time>

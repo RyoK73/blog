@@ -39,13 +39,11 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="w-screen flex flex-col p-5  gap-5">
+                    <div className="w-screen flex flex-col p-5 gap-5">
                         <Header />
-                        <div className="grid grid-cols-5 gap-5">
+                        <div className="flex gap-5">
                             <Sidebar className="min-w-100" />
-                            <main className="container col-span-4">
-                                {children}
-                            </main>
+                            <main className="w-full">{children}</main>
                         </div>
                     </div>
                 </ThemeProvider>
