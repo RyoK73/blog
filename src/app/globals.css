@@ -143,7 +143,7 @@ body {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
-    --bg-code: oklch(0.3793 0.0497 251.32);
+    --bg-code: oklch(0.3793 0.0497 251.32/0.6);
 }
 
 @layer base {
@@ -161,21 +161,16 @@ body {
 @layer utilities {
     .prose {
         h1 {
-            @apply bg-foreground;
+            @apply text-foreground border-b-3 pb-2 text-4xl;
         }
         h2 {
-            color: var(--foreground);
-            border-bottom: 2px solid var(--foreground);
-            padding-bottom: 0.25rem;
+            @apply text-foreground border-b-foreground border-b-2 pb-2;
         }
         h3 {
-            color: var(--foreground);
-            border-left: 4px solid var(--foreground);
-            padding-left: 0.75rem;
+            @apply text-foreground border-l-4 border-l-foreground pl-3;
         }
         code:not(pre code) {
-            background-color: var(--bg-code);
-            @apply px-2;
+            @apply bg-(--bg-code) px-2 py-1;
         }
         code:not(pre code)::before {
             content: "";
