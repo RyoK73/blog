@@ -4,6 +4,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
 import consola from "consola";
+import CodeBlock from "@/components/common/CodeBlock";
 
 type Props = {
     category: string;
@@ -35,7 +36,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
                 components={{
                     pre: (props) => {
                         consola.info(props);
-                        return <code>{props.children}</code>;
+                        return <CodeBlock>{props.children}</CodeBlock>;
                     },
                 }}
             >
