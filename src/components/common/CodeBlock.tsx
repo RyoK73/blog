@@ -1,13 +1,13 @@
 import { codeToHtml, bundledLanguages } from "shiki";
 import CopyButton from "./CopyButton";
+import { ReactElement } from "react";
+
+type CodeBlockChildren = ReactElement<{
+    className?: string;
+    children: React.ReactNode;
+}>;
 type CodeProps = {
-    children: {
-        type: string;
-        props: {
-            className?: string;
-            children: React.ReactNode;
-        };
-    };
+    children: CodeBlockChildren;
 };
 
 const isValidLanguage = (lang: string) => {

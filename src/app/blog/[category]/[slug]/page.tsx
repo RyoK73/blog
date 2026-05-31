@@ -3,7 +3,7 @@ import { CustomCategory } from "@/components/common/CustomCategory";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
-import consola from "consola";
+import React from "react";
 import CodeBlock from "@/components/common/CodeBlock";
 
 type Props = {
@@ -35,8 +35,19 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
                 remarkPlugins={[[remarkGfm]]}
                 components={{
                     pre: (props) => {
-                        consola.info(props);
-                        return <CodeBlock>{props.children}</CodeBlock>;
+                        if (!React.isValidElement(props.children)) {
+                            return <pre>{props.children}</pre>;
+                        }
+                        // react-markdownの仕様上、props.childrenはchildren:React.ReactNodeのReactElementなため、asでキャストしている。
+                        return (
+                            <CodeBlock>
+                                {
+                                    props.children as React.ReactElement<{
+                                        children: React.ReactNode;
+                                    }>
+                                }
+                            </CodeBlock>
+                        );
                     },
                 }}
             >
