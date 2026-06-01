@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { LuCopy } from "react-icons/lu";
 import { LuCheck } from "react-icons/lu";
@@ -9,12 +9,19 @@ type CopyButtonProps = {
     className?: string;
 };
 export const CopyButton = ({ code, className }: CopyButtonProps) => {
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [copied, setCopied] = useState(false);
     const handleCopy = async () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
         await navigator.clipboard.writeText(code);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        timerRef.current = setTimeout(() => setCopied(false), 2000);
     };
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    });
     return (
         <button
             className={cn("transform", className)}
