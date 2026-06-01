@@ -5,7 +5,7 @@ type SidebarProps = {
 };
 export const Sidebar = ({ className }: SidebarProps) => {
     return (
-        <div className={cn("col-span-1 flex flex-col gap-5 ", className)}>
+        <div className={cn("shrink-0 flex flex-col gap-5", className)}>
             <Author />
         </div>
     );
