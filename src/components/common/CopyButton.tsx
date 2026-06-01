@@ -16,6 +16,8 @@ export const CopyButton = ({ code, className }: CopyButtonProps) => {
         if (timerRef.current) clearTimeout(timerRef.current);
         try {
             await navigator.clipboard.writeText(code);
+            setCopied(true);
+            timerRef.current = setTimeout(() => setCopied(false), 2000);
         } catch (e) {
             if (e instanceof Error) {
                 consola.warn("code copy failed...", e.message);
@@ -23,14 +25,12 @@ export const CopyButton = ({ code, className }: CopyButtonProps) => {
                 consola.error("unkown error:", e);
             }
         }
-        setCopied(true);
-        timerRef.current = setTimeout(() => setCopied(false), 2000);
     };
     useEffect(() => {
         return () => {
             if (timerRef.current) clearTimeout(timerRef.current);
         };
-    });
+    }, []);
     return (
         <button
             className={cn("transform", className)}
