@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { LuCopy } from "react-icons/lu";
 import { LuCheck } from "react-icons/lu";
+import consola from "consola";
 
 type CopyButtonProps = {
     code: string;
@@ -13,7 +14,15 @@ export const CopyButton = ({ code, className }: CopyButtonProps) => {
     const [copied, setCopied] = useState(false);
     const handleCopy = async () => {
         if (timerRef.current) clearTimeout(timerRef.current);
-        await navigator.clipboard.writeText(code);
+        try {
+            await navigator.clipboard.writeText(code);
+        } catch (e) {
+            if (e instanceof Error) {
+                consola.warn("code copy failed...", e.message);
+            } else {
+                consola.error("unkown error:", e);
+            }
+        }
         setCopied(true);
         timerRef.current = setTimeout(() => setCopied(false), 2000);
     };
