@@ -11,7 +11,7 @@ export const Posts = async ({ category }: { category?: string }) => {
         ? sortedPosts.filter((sortedPost) => sortedPost.category === category)
         : sortedPosts;
     return (
-        <ul>
+        <ul className="w-full flex flex-col gap-5">
             {filteredPosts.map((post, index) => (
                 <li key={post.slug}>
                     <CustomCard

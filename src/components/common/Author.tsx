@@ -31,7 +31,8 @@ export const Author = () => {
                 </tbody>
             </table>
             <div className="flex items-end [&_a:hover]:text-vivid">
-                <div className="flex text-3xl text-foreground pt-3 justify-evenly gap-2 w-1/2 transition [&_a]:border [&_a]:border-border shadow-2xl">
+                <div className="flex text-3xl text-foreground pt-3 justify-evenly gap-2 w-1/2 transition [&_a]:border [&_a]:border-border [&_a]:shadow-2xl">
+
                     <ExternalLink
                         href="https://x.com/RyoK73EG"
                         className="border-flow"
