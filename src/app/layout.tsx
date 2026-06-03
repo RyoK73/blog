@@ -36,7 +36,7 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="max-w-5xl mx-auto w-full flex flex-col gap-5 m-5">
+                    <div className="max-w-6xl mx-auto w-full flex flex-col gap-5 p-5">
                         <Header />
                         <div className="flex lg:gap-5">
                             <SidebarLayout className="" />
