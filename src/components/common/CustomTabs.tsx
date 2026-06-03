@@ -11,7 +11,7 @@ type Tab = {
 };
 
 const tabStyle = {
-    active: "border border-vivid text-vivid",
+    active: "-ml-px relative z-10 border border-vivid text-vivid",
     semiactive: "border-b border-b-vivid text-vivid",
     inactive: "bg-background/0 text-input",
 };
@@ -39,7 +39,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     ];
 
     return (
-        <nav className="flex h-auto justify-center divide-x divide-border">
+        <nav className="flex h-auto justify-center divide-x divide-border border-l">
             {tabs.map((tab, index) => {
                 const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
                 return (
@@ -47,7 +47,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
                         key={tab.href}
                         href={tab.href}
                         className={cn(
-                            "flex justify-center items-center",
+                            "flex justify-center items-center border-r",
                             getTabStyle(tab),
                             className,
                         )}
