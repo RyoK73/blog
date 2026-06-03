@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/common/Header";
 import { SidebarLayout } from "@/components/common/SidebarLayout";
+import { CustomTabs } from "@/components/common/CustomTabs";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default async function RootLayout({
     return (
         <html lang="ja" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark   `}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -40,8 +41,12 @@ export default async function RootLayout({
                         <Header />
                         <div className="flex lg:gap-5">
                             <SidebarLayout className="" />
-                            <main className="w-full min-w-0">{children}</main>
+                            <main className="w-full">{children}</main>
                         </div>
+                        <CustomTabs
+                            navClassName="fixed inset-x-0 border border-border bg-background/90 bottom-2 w-full h-10 justify-evenly lg:hidden"
+                            linkClassName="imte-center w-full"
+                        />
                     </div>
                 </ThemeProvider>
             </body>

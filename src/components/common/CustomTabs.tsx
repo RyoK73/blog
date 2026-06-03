@@ -16,7 +16,13 @@ const tabStyle = {
     inactive: "bg-background/0 text-input",
 };
 
-export const CustomTabs = ({ className }: { className?: string }) => {
+export const CustomTabs = ({
+    navClassName,
+    linkClassName,
+}: {
+    navClassName?: string;
+    linkClassName?: string;
+}) => {
     const pathName = usePathname();
 
     const getTabStyle = (tab: Tab): string => {
@@ -39,7 +45,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
     ];
 
     return (
-        <nav className="flex h-auto justify-center divide-x divide-border border-l">
+        <nav className={cn("flex h-auto justify-center", navClassName)}>
             {tabs.map((tab, index) => {
                 const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
                 return (
@@ -49,7 +55,7 @@ export const CustomTabs = ({ className }: { className?: string }) => {
                         className={cn(
                             "flex justify-center items-center border-r",
                             getTabStyle(tab),
-                            className,
+                            linkClassName,
                         )}
                     >
                         {label}
