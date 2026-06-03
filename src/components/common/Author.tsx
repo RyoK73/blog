@@ -1,7 +1,6 @@
 import { SiZenn, SiGithub, SiX } from "react-icons/si";
 import { ExternalLink } from "./ExternalLink";
 import { CustomCard } from "./CustomCard";
-import Link from "next/link";
 export const Author = () => {
     return (
         <CustomCard label={"Author"} className="p-6">
@@ -32,7 +31,6 @@ export const Author = () => {
             </table>
             <div className="flex items-end [&_a:hover]:text-vivid">
                 <div className="flex text-3xl text-foreground pt-3 justify-evenly gap-2 w-1/2 transition [&_a]:border [&_a]:border-border [&_a]:shadow-2xl">
-
                     <ExternalLink
                         href="https://x.com/RyoK73EG"
                         className="border-flow"
@@ -55,13 +53,6 @@ export const Author = () => {
                         <SiZenn />
                     </ExternalLink>
                 </div>
-                <Link
-                    href="/about"
-                    className="border-flow text-base ml-auto px-1"
-                    aria-label="About詳細ページへ飛ぶ"
-                >
-                    [ About → ]
-                </Link>
             </div>
         </CustomCard>
     );
