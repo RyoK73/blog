@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/common/Header";
-import { Sidebar } from "@/components/common/Sidebar";
+import { SidebarLayout } from "@/components/common/SidebarLayout";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -36,11 +36,11 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="w-screen flex flex-col p-5 gap-5">
+                    <div className="max-w-5xl mx-auto w-full flex flex-col gap-5 m-5">
                         <Header />
-                        <div className="flex gap-5">
-                            <Sidebar className="min-w-100" />
-                            <main className="w-full">{children}</main>
+                        <div className="flex lg:gap-5">
+                            <SidebarLayout className="" />
+                            <main className="w-full min-w-0">{children}</main>
                         </div>
                     </div>
                 </ThemeProvider>
