@@ -78,10 +78,6 @@ const edit = async () => {
         updatedAt: format(result.updatedAt, "yyyy-MM-dd"),
     };
 
-    if (newFrontmatter.date instanceof Date) {
-        newFrontmatter.date = format(newFrontmatter.date, "yyyy-MM-dd");
-    }
-
     const newContent = matter.stringify(parsed!.content, newFrontmatter);
 
     try {
