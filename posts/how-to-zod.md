@@ -2,15 +2,20 @@
 title: TypeScript Zodの使い方 まとめ
 date: 2026-05-24
 category: tech
+published: true
 ---
-# ZODとは
+
+## ZODとは
+
 データの検証用ライブラリ
 データスキーマを定義し、単純なデータ型から複雑なオブジェクトまで様々なデータを検証することができる
 
 ## 参考
-https://zod.dev
 
-# 基本的な使い方
+<https://zod.dev>
+
+## 基本的な使い方
+
 ```ts
 import z from "zod"
 
@@ -25,8 +30,9 @@ if (!result.success){
 ```
 
 ## data-schemaの定義
+
 ```ts
-const categoryKeys = ["tech","life","idea"] as [string,string[]]
+const categoryKeys = ["tech", "life", "idea"] as [string, string[]];
 const frontMatterSchema = z.object({
     title: z.string({ error: "タイトルは必須です" }),
     category: z.enum(categoryKeys, {
@@ -37,9 +43,11 @@ const frontMatterSchema = z.object({
 ```
 
 ## エラーになると...?
+
 ### `result.error`の戻り値
+
 ```ts
-   /* [
+/* [
       {
         expected: 'string',
         code: 'invalid_type',
@@ -54,15 +62,18 @@ const frontMatterSchema = z.object({
       }
     ] */
 ```
+
 この戻り値を使って、エラーメッセージをカスタマイズし処理を行う
+
 - `expected`
 - `code`
 - `path`
 - `message`
-### 処理を止めたいなら...
-```ts
-    if (!result.success) {
-        throw new Error(`記事のfrontmatterが不正です。${result.error.message}`);
-    }
-```
 
+### 処理を止めたいなら
+
+```ts
+if (!result.success) {
+    throw new Error(`記事のfrontmatterが不正です。${result.error.message}`);
+}
+```

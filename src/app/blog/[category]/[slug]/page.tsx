@@ -22,6 +22,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
     const { category, slug } = await params;
     const postData = await getPostData(slug);
 
+    if (!postData.published) notFound();
     if (postData.category !== category) notFound();
 
     return (
@@ -29,6 +30,9 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
             <header>
                 <h1>{postData.title}</h1>
                 <time>{postData.date}</time>
+                {postData.updatedAt && (
+                    <time>更新日: {postData.updatedAt}</time>
+                )}
                 <CustomCategory category={postData.category} />
             </header>
             <Markdown

@@ -8,13 +8,14 @@ import userCategories from "@/user-category.json";
 // contentsのpathの宣言
 const postDirectory = path.join(process.cwd(), "posts");
 
-// 関数の戻り値の型宣言
 export type PostData = {
     slug: string;
     title: string;
     date: string;
     category: string;
     markdown: string;
+    published: boolean;
+    updatedAt?: string;
 };
 
 const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
@@ -25,6 +26,8 @@ const frontMatterSchema = z.object({
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
     date: z.date({ error: "日付は必須です" }),
+    published: z.boolean(),
+    updatedAt: z.date().optional(),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
@@ -39,13 +42,14 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         );
     }
 
-    // PostDataを返す
     return {
         slug,
-        title: postData.data.title,
-        category: postData.data.category,
-        date: format(postData.data.date, "yyyy-MM-dd"),
+        title: result.data.title,
+        category: result.data.category,
+        date: format(result.data.date, "yyyy-MM-dd"),
         markdown: postData.content,
+        published: result.data.published,
+        updatedAt: result.data.updatedAt ? format(result.data.updatedAt, "yyyy-MM-dd") : undefined,
     };
 };
 
@@ -58,5 +62,6 @@ export const getSlugs = async (): Promise<string[]> => {
 export const getAllPostData = async (): Promise<PostData[]> => {
     const slugs = await getSlugs();
     const postDatasPromise = slugs.map(async (slug) => await getPostData(slug));
-    return Promise.all(postDatasPromise);
+    const postDatas = await Promise.all(postDatasPromise);
+    return postDatas.filter((post) => post.published);
 };
