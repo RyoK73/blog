@@ -11,12 +11,29 @@ type Tab = {
 };
 
 const tabStyle = {
-    active: "border border-vivid text-vivid",
+    active: "-ml-px relative z-10 border border-vivid text-vivid",
     semiactive: "border-b border-b-vivid text-vivid",
     inactive: "bg-background/0 text-input",
 };
 
-export const CustomTabs = ({ className }: { className?: string }) => {
+// aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
+const tabs: Tab[] = [
+    { href: "/", name: "HOME", prefix: true },
+    ...Object.keys(userCategories).map((category) => ({
+        href: `/blog/${category}`,
+        name: category.toUpperCase(),
+        prefix: true,
+    })),
+    { href: "/about", name: "ABOUT", prefix: false },
+];
+
+export const CustomTabs = ({
+    navClassName,
+    linkClassName,
+}: {
+    navClassName?: string;
+    linkClassName?: string;
+}) => {
     const pathName = usePathname();
 
     const getTabStyle = (tab: Tab): string => {
@@ -27,19 +44,9 @@ export const CustomTabs = ({ className }: { className?: string }) => {
         } else return tabStyle.inactive;
     };
 
-    // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
-    const tabs: Tab[] = [
-        { href: "/", name: "HOME", prefix: true },
-        ...Object.keys(userCategories).map((category) => ({
-            href: `/blog/${category}`,
-            name: category.toUpperCase(),
-            prefix: true,
-        })),
-        { href: "/about", name: "ABOUT", prefix: false },
-    ];
-
+    // divide-xではなくborder-rで区切り線を表現。タブのアクティブ切り替え時の処理で隣の要素の枠線を制御しないため。
     return (
-        <nav className="flex h-auto justify-center divide-x divide-border">
+        <nav className={cn("flex h-auto justify-center", navClassName)}>
             {tabs.map((tab, index) => {
                 const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
                 return (
@@ -47,9 +54,9 @@ export const CustomTabs = ({ className }: { className?: string }) => {
                         key={tab.href}
                         href={tab.href}
                         className={cn(
-                            "flex justify-center items-center",
+                            "flex justify-center items-center border-r",
                             getTabStyle(tab),
-                            className,
+                            linkClassName,
                         )}
                     >
                         {label}

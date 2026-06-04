@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/common/Header";
-import { Sidebar } from "@/components/common/Sidebar";
+import { SidebarLayout } from "@/components/common/SidebarLayout";
+import { CustomTabs } from "@/components/common/CustomTabs";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default async function RootLayout({
     return (
         <html lang="ja" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark   `}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -36,12 +37,16 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="w-screen flex flex-col p-5 gap-5">
+                    <div className="max-w-6xl mx-auto w-full flex flex-col gap-5 p-5">
                         <Header />
-                        <div className="flex gap-5">
-                            <Sidebar className="min-w-100" />
+                        <div className="flex lg:gap-5">
+                            <SidebarLayout />
                             <main className="w-full">{children}</main>
                         </div>
+                        <CustomTabs
+                            navClassName="fixed inset-x-0 border border-border bg-background/90 bottom-2 w-full h-10 justify-evenly lg:hidden"
+                            linkClassName="item-center w-full"
+                        />
                     </div>
                 </ThemeProvider>
             </body>
