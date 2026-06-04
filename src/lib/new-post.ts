@@ -89,7 +89,7 @@ const edit = async () => {
     p.outro("記事の更新完了!");
     consola.info(`${postFullPath} を更新しました`);
 
-    openByEditor(postFullPath);
+    await openByEditor(postFullPath);
 };
 
 const create = async () => {
@@ -162,7 +162,7 @@ const create = async () => {
 
     consola.info(`${postFullPath}を作成しました`);
 
-    openByEditor(postFullPath);
+    await openByEditor(postFullPath);
 };
 
 if (process.argv.includes("--edit")) {
