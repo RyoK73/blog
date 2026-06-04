@@ -9,7 +9,7 @@ export const SidebarLayout = ({ className }: { className?: string }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={cn("flex gap-5", className)}>
+        <>
             {isOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -36,6 +36,6 @@ export const SidebarLayout = ({ className }: { className?: string }) => {
                     <LuListPlus className="size-6" />
                 )}
             </button>
-        </div>
+        </>
     );
 };
