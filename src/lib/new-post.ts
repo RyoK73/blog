@@ -4,6 +4,86 @@ import userCategories from "@/user-category.json";
 import path from "path";
 import fs from "fs/promises";
 import consola from "consola";
+import matter from "gray-matter";
+
+const edit = async () => {
+    p.intro("記事の編集を開始します");
+
+    const postsDir = path.join(process.cwd(), "posts");
+    const files = await fs.readdir(postsDir);
+    const slugs = files
+        .filter((f) => f.endsWith(".md"))
+        .map((f) => f.replace(/\.md$/, ""));
+
+    if (slugs.length === 0) {
+        p.cancel("編集可能な記事が見つかりません");
+        process.exit(0);
+    }
+
+    let parsed: matter.GrayMatterFile<string> | undefined;
+
+    const result = await p.group(
+        {
+            slug: () =>
+                p.select({
+                    message: "編集する記事を選んでください",
+                    options: slugs.map((slug) => ({
+                        value: slug,
+                        label: slug,
+                    })),
+                }),
+            published: async ({ results }) => {
+                const raw = await fs.readFile(
+                    path.join(postsDir, `${results.slug}.md`),
+                    "utf-8",
+                );
+                parsed = matter(raw);
+                return p.confirm({
+                    message: "公開状態を設定してください（published）",
+                    initialValue:
+                        (parsed.data.published as boolean | undefined) ?? false,
+                });
+            },
+            updatedAt: () =>
+                p.date({
+                    message: "更新日付を選んでください（updatedAt）",
+                    format: "YMD",
+                    initialValue: parsed?.data.updatedAt
+                        ? new Date(parsed.data.updatedAt as string)
+                        : new Date(),
+                }),
+        },
+        {
+            onCancel: () => {
+                p.cancel("キャンセルしました");
+                process.exit(0);
+            },
+        },
+    );
+
+    const postFullPath = path.join(postsDir, `${result.slug}.md`);
+
+    const newData: Record<string, unknown> = {
+        ...parsed!.data,
+        published: result.published,
+        updatedAt: format(result.updatedAt, "yyyy-MM-dd"),
+    };
+
+    if (newData.date instanceof Date) {
+        newData.date = format(newData.date, "yyyy-MM-dd");
+    }
+
+    const newContent = matter.stringify(parsed!.content, newData);
+
+    try {
+        await fs.writeFile(postFullPath, newContent);
+    } catch (e) {
+        consola.warn(e);
+    }
+
+    p.outro("記事の更新完了!");
+    consola.info(`${postFullPath} を更新しました`);
+};
 
 const main = async () => {
     p.intro("記事作成のセットアップを開始します");
@@ -64,6 +144,7 @@ const main = async () => {
 title: ${result.title}
 date: ${format(result.date, "yyyy-MM-dd")}
 category: ${result.category}
+published: false
 ---
     `;
     try {
@@ -77,4 +158,8 @@ category: ${result.category}
     consola.info(`${postFullPath}を作成しました`);
 };
 
-main();
+if (process.argv.includes("--edit")) {
+    edit();
+} else {
+    main();
+}
