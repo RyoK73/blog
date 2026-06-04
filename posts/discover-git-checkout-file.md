@@ -1,6 +1,6 @@
 ---
 title: ファイルの巻き戻しにはgit checkout --<file>を使いたい
-date: 2026-05-25
+date: "2026-05-25"
 category: tech
 published: false
 ---

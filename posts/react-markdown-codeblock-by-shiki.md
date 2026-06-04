@@ -1,6 +1,6 @@
 ---
 title: react-markdownのコードブロックをshikiで実装する
-date: 2026-05-26
+date: "2026-05-26"
 category: tech
 published: false
 ---

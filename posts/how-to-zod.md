@@ -1,6 +1,6 @@
 ---
 title: TypeScript Zodの使い方 まとめ
-date: 2026-05-24
+date: "2026-05-24"
 category: tech
 published: true
 ---

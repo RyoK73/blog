@@ -25,9 +25,24 @@ const frontMatterSchema = z.object({
     category: z.enum(categoryKeys, {
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
-    date: z.date({ error: "日付は必須です" }),
+    date: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, {
+            error: "yyyy-MM-dd形式で書いてください",
+        })
+        .refine((val) => !isNaN(new Date(val).getTime()), {
+            error: "有効な日付ではありません",
+        }),
     published: z.boolean(),
-    updatedAt: z.date().optional(),
+    updatedAt: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, {
+            error: "yyyy-MM-dd形式で書いてください",
+        })
+        .refine((val) => !isNaN(new Date(val).getTime()), {
+            error: "有効な日付ではありません",
+        })
+        .optional(),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
