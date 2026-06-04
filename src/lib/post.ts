@@ -64,7 +64,9 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         date: format(result.data.date, "yyyy-MM-dd"),
         markdown: postData.content,
         published: result.data.published,
-        updatedAt: result.data.updatedAt ? format(result.data.updatedAt, "yyyy-MM-dd") : undefined,
+        updatedAt: result.data.updatedAt
+            ? format(result.data.updatedAt, "yyyy-MM-dd")
+            : undefined,
     };
 };
 

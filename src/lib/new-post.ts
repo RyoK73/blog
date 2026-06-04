@@ -7,7 +7,7 @@ import consola from "consola";
 import matter from "gray-matter";
 
 const edit = async () => {
-    p.intro("記事の編集を開始します");
+    p.intro("記事編集のセットアップを開始します");
 
     const postsDir = path.join(process.cwd(), "posts");
     const files = await fs.readdir(postsDir);
@@ -63,17 +63,17 @@ const edit = async () => {
 
     const postFullPath = path.join(postsDir, `${result.slug}.md`);
 
-    const newData: Record<string, unknown> = {
+    const newFrontmatter: Record<string, unknown> = {
         ...parsed!.data,
         published: result.published,
         updatedAt: format(result.updatedAt, "yyyy-MM-dd"),
     };
 
-    if (newData.date instanceof Date) {
-        newData.date = format(newData.date, "yyyy-MM-dd");
+    if (newFrontmatter.date instanceof Date) {
+        newFrontmatter.date = format(newFrontmatter.date, "yyyy-MM-dd");
     }
 
-    const newContent = matter.stringify(parsed!.content, newData);
+    const newContent = matter.stringify(parsed!.content, newFrontmatter);
 
     try {
         await fs.writeFile(postFullPath, newContent);
@@ -85,7 +85,7 @@ const edit = async () => {
     consola.info(`${postFullPath} を更新しました`);
 };
 
-const main = async () => {
+const create = async () => {
     p.intro("記事作成のセットアップを開始します");
 
     const result = await p.group(
@@ -161,5 +161,5 @@ published: false
 if (process.argv.includes("--edit")) {
     edit();
 } else {
-    main();
+    create();
 }
