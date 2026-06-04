@@ -16,6 +16,17 @@ const tabStyle = {
     inactive: "bg-background/0 text-input",
 };
 
+// aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
+const tabs: Tab[] = [
+    { href: "/", name: "HOME", prefix: true },
+    ...Object.keys(userCategories).map((category) => ({
+        href: `/blog/${category}`,
+        name: category.toUpperCase(),
+        prefix: true,
+    })),
+    { href: "/about", name: "ABOUT", prefix: false },
+];
+
 export const CustomTabs = ({
     navClassName,
     linkClassName,
