@@ -44,17 +44,7 @@ export const CustomTabs = ({
         } else return tabStyle.inactive;
     };
 
-    // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
-    const tabs: Tab[] = [
-        { href: "/", name: "HOME", prefix: true },
-        ...Object.keys(userCategories).map((category) => ({
-            href: `/blog/${category}`,
-            name: category.toUpperCase(),
-            prefix: true,
-        })),
-        { href: "/about", name: "ABOUT", prefix: false },
-    ];
-
+    // divide-xではなくborder-rで区切り線を表現。タブのアクティブ切り替え時の処理で隣の要素の枠線を制御しないため。
     return (
         <nav className={cn("flex h-auto justify-center", navClassName)}>
             {tabs.map((tab, index) => {
