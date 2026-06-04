@@ -139,16 +139,14 @@ const create = async () => {
 
     const postFullPath = path.join(process.cwd(), "posts", `${result.slug}.md`);
 
-    // frontmatter生成用にインデントをコード中のインデントを削除
-    const frontmatter = `---
-title: ${result.title}
-date: ${format(result.date, "yyyy-MM-dd")}
-category: ${result.category}
-published: false
----
-    `;
+    const frontmatter: Record<string, unknown> = {
+        title: result.title,
+        date: format(result.date, "yyyy-MM-dd"),
+        category: result.category,
+        published: false,
+    };
     try {
-        await fs.writeFile(postFullPath, frontmatter);
+        await fs.writeFile(postFullPath, matter.stringify("", frontmatter));
     } catch (e) {
         consola.warn(e);
     }
