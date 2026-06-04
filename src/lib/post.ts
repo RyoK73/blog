@@ -20,29 +20,23 @@ export type PostData = {
 
 const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
 
+const dateStringSchema = z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, {
+        error: "yyyy-MM-dd形式で書いてください",
+    })
+    .refine((val) => !isNaN(new Date(val).getTime()), {
+        error: "有効な日付ではありません",
+    });
+
 const frontMatterSchema = z.object({
     title: z.string({ error: "タイトルは必須です" }),
     category: z.enum(categoryKeys, {
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
-    date: z
-        .string()
-        .regex(/^\d{4}-\d{2}-\d{2}$/, {
-            error: "yyyy-MM-dd形式で書いてください",
-        })
-        .refine((val) => !isNaN(new Date(val).getTime()), {
-            error: "有効な日付ではありません",
-        }),
-    published: z.boolean(),
-    updatedAt: z
-        .string()
-        .regex(/^\d{4}-\d{2}-\d{2}$/, {
-            error: "yyyy-MM-dd形式で書いてください",
-        })
-        .refine((val) => !isNaN(new Date(val).getTime()), {
-            error: "有効な日付ではありません",
-        })
-        .optional(),
+    date: dateStringSchema,
+    published: z.boolean().default(false),
+    updatedAt: dateStringSchema.optional(),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
