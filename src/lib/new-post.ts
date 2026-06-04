@@ -5,6 +5,15 @@ import path from "path";
 import fs from "fs/promises";
 import consola from "consola";
 import matter from "gray-matter";
+import { spawn } from "child_process";
+
+const editor = process.env.EDITOR ?? "vi";
+const openByEditor = async (path: string) => {
+    const shouldOpen = await p.confirm({ message: `${editor}で開きますか？` });
+    if (shouldOpen) {
+        const child = spawn(editor, [path], { stdio: "inherit" });
+    }
+};
 
 const edit = async () => {
     p.intro("記事編集のセットアップを開始します");
@@ -83,6 +92,8 @@ const edit = async () => {
 
     p.outro("記事の更新完了!");
     consola.info(`${postFullPath} を更新しました`);
+
+    openByEditor(postFullPath);
 };
 
 const create = async () => {
@@ -154,6 +165,8 @@ const create = async () => {
     p.outro("記事作成完了!");
 
     consola.info(`${postFullPath}を作成しました`);
+
+    openByEditor(postFullPath);
 };
 
 if (process.argv.includes("--edit")) {
