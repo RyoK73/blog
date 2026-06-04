@@ -28,9 +28,12 @@ export const CodeBlock = async ({ children }: CodeProps) => {
 
     return (
         <div className="relative">
-            <div className="" dangerouslySetInnerHTML={{ __html: html }} />
+            <div
+                className="overflow-x-auto"
+                dangerouslySetInnerHTML={{ __html: html }}
+            />
             <CopyButton
-                className="absolute top-5 right-5 duration-300"
+                className="absolute top-10 right-5 duration-300"
                 code={code}
             />
         </div>
