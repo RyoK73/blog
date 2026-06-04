@@ -40,12 +40,12 @@ export default async function RootLayout({
                     <div className="max-w-6xl mx-auto w-full flex flex-col gap-5 p-5">
                         <Header />
                         <div className="flex lg:gap-5">
-                            <SidebarLayout className="" />
+                            <SidebarLayout />
                             <main className="w-full">{children}</main>
                         </div>
                         <CustomTabs
                             navClassName="fixed inset-x-0 border border-border bg-background/90 bottom-2 w-full h-10 justify-evenly lg:hidden"
-                            linkClassName="imte-center w-full"
+                            linkClassName="item-center w-full"
                         />
                     </div>
                 </ThemeProvider>
