@@ -72,14 +72,16 @@ const edit = async () => {
                 }),
         },
         {
-            onCancel: () => {
-                p.cancel("キャンセルしました");
-                process.exit(0);
-            },
+            onCancel: () => cancel(),
         },
     );
 
-    const postFullPath = path.join(postsDir, `${result.slug}.md`);
+    if (p.isCancel(result)) {
+        cancel();
+        return;
+    }
+
+    const postFullPath = path.join(postsDir, `${slug}.md`);
 
     const newFrontmatter: Record<string, unknown> = {
         ...parsed!.data,
@@ -146,12 +148,14 @@ const create = async () => {
                 }),
         },
         {
-            onCancel: () => {
-                p.cancel("キャンセルしました");
-                process.exit(0);
-            },
+            onCancel: () => cancel(),
         },
     );
+
+    if (p.isCancel(result)) {
+        cancel();
+        return;
+    }
 
     const postFullPath = path.join(process.cwd(), "posts", `${result.slug}.md`);
 
