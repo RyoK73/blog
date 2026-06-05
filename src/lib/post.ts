@@ -8,23 +8,35 @@ import userCategories from "@/user-category.json";
 // contentsのpathの宣言
 const postDirectory = path.join(process.cwd(), "posts");
 
-// 関数の戻り値の型宣言
 export type PostData = {
     slug: string;
     title: string;
-    date: string;
+    createdAt: string;
     category: string;
     markdown: string;
+    published: boolean;
+    updatedAt?: string;
 };
 
 const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
+
+const dateStringSchema = z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, {
+        error: "yyyy-MM-dd形式で書いてください",
+    })
+    .refine((val) => !isNaN(new Date(val).getTime()), {
+        error: "有効な日付ではありません",
+    });
 
 const frontMatterSchema = z.object({
     title: z.string({ error: "タイトルは必須です" }),
     category: z.enum(categoryKeys, {
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
-    date: z.date({ error: "日付は必須です" }),
+    createdAt: dateStringSchema,
+    published: z.boolean().default(false),
+    updatedAt: dateStringSchema.optional(),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
@@ -39,13 +51,14 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         );
     }
 
-    // PostDataを返す
     return {
         slug,
-        title: postData.data.title,
-        category: postData.data.category,
-        date: format(postData.data.date, "yyyy-MM-dd"),
+        title: result.data.title,
+        category: result.data.category,
+        createdAt: result.data.createdAt,
         markdown: postData.content,
+        published: result.data.published,
+        updatedAt: result.data.updatedAt ?? undefined,
     };
 };
 
@@ -58,5 +71,6 @@ export const getSlugs = async (): Promise<string[]> => {
 export const getAllPostData = async (): Promise<PostData[]> => {
     const slugs = await getSlugs();
     const postDatasPromise = slugs.map(async (slug) => await getPostData(slug));
-    return Promise.all(postDatasPromise);
+    const postDatas = await Promise.all(postDatasPromise);
+    return postDatas.filter((post) => post.published);
 };
