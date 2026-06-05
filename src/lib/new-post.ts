@@ -18,6 +18,11 @@ const openByEditor = async (path: string) => {
     }
 };
 
+const cancel = () => {
+    p.cancel("キャンセルしました。");
+    process.exit(0);
+};
+
 const edit = async () => {
     p.intro("記事編集のセットアップを開始します");
 
