@@ -37,24 +37,25 @@ const edit = async () => {
         process.exit(0);
     }
 
-    let parsed: matter.GrayMatterFile<string> | undefined;
-
+    const slugResult = await p.select({
+        message: "編集する記事を選んでください",
+        options: slugs.map((slug) => ({
+            value: slug,
+            label: slug,
+        })),
+    });
+    if (p.isCancel(slugResult)) {
+        cancel();
+    }
+    const slug = String(slugResult);
+    const raw = await fs.readFile(
+        path.join(postsDir, `${String(slug)}.md`),
+        "utf-8",
+    );
+    const parsed = matter(raw);
     const result = await p.group(
         {
-            slug: () =>
-                p.select({
-                    message: "編集する記事を選んでください",
-                    options: slugs.map((slug) => ({
-                        value: slug,
-                        label: slug,
-                    })),
-                }),
-            published: async ({ results }) => {
-                const raw = await fs.readFile(
-                    path.join(postsDir, `${results.slug}.md`),
-                    "utf-8",
-                );
-                parsed = matter(raw);
+            published: async () => {
                 return p.confirm({
                     message: "公開状態を設定してください（published）",
                     initialValue:
