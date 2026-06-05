@@ -6,7 +6,7 @@ import path from "path";
 
 export const Posts = async ({ category }: { category?: string }) => {
     const posts = await getAllPostData();
-    const sortedPosts = posts.sort((a, b) => b.date.localeCompare(a.date));
+    const sortedPosts = posts.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     const filteredPosts = category
         ? sortedPosts.filter((sortedPost) => sortedPost.category === category)
         : sortedPosts;
@@ -18,7 +18,7 @@ export const Posts = async ({ category }: { category?: string }) => {
                         label={`P${(index + 1).toString().padStart(3, "0")}`}
                         className="relative hover:border-foreground hover:transition-colors duration-500"
                     >
-                        <time>{post.date}</time>
+                        <time>{post.createdAt}</time>
                         <Link
                             href={path.join("/blog", post.category, post.slug)}
                             className="after:absolute after:inset-0"

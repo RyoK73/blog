@@ -122,7 +122,7 @@ const create = async () => {
                     },
                 }),
 
-            date: () =>
+            createdAt: () =>
                 p.date({
                     message: "日付を選んでください",
                     format: "YMD",
@@ -151,7 +151,7 @@ const create = async () => {
 
     const frontmatter: Record<string, unknown> = {
         title: result.title,
-        date: format(result.date, "yyyy-MM-dd"),
+        createdAt: format(result.createdAt, "yyyy-MM-dd"),
         category: result.category,
         published: false,
     };

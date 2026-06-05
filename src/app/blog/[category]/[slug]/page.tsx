@@ -29,7 +29,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
         <article className="prose dark:prose-invert max-w-full border border-border p-5">
             <header>
                 <h1>{postData.title}</h1>
-                <time>{postData.date}</time>
+                <time>{postData.createdAt}</time>
                 {postData.updatedAt && (
                     <time>更新日: {postData.updatedAt}</time>
                 )}

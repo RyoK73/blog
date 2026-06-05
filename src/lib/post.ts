@@ -11,7 +11,7 @@ const postDirectory = path.join(process.cwd(), "posts");
 export type PostData = {
     slug: string;
     title: string;
-    date: string;
+    createdAt: string;
     category: string;
     markdown: string;
     published: boolean;
@@ -34,7 +34,7 @@ const frontMatterSchema = z.object({
     category: z.enum(categoryKeys, {
         error: `${categoryKeys.join(",")}のいずれかが必須です`,
     }),
-    date: dateStringSchema,
+    createdAt: dateStringSchema,
     published: z.boolean().default(false),
     updatedAt: dateStringSchema.optional(),
 });
@@ -55,7 +55,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         slug,
         title: result.data.title,
         category: result.data.category,
-        date: format(result.data.date, "yyyy-MM-dd"),
+        createdAt: format(result.data.createdAt, "yyyy-MM-dd"),
         markdown: postData.content,
         published: result.data.published,
         updatedAt: result.data.updatedAt
