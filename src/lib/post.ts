@@ -55,12 +55,10 @@ export const getPostData = async (slug: string): Promise<PostData> => {
         slug,
         title: result.data.title,
         category: result.data.category,
-        createdAt: format(result.data.createdAt, "yyyy-MM-dd"),
+        createdAt: result.data.createdAt,
         markdown: postData.content,
         published: result.data.published,
-        updatedAt: result.data.updatedAt
-            ? format(result.data.updatedAt, "yyyy-MM-dd")
-            : undefined,
+        updatedAt: result.data.updatedAt ?? undefined,
     };
 };
 
