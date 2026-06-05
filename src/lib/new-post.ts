@@ -12,6 +12,9 @@ const openByEditor = async (path: string) => {
     const shouldOpen = await p.confirm({ message: `${editor}で開きますか？` });
     if (shouldOpen) {
         const child = spawn(editor, [path], { stdio: "inherit" });
+        child.on("error", (err: Error) => {
+            consola.warn("起動失敗:", err.message);
+        });
     }
 };
 
