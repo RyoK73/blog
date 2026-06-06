@@ -1,5 +1,5 @@
 "use client";
-import { useTheme } from "next-themes";
+import { useTheme } from "@teispace/next-themes";
 import { LuSun } from "react-icons/lu";
 import { LuMoonStar } from "react-icons/lu";
 import { CustomButton } from "./CustomButton";
