@@ -22,12 +22,12 @@ published: true
 
 ```jsx
 function MyComponent() {
-    return (
-        <div>
-            <script async={true} src="my-script.js"></script>
-            Hello World
-        </div>
-    );
+  return (
+    <div>
+      <script async={true} src="my-script.js"></script>
+      Hello World
+    </div>
+  );
 }
 ```
 
