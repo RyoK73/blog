@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 type ButtonProps = {
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     className?: string;
 };
 export const CustomButton = ({ children, onClick, className }: ButtonProps) => {
