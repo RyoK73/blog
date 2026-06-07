@@ -39,7 +39,7 @@ function MyComponent() {
 問題は、next-themesがこのReact19の変更に対しメンテナンスがされていないことです。
 実際に[BugとしてIssue](https://github.com/pacocoursey/next-themes/issues/387)もありますが、PRでFixされていません。
 
-現在のところ、[next-themes](https://github.com/pacocoursey/next-themes/issues/387)は2025年5月から一度も新規リリースを行っていません。
+現在のところ、[next-themes](https://github.com/pacocoursey/next-themes/)は2025年5月から一度も新規リリースを行っていません。
 
 ### 解決策
 
