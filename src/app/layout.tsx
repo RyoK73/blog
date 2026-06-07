@@ -37,6 +37,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
           initialTheme="dark"
+          storage="local"
         >
           <div className="max-w-6xl mx-auto w-full flex flex-col gap-5 p-5">
             <Header />

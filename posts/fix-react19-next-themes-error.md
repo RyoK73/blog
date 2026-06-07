@@ -61,3 +61,24 @@ import { useTheme } from "@teispace/next-themes";
 ```
 
 これだけでOKです。
+
+### 注意点
+
+[@teispace/next-themes](https://www.npmjs.com/package/@teispace/next-themes)は`storage`の利用がデフォルトで`hybrid(localStorage + Cookie)`に変わっています。
+
+```md
+> Hybrid cookie + localStorage storage, typed themes, View Transitions, scoped sub-trees, Tailwind v4 preset, zero-FOUC SSR, codemod from `next-themes`.
+
+※ node_modules/@teispace/next-themes/README.mdより抜粋
+```
+
+そのため、Cookieの使用を避ける場合、以下のように`<ThemeProvider>`に`storage = "local"`の指定が必要です。
+
+```tsx
+  <ThemeProvider attribute="class"
+    ...
+    storage="local"
+  >
+```
+
+それではよきnext-themesライフを！
