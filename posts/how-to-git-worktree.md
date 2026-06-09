@@ -11,6 +11,15 @@ published: true
 
 この記事では、git worktreeの概要、記述方法、zshで使用可能な便利なコマンドを紹介します。
 
+gitブランチ切り替えが煩雑になってきた方向けに、worktreeで並行作業を快適にする方法を紹介します。
+
+## なぜgit worktreeを使うのか？
+
+最初は`git switch -c <branch-name>`が私の相棒でした。
+ところが、ブログを書くようになると、ブログ記事を書くブランチ、ブログ機能を実装するブランチが混ざって混乱することが増えるようになったのです。
+
+また、claude codeを本格的に使うようになったこともあり、ブランチごとにディレクトリをわけて、ファイルに対する変更を混同しなくてすむようにもしたくなりました。
+
 ## git worktreeとは
 
 ### 違い
@@ -39,20 +48,20 @@ git worktree add ../<branch-name>
    現在作業中のブランチを`<directory-name>`に移動します。
 
 ```bash
-git worktree add <directory-name>
+git worktree add <directory-name> <existing-branch-name>
 ```
 
 3. ブランチ名と作業ディレクトリ名を指定し、特定のコミットからブランチを作成する
    私の使用例では、`<commit-name>`は基本的に`main`を使用します。
 
 ```bash
-git worktree add add -b <branch-name> <directory-name> <commit-name>
+git worktree add -b <branch-name> <directory-name> <commit-name>
 ```
 
 4. ブランチ名と作業ディレクトリ名を指定して現在のコミットからブランチを作成する
 
 ```bash
-git worktree add add -b <branch-name> <directory-name>
+git worktree add -b <branch-name> <directory-name>
 ```
 
 ### 現在のworktreeの一覧表示
@@ -72,7 +81,7 @@ git worktree remove <directory-name>
 2. 未保存の変更があっても強制定期に削除します。
 
 ```bash
-git worktree remote --force <directory-name>
+git worktree remove --force <directory-name>
 ```
 
 ## zshで使っている便利関数
@@ -105,7 +114,7 @@ function git-plant() {
 ```
 
 - `git rev-parse (HEAD) --git-dir &>/dev/null`
-  現在の(HEAD コミットへの)git directoryのパスを出力。その際のstdinはtrashします。
+  現在の(HEAD コミットへの)HEADのコミットハッシュと`.git directory``のパスを出力、`stdout`(標準出力)と`stderr`(標準エラー出力)を捨てます。
   true/falseを判定するために使用
 
 - `git rev-parse --show-toplevel`
@@ -139,13 +148,6 @@ function git-cut() {
 - `git branch -vv | grep ': gone' | awk`
   mainにmergeされると、`git branch -vv`で`feature/foo  abc1234 [origin/feature/foo: gone]`のように表示されます。
   そのため、`: gone`のブランチに対して`awk`の処理を実行します。
-
-## なぜgit worktreeを使うのか？
-
-最初は`git switch -c <branch-name>`が私の相棒でした。
-ところが、ブログを書くようになると、ブログ記事を書くブランチ、ブログ機能を実装するブランチが混ざって混乱することが増えるようになったのです。
-
-また、claude codeを本格的に使うようになったこともあり、ブランチごとにディレクトリをわけて、ファイルに対する変更を混同しなくてすむようにもしたかったからです。
 
 ## さいごに
 
