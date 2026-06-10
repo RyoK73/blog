@@ -72,21 +72,42 @@ Vercelのアプリじゃなくなるからです。
 
 ### ドメインを変更する
 
+#### Webアプリにアクセスできる仕組み
+
+まずWebアプリにアクセスできる仕組みについておさらいします。
+
+1. ユーザーが`ryok73.dev`を叩く
+2. DNSサーバーに「`ryok73.com`ってどこにある？」と問い合わせる
+3. **DNSレコード**を見て「`123.456.789.0`だよ」と返す
+4. そのIPアドレスのサーバーに実際にアクセスする
+
+上記のような流れになります。
+まず、3で参照するDNSレコードの紐づけを変更する必要があります。
+
 #### 1. DNS Recordsを変更する
 
-### 環境変数を設定する
+今回はVercelから設定します。
+
+1. Overview > Domains
+   ![Vercel内でのDomainsの設定箇所](/seo-1-set-domain-variables-domain-place.jpg)
+2. Add Existing > Add Domains
+   ![Existing Domains追加画面](/seo-1-set-domain-variables-add-domains.jpg)
+3. Add configure
+   ![設定追加ボタン](/seo-1-set-domain-variables-add-configure.jpg)
+4. 画面指示に従う
+
+## 環境変数を設定する
 
 このあと作成する`sitemap.ts`や`robots.ts`でブログのURLを指定する際、`NEXT_PUBLIC_SITE_URL`という環境変数を用います。
 
 ハードコードすると、ドメイン変更のたびにコードを書き換える必要があリます。
-環境変数にしておくと、
 
 ```ts
 // 環境変数を参照
 url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/...`;
 ```
 
-ドメイン変更時にはVercelの画面上で変更するだけで対応可能です。
+環境変数にしておくと、ドメイン変更時にVercelの画面上で変更するだけで対応可能です。
 
 #### ローカル
 
@@ -97,3 +118,57 @@ NEXT_PUBLIC_SITE_URL=https://localhost:3000
 ```
 
 #### Vercel
+
+1. Overview > Settings
+   ![Settingsの場所](/seo-1-set-domain-variables-setting-location.jpg)
+2. Enviroments > Production
+   ![Enviromentの場所](/seo-1-set-domain-variables-enviroment-location.jpg)
+3. Add Enviroment Variable
+
+```txt
+Key : NEXT_PUBLIC_SITE_URL
+Value : <your-site-domain>
+```
+
+今後はこの`NEXT_PUBLIC_SITE_URL`を変更するだけで`rotbots.ts`の内容も更新できます。
+
+## ドメインの戻り値を設定する
+
+最後の仕上げです。
+
+設定したドメインにアクセスした際に
+
+- リダイレクトするか
+- ブログのHTMLを返すか
+
+この2つのどちらかを設定する必要があります。
+
+![ドメインの戻り値設定](/seo-1-set-domain-variables-domains-redirect.jpg)
+
+> wwwの有無についてはどちらでもいいですが、片方がもう片方にリダイレクトするように設定するのがベターです。
+> 以前はネットワークアクセスにも様々あり、**Webサーバーへのアクセス**であることを明示するために`www`がつかわれました。
+> ただ、現在は**Webサーバーへのアクセス**が当たり前になったため省略されるようになってきています。
+> しかし、`www.domain.dev`でもアクセスできるようリダイレクトの設定は必要です。
+
+### `Connet to an enviroment`と`Redirect to Another Domain`の違い
+
+この2つのオプションの違いは、そのドメインにリクエストを送った際に、**何を返すか**です。
+
+- `Connet to an enviroment`: 先ほど設定した環境変数を参照し、**ブログのHTML**を返します。
+
+- `Redirect to Another Domain`: 他のドメインへのリダイレクトを返します。
+
+そのため、自分のブログのドメインとして利用したいものに`Connet to an enviroment`を設定しましょう。
+他のドメインは`Redirect to Another Domain`とし、`🔍️<your-domain>`にリダイレクトするよう設定します。
+
+> `Connet to an enviroment`を2つ以上のドメインに設定した場合、ブログにアクセス可能なドメインが複数存在することになります。
+> その場合、SEO的に重複コンテンツとみなされ検索順位に悪影響が出る...らしいです。
+
+## おわりに
+
+濃厚な内容でしたが、いかがでしたか？
+自分の知らない設定を行うと、次々と*なぜ？*が増えて知識が増えていくのが楽しくなります。
+
+さて、次回は[sitemap.tsの設定](/blog/tech/seo-2-dev-sitemap)を行います！
+
+ヾ('ω'⊂ )))Σ≡ｻﾗﾊﾞ!!
