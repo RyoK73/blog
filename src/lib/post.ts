@@ -10,6 +10,7 @@ const postDirectory = path.join(process.cwd(), "posts");
 export type PostData = {
   slug: string;
   title: string;
+  description: string;
   createdAt: string;
   category: string;
   markdown: string;
@@ -49,10 +50,20 @@ export const getPostData = async (slug: string): Promise<PostData> => {
       `${postData.data.title}のfrontmatterが不正です。${result.error.message}`,
     );
   }
+  const description =
+    postData.content
+      .replace(/^---[\s\S]*?---/, "") // frontmatterを除去
+      .replace(/#+\s.+$/gm, "") // 見出し
+      .replace(/\n{2,}/g, "")
+      .replace(/\*\*|__|~~|`/g, "") // 装飾
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // リンク→テキストだけ残す
+      .trim()
+      .slice(0, 120) + "...";
 
   return {
     slug,
     title: result.data.title,
+    description: description,
     category: result.data.category,
     createdAt: result.data.createdAt,
     markdown: postData.content,
