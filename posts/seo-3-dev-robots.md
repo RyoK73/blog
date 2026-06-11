@@ -7,7 +7,7 @@ published: true
 
 ## はじめに
 
-今回は「Vercelデプロイを検索結果に乗せるまで」の第2回目です。
+今回は「Vercelデプロイを検索結果に乗せるまで」の第3回目です。
 この記事では、`Next.js`プロジェクトにおける**robots.ts**の作り方について解説します。
 
 ## robots.tsとは
@@ -53,6 +53,6 @@ export default function robots(): MetadataRoute.Robots {
 
 ## おわりに
 
-さて、次回は[metadataの実装](/blog/tech/seo-4-metadata)を行います！
+さて、次回は[metadataの実装](/blog/tech/seo-4-dev-metadata)を行います！
 
 ヾ('ω'⊂ )))Σ≡ｻﾗﾊﾞ!!
