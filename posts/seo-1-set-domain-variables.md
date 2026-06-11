@@ -60,7 +60,7 @@ Vercelのアプリじゃなくなるからです。
 ### 取得方法
 
 今回は[Cloudflare Register](https://domains.cloudflare.com)を利用しました。
-更新料が年次で増加せず、ダッシュボードが非常に見やす買ったからです。
+更新料が年次で増加せず、ダッシュボードが非常に見やすかったからです。
 
 [お名前.com](https://www.onamae.com/),[エックスサーバー](https://www.xdomain.ne.jp/column/get-domain/),[ムームードメイン](https://muumuu-domain.com/)...など色々ありますのでお好みでサービスを選んでください。
 
@@ -75,7 +75,7 @@ Vercelのアプリじゃなくなるからです。
 まずWebアプリにアクセスできる仕組みについておさらいします。
 
 1. ユーザーが`ryok73.dev`を叩く
-2. DNSサーバーに「`ryok73.com`ってどこにある？」と問い合わせる
+2. DNSサーバーに「`ryok73.dev`ってどこにある？」と問い合わせる
 3. **DNSレコード**を見て「`123.456.789.0`だよ」と返す
 4. そのIPアドレスのサーバーに実際にアクセスする
 
@@ -98,7 +98,7 @@ Vercelのアプリじゃなくなるからです。
 
 このあと作成する`sitemap.ts`や`robots.ts`でブログのURLを指定する際、`NEXT_PUBLIC_SITE_URL`という環境変数を用います。
 
-ハードコードすると、ドメイン変更のたびにコードを書き換える必要があリます。
+ハードコードすると、ドメイン変更のたびにコードを書き換える必要があります。
 
 ```ts
 // 環境変数を参照
@@ -111,8 +111,8 @@ url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/...`;
 
 `.env.local`というファイルをプロジェクトルートに追加します。
 
-```.env
-NEXT_PUBLIC_SITE_URL=https://localhost:3000
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 #### Vercel
@@ -120,7 +120,7 @@ NEXT_PUBLIC_SITE_URL=https://localhost:3000
 1. Overview > Settings
    ![Settingsの場所](/seo-1-set-domain-variables-setting-location.jpg)
 2. Enviroments > Production
-   ![Enviromentの場所](/seo-1-set-domain-variables-enviroment-location.jpg)
+   ![Enviromentの場所](/seo-1-set-domain-variables-environment-location.jpg)
 3. Add Enviroment Variable
 
 ```txt
@@ -128,7 +128,7 @@ Key : NEXT_PUBLIC_SITE_URL
 Value : <your-site-domain>
 ```
 
-今後はこの`NEXT_PUBLIC_SITE_URL`を変更するだけで`rotbots.ts`の内容も更新できます。
+今後はこの`NEXT_PUBLIC_SITE_URL`を変更するだけで`robots.ts`の内容も更新できます。
 
 ## ドメインの戻り値を設定する
 
@@ -148,18 +148,18 @@ Value : <your-site-domain>
 > ただ、現在は**Webサーバーへのアクセス**が当たり前になったため省略されるようになってきています。
 > しかし、`www.domain.dev`でもアクセスできるようリダイレクトの設定は必要です。
 
-### `Connet to an enviroment`と`Redirect to Another Domain`の違い
+### `Connect to an environment`と`Redirect to Another Domain`の違い
 
 この2つのオプションの違いは、そのドメインにリクエストを送った際に、**何を返すか**です。
 
-- `Connet to an enviroment`: 先ほど設定した環境変数を参照し、**ブログのHTML**を返します。
+- `Connet to an environment`: 先ほど設定した環境変数を参照し、**ブログのHTML**を返します。
 
 - `Redirect to Another Domain`: 他のドメインへのリダイレクトを返します。
 
-そのため、自分のブログのドメインとして利用したいものに`Connet to an enviroment`を設定しましょう。
+そのため、自分のブログのドメインとして利用したいものに`Connet to an environment`を設定しましょう。
 他のドメインは`Redirect to Another Domain`とし、`🔍️<your-domain>`にリダイレクトするよう設定します。
 
-> `Connet to an enviroment`を2つ以上のドメインに設定した場合、ブログにアクセス可能なドメインが複数存在することになります。
+> `Connet to an environment`を2つ以上のドメインに設定した場合、ブログにアクセス可能なドメインが複数存在することになります。
 > その場合、SEO的に重複コンテンツとみなされ検索順位に悪影響が出る...らしいです。
 
 ## おわりに
