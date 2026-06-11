@@ -66,7 +66,7 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   ];
 };
 
-export default sitemap();
+export default sitemap;
 ```
 
 `map`の中でだけ、`changeFrequency`に`as const`を付与しています。
