@@ -26,4 +26,4 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   ];
 };
 
-export default sitemap();
+export default sitemap;
