@@ -3,6 +3,7 @@ title: git worktreeの使い方と便利コマンド
 createdAt: "2026-06-09"
 category: tech
 published: true
+updatedAt: "2026-06-11"
 ---
 
 ## はじめに
@@ -15,7 +16,7 @@ gitブランチ切り替えが煩雑になってきた方向けに、worktreeで
 
 ## なぜgit worktreeを使うのか？
 
-最初は`git switch -c <branch-name>`が私の相棒でした。
+最初は`git switch -c "branch-name"`が私の相棒でした。
 ところが、ブログを書くようになると、ブログ記事を書くブランチ、ブログ機能を実装するブランチが混ざって混乱することが増えるようになったのです。
 
 また、claude codeを本格的に使うようになったこともあり、ブランチごとにディレクトリをわけて、ファイルに対する変更を混同しなくてすむようにもしたくなりました。
@@ -38,30 +39,30 @@ gitブランチ切り替えが煩雑になってきた方向けに、worktreeで
 ### 追加
 
 1. 新しいブランチと作業ディレクトリを作成する
-   `../`に`<branch-name>`のディレクトリが作成されます
+   `../`に`"branch-name"`のディレクトリが作成されます
 
 ```bash
-git worktree add ../<branch-name>
+git worktree add ../"branch-name"
 ```
 
 2. 既存ブランチを新しい作業ディレクトリに移す
-   現在作業中のブランチを`<directory-name>`に移動します。
+   現在作業中のブランチを`"directory-name"`に移動します。
 
 ```bash
-git worktree add <directory-name> <existing-branch-name>
+git worktree add "directory-name" "existing-branch-name"
 ```
 
 3. ブランチ名と作業ディレクトリ名を指定し、特定のコミットからブランチを作成する
-   私の使用例では、`<commit-name>`は基本的に`main`を使用します。
+   私の使用例では、`"commit-name"`は基本的に`main`を使用します。
 
 ```bash
-git worktree add -b <branch-name> <directory-name> <commit-name>
+git worktree add -b "branch-name" "directory-name" "commit-name"
 ```
 
 4. ブランチ名と作業ディレクトリ名を指定して現在のコミットからブランチを作成する
 
 ```bash
-git worktree add -b <branch-name> <directory-name>
+git worktree add -b "branch-name" "directory-name"
 ```
 
 ### 現在のworktreeの一覧表示
@@ -75,13 +76,13 @@ git worktree list
 1. 作業が完了したworktreeを削除します。
 
 ```bash
-git worktree remove <directory-name>
+git worktree remove "directory-name"
 ```
 
 2. 未保存の変更があっても強制定期に削除します。
 
 ```bash
-git worktree remove --force <directory-name>
+git worktree remove --force "directory-name"
 ```
 
 ## zshで使っている便利関数
@@ -93,7 +94,7 @@ git worktree remove --force <directory-name>
 1. git repositoryか
 2. 初回コミットがあるか
 
-その後、`<repository-name>-<branch-name>`というディレクトリを作成し、`<branch-name>`にチェックアウトします。
+その後、`"repository-name"-"branch-name"`というディレクトリを作成し、`"branch-name"`にチェックアウトします。
 
 ```bash
 function git-plant() {
@@ -148,6 +149,21 @@ function git-cut() {
 - `git branch -vv | grep ': gone' | awk`
   mainにmergeされると、`git branch -vv`で`feature/foo  abc1234 [origin/feature/foo: gone]`のように表示されます。
   そのため、`: gone`のブランチに対して`awk`の処理を実行します。
+
+### スコープ外の実装を別ワークツリーに分ける
+
+```bash
+# まず変更をstashする
+git stash -m "stash message"
+
+# ワークツリーを分ける
+git worktree add -b "branch-name" "directory-name"
+
+# (stash一覧を表示する)
+git stash list
+# 変更をstashから戻す
+git stash index
+```
 
 ## さいごに
 
