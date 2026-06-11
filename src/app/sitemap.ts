@@ -5,7 +5,7 @@ import userCategory from "@/user-category.json";
 const categories = Object.keys(userCategory);
 
 export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   // 記事一覧を取得
   const posts = await getAllPostData();
