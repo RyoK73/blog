@@ -54,7 +54,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
     postData.content
       .replace(/^---[\s\S]*?---/, "") // frontmatterを除去
       .replace(/#+\s.+$/gm, "") // 見出し
-      .replace(/\n{2,}/g, "")
+      .replace(/\n{2,}/g, "") // 改行を削除
       .replace(/\*\*|__|~~|`/g, "") // 装飾
       .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // リンク→テキストだけ残す
       .trim()
