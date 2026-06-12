@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "dev活ブログ",
   description:
     "RyoK73のパーソナル技術ブログ 開発記録や個人的な技術に対する思いを綴ります。",
+  verification: {
+    google: "gxHSw769zX3RHs7sWzh4rL_8MW-qggse_EAPvbDqN70",
+  },
 };
 
 export default async function RootLayout({
