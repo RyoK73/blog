@@ -9,7 +9,9 @@ published: true
 
 今回は、当ブログで採用しているCLIベースのブログ作成・編集補助機能を紹介します。
 
-[`@clack/prompt`](https://github.com/bombshell-dev/clack/tree/main/packages/prompts)を使用した構成となっており、技術ブログ書き始めの方だけでなく、管理しにくさを感じてる方にもおすすめです。
+この記事を読むと、`@clack/prompts` で記事作成 CLI を自作し、`pnpm post` 一発で frontmatter 付きの MDファイルを生成できるようになります
+
+[`@clack/prompts`](https://github.com/bombshell-dev/clack/tree/main/packages/prompts)を使用した構成となっており、技術ブログ書き始めの方だけでなく、管理しにくさを感じてる方にもおすすめです。
 
 ## `@clack/prompts`について
 
