@@ -131,8 +131,8 @@ const result = await p.group(
 ### 主要なライブラリ
 
 1. `@clack/prompts`: 会話式のCLIを構成するため
-2. `child_process`: シェルコマンドを実行するため。`@clack/pronpts`ではシェルコマンドの実行を行えません。
-3. `concola`: わかりやすい通知を行うため
+2. `child_process`: シェルコマンドを実行するため。`@clack/prompts`ではシェルコマンドの実行を行えません。
+3. `consola`: わかりやすい通知を行うため
 
 ### コード
 
