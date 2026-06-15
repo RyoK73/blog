@@ -129,11 +129,44 @@ const result = await p.group(
 ### 主要なライブラリ
 
 1. `@clack/prompts`: 会話式のCLIを構成するため
-2. `concola`: わかりやすい通知を行うため
+2. `child_process`: シェルコマンドを実行するため。`@clack/pronpts`ではシェルコマンドの実行を行えません。
+3. `concola`: わかりやすい通知を行うため
 
 ### コード
 
 紹介するのは記事作成を担う`create`関数です。
+
+記事ファイル作成に必要な
+
+- slug
+- 記事タイトル
+- 作成日
+- カテゴリ
+
+の入力を促します。
+
+それらでMDファイルの`frontmatter`を構成し記事の作成を行っています。
+
+#### 補助関数
+
+```ts
+const openByEditor = async (path: string) => {
+  const shouldOpen = await p.confirm({ message: `${editor}で開きますか？` });
+  if (shouldOpen) {
+    const child = spawn(editor, [path], { stdio: "inherit" });
+    child.on("error", (err: Error) => {
+      consola.warn("起動失敗:", err.message);
+    });
+  }
+};
+
+const cancel = () => {
+  p.cancel("キャンセルしました。");
+  process.exit(0);
+};
+```
+
+#### メイン関数
 
 ```ts
 const create = async () => {
@@ -209,3 +242,31 @@ const create = async () => {
   await openByEditor(postFullPath);
 };
 ```
+
+```json
+"scripts": {
+  "dev": "next dev & sleep 2 && xdg-open http://localhost:3000",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint",
+  "post": "npx tsx src/lib/new-post.ts"
+},
+
+```
+
+## おわりに
+
+**Gitで技術ブログ管理**はエンジニア向けブログとしては非常に一般的なものですが、どうやって管理するかにフォーカスして語られることは少ないように感じます。
+
+特に画像対応や記事管理については、専用のGUIを持つブログサービスに数歩劣ります。
+また、正直にいって、Next.jsでの個人テックブログは世の中にテンプレートも出回っており、過度にカスタムしなければさほど難易度も高くありません。
+
+そのため、それらに対し如何に*書きやすさ*や*管理しやすさ*、独自の魅力で勝負するかが、個人テックブログに求められていると思っています。
+
+この`clack/prompts`によるCLIの魅力は、なんといっても**作成したいときに一瞬で作成できる**ことにあります。
+
+`pnpm post`だけで記事作成時の諸設定を簡単に完了できます。
+
+今後も、より使いやすくなるよう改善していきたいですね。
+
+それでは... ヾ('ω'⊂ )))Σ≡ｻﾗﾊﾞ
