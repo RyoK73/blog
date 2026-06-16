@@ -77,7 +77,7 @@ export default sitemap;
 `map`の中でだけ、`changeFrequency`に`as const`を付与しています。
 これは、`map`で定義されたときだけ*リテラル型*ではなく`string型`を返してしまうためです。
 
-リテラル型については[こちらの記事](/blog/practice-numeric-separator)をどうぞ！
+リテラル型については[こちらの記事](/blog/tech/practice-numeric-separator)をどうぞ！
 
 ※ `getAllPostData()`は以下のオブジェクトの配列を返します。
 
@@ -125,7 +125,7 @@ export type PostData = {
 
 今回は*2 HTMLタグの埋め込み*で所有権の確認を行います。
 
-[Vercelデプロイを検索結果に乗せるまで - metadataの実装 -へのリンク](/tech/seo-4-dev-metadata)で紹介する`metadata`オブジェクトに`verification`プロパティを追加します。
+[Vercelデプロイを検索結果に乗せるまで - metadataの実装 -へのリンク](/blog/tech/seo-4-dev-metadata)で紹介する`metadata`オブジェクトに`verification`プロパティを追加します。
 
 ```tsx
 export const metadata: Metadata = {
@@ -136,8 +136,8 @@ export const metadata: Metadata = {
 };
 ```
 
-`"<verification code>`はHTMLタグとして画面に表示されるmetaタグの`content=`の文字列です。
-`<meta name="google-site-verification" content="verification code" />;`
+`"<verification code>"`はHTMLタグとして画面に表示されるmetaタグの`content=`の文字列です。
+`<meta name="google-site-verification" content="verification code" />`
 
 その後、所有権の確認が完了すると設定ページへ遷移します。
 
