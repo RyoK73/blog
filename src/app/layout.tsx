@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   verification: {
     google: "gxHSw769zX3RHs7sWzh4rL_8MW-qggse_EAPvbDqN70",
   },
-};<meta name="google-site-verification" content="gxHSw769zX3RHs7sWzh4rL_8MW-qggse_EAPvbDqN70" />
+};
 
 export default async function RootLayout({
   children,
