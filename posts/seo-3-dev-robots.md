@@ -1,5 +1,5 @@
 ---
-title: Vercelデプロイを検索結果に乗せるまで - robots.tsの実装 -
+title: Vercelデプロイを検索結果に乗せるまで 3 - robots.tsの実装 -
 createdAt: "2026-06-10"
 category: tech
 published: true

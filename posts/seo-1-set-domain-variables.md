@@ -1,5 +1,5 @@
 ---
-title: Vercelデプロイを検索結果に乗せるまで - 独自ドメイン/環境変数の設定 -
+title: Vercelデプロイを検索結果に乗せるまで 1 - 独自ドメイン/環境変数の設定 -
 createdAt: "2026-06-10"
 category: tech
 published: true
