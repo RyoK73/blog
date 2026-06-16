@@ -96,14 +96,60 @@ export type PostData = {
 
 [Google Search Console](https://search.google.com/search-console/welcome?hl=ja)に`https://<your-domain>/sitemap.xml`を送信しましょう。
 
-### ドメインを入力する
+### URLプレフィックスを入力する
 
-- mainにマージして挙動確認してから記述する
+![プロパティタイプの登録画面](/seo-2-select-url-prefix.jpg)
+
+**URL プレフィックス**へ`https://<your-domain>/`を入力します。
+
+今回は当ブログの`https://ryok73.dev/`を入力しました。
+
+確認状態をチェックしています。というダイアログが表示された後、**所有権の確認**に移ります。
+
+### 所有権の確認
+
+そのWebサイトの所有権を証明する必要があります。
+方法は以下の5種類
+
+1. HTMLファイルのアップロード
+2. HTMLタグの埋め込み
+3. Googleアナリティクスアカウントでの設定
+4. Googleタグマネージャーでの設定
+5. DNSレコードの紐づけ
+
+> 詳しくは[Search Console ヘルプ](https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-%E3%82%BF%E3%82%B0)へ
+
+今回は*2 HTMLタグの埋め込み*で所有権の確認を行います。
+
+[Vercelデプロイを検索結果に乗せるまで - metadataの実装 -へのリンク](/tech/seo-4-dev-metadata)で紹介する`metadata`オブジェクトに`verification`プロパティを追加します。
+
+```tsx
+export const metadata: Metadata = {
+  ...,
+  verification: {
+    google: "<verification code>",
+  },
+};
+```
+
+`"<verification code>`はHTMLタグとして画面に表示されるmetaタグの`content=`の文字列です。
+`<meta name="google-site-verification" content="verification code" />;`
+
+その後、所有権の確認が完了すると設定ページへ遷移します。
+
+### サイトマップの登録
+
+> インデックス作成 > サイトマップ
+
+![sitemapの送信画面](/seo-2-sitemap-register.jpg)
+**新しいサイトマップの追加**にて`sitemap.xml`を入力して送信すると、登録完了です。
+
+これで数日すれば、Googleのクローラーがあなたのページを見に来ることでしょう。
 
 ## おわりに
 
-複雑に見えますが、基本的にテンプレート通りに記述すれば問題ありません。
-テンプレートに使用する関数もブログ構築時に作成してあったため簡単でした。
+複雑に見えますが、基本的にテンプレート通りに記述すれば簡単に実装できますね。
+テンプレートに使用する関数もブログ構築時に作成してあったため、作業が少なくて済みました。
 
 さて、次回は[robots.tsの設定](/blog/tech/seo-3-dev-robots)を行います！
 
