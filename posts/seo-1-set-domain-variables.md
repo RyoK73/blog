@@ -1,5 +1,5 @@
 ---
-title: Vercelデプロイを検索結果に乗せるまで - 独自ドメイン/環境変数の設定 -
+title: Vercelデプロイを検索結果に乗せるまで 1 - 独自ドメイン/環境変数の設定 -
 createdAt: "2026-06-10"
 category: tech
 published: true
@@ -119,9 +119,9 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 1. Overview > Settings
    ![Settingsの場所](/seo-1-set-domain-variables-setting-location.jpg)
-2. Enviroments > Production
-   ![Enviromentの場所](/seo-1-set-domain-variables-environment-location.jpg)
-3. Add Enviroment Variable
+2. Environments > Production
+   ![Environmentの場所](/seo-1-set-domain-variables-environment-location.jpg)
+3. Add Environment Variable
 
 ```txt
 Key : NEXT_PUBLIC_SITE_URL
