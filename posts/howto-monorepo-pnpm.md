@@ -2,7 +2,7 @@
 title: pnpmでモノレポの初期設定を行うには？
 createdAt: "2026-06-23"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに
