@@ -82,7 +82,7 @@ packages:
     "module": "nodenext",
     "target": "esnext",
     "types": [],
-    "esModuleInterop": "true",
+    "esModuleInterop": true,
 
     // Other Outputs
     "sourceMap": true,
@@ -148,14 +148,13 @@ packages:
 }
 ```
 
-#### Next.jsonの`tsconfig.json`
+#### Next.jsの`tsconfig.json`
 
 ```json
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2017",
-    ...
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
@@ -192,7 +191,7 @@ packages:
 | ------------------------------------ | ---------------------------------------------------- |
 | `pnpm install`                       | `package.json`に書かれた全パッケージ一括インストール |
 | `pnpm -r build`                      | 全パッケージでbuild実行                              |
-| `pnpm --filter @app/web dev`         | 特定パッケージのみ実行                               |
+| `pnpm --filter @apps/web dev`        | 特定パッケージのみ実行                               |
 | `pnpm add lodash --filter @apps/web` | 特定パッケージに依存(ライブラリ・モジュール)追加     |
 
 ※ 原則、ライブラリ・依存管理はパッケージごとに行います。
