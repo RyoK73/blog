@@ -209,3 +209,9 @@ packages:
 
 .gitignoreは[githubがテンプレートを用意してくれている](https://github.com/github/gitignore/blob/main/Node.gitignore)ので活用しましょう。
 Node.jsの場合は、**Node.gitignore**がおすすめです。
+
+## 複数環境への挑戦
+
+ということで現在、そして今後作っていくであろう複数環境をまたぐアプリケーションのためのモノレポジトリ構成についてまとめてみました。
+
+フロントエンド・バックエンド両方を組み込んだり、CLIを作ってみたり...とモノレポを活用してみてください！
