@@ -140,13 +140,20 @@ supabase --version
 
 supabase cliを使って開発するフローは大きく2つあります。
 
-1. CLIでマイグレーションファイルを作成し、WEBで確認する
+1. CLIでマイグレーションファイルを作成し、Webで確認する
 2. CLIでマイグレーションファイルを作成し、CLIで確認する
 
 2番目の方法はDockerを使用して、ローカルDBを生成してローカル完結で解決できます。
-これは本番と同じ環境をローカルに作成できることが大きなメリットですが、今回はリモート(WEB)で確認するため1番目の方法を採用しています。
+これは本番と同じ環境をローカルに作成できることが大きなメリットですが、今回はリモート(Web)で確認するため1番目の方法を採用しています。
 
 そのためDockerを用いたsupabase開発方法についての解説は今回は割愛します。
+
+### nvim用のPostgresLSPのインストール
+
+[2025年3月にSupabaseがPostgresLanguageServerをリリースしました。](https://supabase.com/blog/postgres-language-server)
+Nvimの場合mason経由でインストールしておくのをおすすめします。
+
+オートコンプリート・シンタックスエラーハイライト・型チェック・Lint...に対応しています。
 
 ## 1.data schemaを決める
 
@@ -163,8 +170,48 @@ supabase cliを使って開発するフローは大きく2つあります。
 また、そのテーブルが負うデータの責任範囲を最小に保つように設計することも大切です。
 コードではないですが、可読性向上につながります。
 
-また、データ型についてはこちらの記事で解説しています。
+データ型についてはこちらの記事で解説しています。
 [Supabaseのデータ型チートシート](/tech/supabase-data-type.md)
+
+## 2.セットアップ
+
+1. 初期化
+
+```bash
+cd "repository-name"
+supabase init
+```
+
+`supabase/config.toml`が作成されます。
+
+2. ログイン
+
+```bash
+supabase login
+```
+
+3. リモート(Web)との紐づけ
+   Webの任意のプロジェクトに移動します。
+
+`Project Settings > General > General Settings > Project ID`をコピーします。
+
+```bash
+supabase link --project-ref "コピーしたProject ID"
+```
+
+4. リモートの現状をpull(CLIから始める場合は不要です)
+   今回はWebのDashboard上でテーブルを作成済みだったため、この工程を挟みました。
+
+※ 結構時間かかります
+
+```bash
+supabase db pull
+
+```
+
+5. マイグレーションファイルを作成する
+
+テーブル操作やRLSを記述します。
 
 ## Tips
 
