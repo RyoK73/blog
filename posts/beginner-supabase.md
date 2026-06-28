@@ -213,6 +213,23 @@ supabase db pull
 
 テーブル操作やRLSを記述します。
 
+```bash
+supabase migration new "filename"
+```
+
+6. リモートに反映
+
+```bash
+supabase db push
+```
+
+7. 型定義を生成
+   schemaを変更するたびに実行する必要があります。
+
+```bash
+npx supabase gen types typescript --project-id "$PROJECT_REF" --schema public > database.types.ts
+```
+
 ## Tips
 
 ### 個人情報を含めない
