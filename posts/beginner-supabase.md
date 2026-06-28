@@ -209,6 +209,13 @@ supabase db pull
 
 ```
 
+ただし、私はこれで`supabase/migrations/`下にファイルが生成されませんでした。
+そのため、`db dump`からマイグレーションファイルを生成しました。
+
+```bash
+supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_initial_schema.sql
+```
+
 5. マイグレーションファイルを作成する
 
 テーブル操作やRLSを記述します。
