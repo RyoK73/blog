@@ -36,6 +36,18 @@ CREATE POLICY "ポリシー名"
 
 ---
 
+## anon / authenticated / service_role の違い
+
+| ロール          | 説明                                  | RLS                |
+| --------------- | ------------------------------------- | ------------------ |
+| `anon`          | 未ログインユーザー（公開APIアクセス） | 適用される         |
+| `authenticated` | ログイン済みユーザー                  | 適用される         |
+| `service_role`  | サーバー・管理者用（Secret キー）     | **バイパスされる** |
+
+> `service_role` キーは絶対にフロントエンドコードに含めない
+
+---
+
 ## Step 0: RLSを有効化する
 
 ```sql
@@ -228,18 +240,6 @@ DROP POLICY "select own posts" ON posts;
 -- RLS を無効化（緊急時のみ）
 ALTER TABLE posts DISABLE ROW LEVEL SECURITY;
 ```
-
----
-
-## anon / authenticated / service_role の違い
-
-| ロール          | 説明                                  | RLS                |
-| --------------- | ------------------------------------- | ------------------ |
-| `anon`          | 未ログインユーザー（公開APIアクセス） | 適用される         |
-| `authenticated` | ログイン済みユーザー                  | 適用される         |
-| `service_role`  | サーバー・管理者用（Secret キー）     | **バイパスされる** |
-
-> `service_role` キーは絶対にフロントエンドコードに含めない
 
 ---
 
