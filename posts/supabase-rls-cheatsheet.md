@@ -30,9 +30,9 @@ CREATE POLICY "ポリシー名"
 
 > **ポイント**
 >
-> - `USING` → 既存の行をフィルタする（読み取り・削除時）
-> - `WITH CHECK` → 書き込もうとしているデータを検証する（挿入・更新時）
-> - `FOR ALL` は非推奨。SELECT / INSERT / UPDATE / DELETE を個別に書くのがベストプラクティス
+> - `USING` → 操作する行の条件を指定(どの既存業を対象に選ぶか)
+> - `WITH CHECK` → 追加・更新した行の条件を指定(書き込んだ行が条件を満たしているか)
+> - なんでもかんでも`FOR ALL` は非推奨。最小限の操作に限定してSELECT / INSERT / UPDATE / DELETE を個別に書くのがベストプラクティス
 
 - 大文字・小文字の区別はありません。""で囲む場合を除き、`create policy`も`CREATE POLICY`も同じものとして扱われます。
 
