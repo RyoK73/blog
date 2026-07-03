@@ -213,6 +213,33 @@ supabase db push
 npx supabase gen types typescript --project-id "$PROJECT_REF" --schema public > database.types.ts
 ```
 
+## よく使うコマンドまとめ
+
+ここまでの手順で登場したコマンドを振り返りつつ、番外編として知っておくと便利なコマンドも紹介します。
+
+### 振り返り: これまで登場したコマンド
+
+| コマンド                                                                                             | 説明                                                                                   |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `supabase init`                                                                                      | プロジェクトを初期化し`supabase/config.toml`を生成する                                 |
+| `supabase login`                                                                                     | Supabaseアカウントにログインする                                                       |
+| `supabase link --project-ref "<PROJECT_REF>"`                                                        | ローカルとリモートのプロジェクトを紐づける                                             |
+| `supabase db pull`                                                                                   | リモートのスキーマ変更をマイグレーションファイルとして取得する                         |
+| `supabase db dump --schema public -f <path>`                                                         | リモートのスキーマをSQLとしてダンプする（`db pull`でファイルが生成されない場合の代替） |
+| `supabase migration new "<name>"`                                                                    | 新しいマイグレーションファイルを作成する                                               |
+| `supabase db push`                                                                                   | ローカルのマイグレーションをリモートに適用する                                         |
+| `npx supabase gen types typescript --project-id "<PROJECT_REF>" --schema public > database.types.ts` | リモートのスキーマからTypeScriptの型定義を生成する                                     |
+
+### 番外編：知っておくと便利なコマンド
+
+| コマンド                     | 説明                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ |
+| `supabase migration list`    | ローカルのマイグレーションファイルとリモート適用済み履歴を照合し一覧表示する。未適用の検出に便利 |
+| `supabase projects list`     | ログイン中アカウントに紐づくプロジェクト一覧とProject IDを確認できる（`link`時のID探しに便利）   |
+| `supabase db push --dry-run` | 実際に適用せず、適用される差分SQLを事前確認できる                                                |
+
+> ローカルでDockerを使い完結させる系のコマンド（`supabase start` / `stop` / `status` / `db reset` など）は、次回のDocker編記事で紹介予定です。
+
 ## Tips
 
 ### 個人情報を含めない
