@@ -34,6 +34,8 @@ CREATE POLICY "ポリシー名"
 > - `WITH CHECK` → 書き込もうとしているデータを検証する（挿入・更新時）
 > - `FOR ALL` は非推奨。SELECT / INSERT / UPDATE / DELETE を個別に書くのがベストプラクティス
 
+- 大文字・小文字の区別はありません。""で囲む場合を除き、`create policy`も`CREATE POLICY`も同じものとして扱われます。
+
 ---
 
 ## anon / authenticated / service_role の違い
