@@ -47,6 +47,7 @@ CREATE POLICY "ポリシー名"
 | `service_role`  | サーバー・管理者用（Secret キー）     | **バイパスされる** |
 
 > `service_role` キーは絶対にフロントエンドコードに含めない
+> `authenticated`はログイン済みかどうかの判定を行うだけなので、これ単体ではログイン済みの他ユーザーのデータにもアクセス可能。別途`USING (auth.uid() = user_id)`などが必要
 
 ---
 
