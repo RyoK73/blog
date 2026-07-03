@@ -74,7 +74,7 @@ ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
 
 ## パターン集
 
-### ① 全員に読み取りを許可（公開データ）
+### 1 全員に読み取りを許可（公開データ）
 
 ```sql
 CREATE POLICY "anyone can read"
@@ -85,7 +85,7 @@ CREATE POLICY "anyone can read"
 
 ---
 
-### ② ログインユーザーだけが自分のデータを見られる
+### 2 ログインユーザーだけが自分のデータを見られる
 
 ```sql
 CREATE POLICY "users can view own data"
@@ -96,7 +96,7 @@ CREATE POLICY "users can view own data"
 
 ---
 
-### ③ ログインユーザーが自分のデータを作成できる
+### 3 ログインユーザーが自分のデータを作成できる
 
 ```sql
 CREATE POLICY "users can insert own data"
@@ -107,7 +107,7 @@ CREATE POLICY "users can insert own data"
 
 ---
 
-### ④ ログインユーザーが自分のデータを更新できる
+### 4 ログインユーザーが自分のデータを更新できる
 
 ```sql
 CREATE POLICY "users can update own data"
@@ -121,7 +121,7 @@ CREATE POLICY "users can update own data"
 
 ---
 
-### ⑤ ログインユーザーが自分のデータを削除できる
+### 5 ログインユーザーが自分のデータを削除できる
 
 ```sql
 CREATE POLICY "users can delete own data"
@@ -132,7 +132,7 @@ CREATE POLICY "users can delete own data"
 
 ---
 
-### ⑥ CRUD をまとめて書く（シンプルな自己所有パターン）
+### 6 CRUD をまとめて書く（シンプルな自己所有パターン）
 
 ```sql
 -- 上記①〜⑤のセット例（posts テーブル）
@@ -146,7 +146,7 @@ CREATE POLICY "delete own posts"   ON posts FOR DELETE   TO authenticated USING 
 
 ---
 
-### ⑦ 公開記事 or 自分の記事を読める
+### 7 公開記事 or 自分の記事を読める
 
 ```sql
 CREATE POLICY "read public or own posts"
@@ -160,7 +160,7 @@ CREATE POLICY "read public or own posts"
 
 ---
 
-### ⑧ JWTのカスタムクレームでロール判定（管理者パターン）
+### 8 JWTのカスタムクレームでロール判定（管理者パターン）
 
 ```sql
 -- auth.jwt() の app_metadata に { "role": "admin" } が入っている場合
@@ -176,7 +176,7 @@ CREATE POLICY "admins can read all"
 
 ---
 
-### ⑨ マルチテナント（組織ごとにデータ分離）
+### 9 マルチテナント（組織ごとにデータ分離）
 
 ```sql
 CREATE POLICY "tenant isolation"
