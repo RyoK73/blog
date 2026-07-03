@@ -224,7 +224,6 @@ CREATE INDEX ON tenant_data(tenant_id);
 | --------------------------------- | ----------------------------------------------------------------- |
 | RLS を有効化し忘れる              | マイグレーションと同時に書く習慣にする                            |
 | ポリシーを1つも作らずに有効化     | RLS 有効化直後はすべてのリクエストがブロックされる                |
-| `FOR ALL` を使う                  | SELECT / INSERT / UPDATE / DELETE を個別に書く                    |
 | UPDATE だけ書いて SELECT がない   | UPDATE には SELECT ポリシーも必要                                 |
 | service_role key をフロントで使う | service_role は RLS を完全バイパスするためサーバー専用            |
 | SQL Editor でテストする           | SQL Editor は RLS をバイパスするのでクライアント SDK でテストする |
