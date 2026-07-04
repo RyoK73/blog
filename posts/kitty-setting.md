@@ -1,5 +1,5 @@
 ---
-title: kittyの設定ファイル・設定方法まとめ
+title: kittyの設定ファイル・設定方法まとめ on Omarchy
 createdAt: "2026-07-04"
 category: tech
 published: false
@@ -34,3 +34,15 @@ published: false
 2. Install
 3. Terminal
 4. Kitty
+
+## 各種設定ファイルの配置
+
+### ghostty
+
+- コンフィグファイル: `~/.config/ghostty/config`
+- テーマファイル: `~/.config/omarchy/current/theme/ghostty.conf`
+
+### kitty
+
+- コンフィグファイル: `~/.config/kitty/kitty.conf`
+- テーマファイル: `~/.config/omarchy/current/theme/kitty.conf`
