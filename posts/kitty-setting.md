@@ -1,8 +1,8 @@
 ---
-title: kittyの設定ファイル・設定方法まとめ on Omarchy
+title: ghostty + Mozcの変換候補ウィンドウ表示バグをターミナル乗換で解決する！ on Omarchy
 createdAt: "2026-07-04"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに
@@ -19,10 +19,12 @@ published: false
 端的に言えば、画面Windowのおよそ1/8よりの位置で日本語入力を行うと変換候補ウィンドウが入力位置に被さってしまいます。
 
 リアルブライドタッチになってしまいます。
+また、Nvim・Claude Codeなどターミナルベースのアプリも同様にこのバグの影響を受けます。
 
 そこでこのバグが発生しない*kitty*に乗り換えることに決めました。
 
 本記事では乗り換え時の設定やコンフィグファイルなどをまとめていきます。
+今回はOmarchyユーザー向けの解説になってますが、Linuxであれば大体似たようなディレクトリ構造なので置き換えて読んでいただれば幸いです。
 
 ## Omarchyでのターミナルの切り替え方法
 
@@ -39,10 +41,55 @@ published: false
 
 ### ghostty
 
-- コンフィグファイル: `~/.config/ghostty/config`
-- テーマファイル: `~/.config/omarchy/current/theme/ghostty.conf`
+- コンフィグ: `~/.config/ghostty/config`
+- テーマ: `~/.config/omarchy/current/theme/ghostty.conf`
+  コンフィグ内で`config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"`で参照されています。
 
 ### kitty
 
-- コンフィグファイル: `~/.config/kitty/kitty.conf`
-- テーマファイル: `~/.config/omarchy/current/theme/kitty.conf`
+- コンフィグ: `~/.config/kitty/kitty.conf`
+- テーマ: `~/.config/omarchy/current/theme/kitty.conf`
+  コンフィグ内で`include ~/.config/omarchy/current/theme/kitty.conf`で参照されています。
+
+## フォント
+
+### 書き方テンプレ
+
+[公式ガイド](https://sw.kovidgoyal.net/kitty/kittens/choose-fonts/#font-spec-syntax)
+
+```conf
+font_family family="PlemolJP Console NF" style="SemiBold"
+font_size        13
+
+```
+
+### 色
+
+例えばこんなふうに書けます。
+
+```conf
+background        #1a1b1e
+foreground         #cdd6f4
+background_opacity 1
+
+```
+
+ただ、kittyにはthemeを指定できる`kitten`という仕組みが用意されています。
+
+```bash
+# テーマ一覧を表示
+kitten themes
+
+# テーマを指定(今回はAtom)
+kitten themes Atom
+```
+
+他にも拡張要素を設定できるようですので、機を見て触ってみてください。
+
+## おわり
+
+以上でkittyに乗り換え、変換候補ウィンドウの表示バグとはおさらばです！
+
+今までコーディングや記事執筆で煩わしく思っていた問題がやっと解決できて感動しています笑
+
+Linux + 日本語入力という非常にマイナーな環境ですが、どこかで困っている人の役に立てると嬉しいです。
