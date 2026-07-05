@@ -14,7 +14,7 @@ published: true
 
 以下のIssueで指摘されてる現象と同一です。
 
-[ghostty Issue #5645](https://github.com/ghostty-org/ghostty/discussions/5645)
+[ghostty Discussion #5645](https://github.com/ghostty-org/ghostty/discussions/5645)
 
 端的に言えば、画面Windowのおよそ1/8よりの位置で日本語入力を行うと変換候補ウィンドウが入力位置に被さってしまいます。
 
