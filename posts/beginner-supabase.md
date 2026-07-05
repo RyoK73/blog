@@ -2,7 +2,7 @@
 title: Supabase CLIの基本的な使い方
 createdAt: "2026-07-03"
 category: tech
-published: true
+published: false
 ---
 
 ## はじめに
