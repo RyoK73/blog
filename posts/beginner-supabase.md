@@ -129,7 +129,9 @@ supabase cliを使って開発するフローは大きく2つあります。
 2. CLIでマイグレーションファイルを作成し、CLIで確認する
 
 2番目の方法はDockerを使用して、ローカルDBを生成してローカル完結で解決できます。
-これは本番と同じ環境をローカルに作成できることが大きなメリットですが、今回はリモート(Web)で確認するため1番目の方法を採用しています。
+
+今回は1の方法を紹介し[次の記事](/tech/beginner-docker-supabase-cli)で2の方法を紹介します。
+個人的にはローカル完結で進めるほうが圧倒的に簡単なので、本記事で基本を抑えたらSupabase CLIを利用するのをおすすめします。
 
 ## 1.data schemaを決める
 
@@ -192,25 +194,52 @@ supabase db pull
 supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_initial_schema.sql
 ```
 
-5. マイグレーションファイルを作成する
+## 編集
 
-テーブル操作やRLSを記述します。
+### マイグレーションファイルを作成する
+
+マイグレーションファイルにテーブル操作やRLSを記述します。
 
 ```bash
 supabase migration new "filename"
 ```
 
-6. リモートに反映
+### 型定義を生成
+
+schemaを変更するたびに実行する必要があります。
+
+```bash
+# supabase未インストールの場合
+npx supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+
+# supabaseインストール済みの場合
+supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+```
+
+```ts
+import { createClient } from '@supabase/supabase-js'
+import type { Database } from './database.types'
+
+const supabase = createClient<Database>(URL, KEY)}
+```
+
+上記コードで以下の恩恵を受けることができます。
+
+1. クエリ結果の型が自動で付く — supabase.from('activity_logs').select()の戻り値が、TypeScript上でRow型として推論される
+2. Insert/Updateの型チェック — .insert({...})するときに、必須カラム（project_id, user_idなど）が抜けていればコンパイルエラーで気づける
+3. リレーションの補完 — Relationships情報があるので、外部キー経由のjoinクエリでも型補完が効く
+4. スキーマ変更の検知 — マイグレーションでカラムを追加/削除した後にこのコマンドを再実行すれば、型が古いままのコードがコンパイルエラーになり、実装漏れを機械的に見つけられる
+
+### Supabase GUIでの編集
+
+[Dockerを使用したSupabase CLI・インテリセンスの設定方法](/tech/beginner-docker-supabase-cli)
+
+## リモートへのアップロード
+
+1. リモートに反映
 
 ```bash
 supabase db push
-```
-
-7. 型定義を生成
-   schemaを変更するたびに実行する必要があります。
-
-```bash
-npx supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
 ```
 
 ## よく使うコマンドまとめ
