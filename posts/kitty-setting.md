@@ -1,5 +1,5 @@
 ---
-title: ghostty + Mozcの変換候補ウィンドウ表示バグをターミナル乗換で解決する！ on Omarchy
+title: Omarchyでghostty + Mozcの変換候補ウィンドウ表示バグをkittyへの乗換で解決する
 createdAt: "2026-07-04"
 category: tech
 published: true
