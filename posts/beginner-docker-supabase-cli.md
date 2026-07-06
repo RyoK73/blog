@@ -133,6 +133,14 @@ supabase stop
 
 ## コマンド集
 
+| コマンド                         | 役割                                                         | ユースケース                                                   |
+| -------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| `supabase start`                 | ローカルDBを起動しGUI(Studio)を使用可能にする                | 開発開始時、DBをローカルで確認しながら作業したいとき           |
+| `supabase stop`                  | ローカルDBを停止する                                         | 開発を終える、または一時的にリソースを解放したいとき           |
+| `supabase status`                | 起動中のローカル環境のURL・ポート情報を確認する              | StudioのURLやDBのポート番号を再確認したいとき                  |
+| `supabase db diff -f "filename"` | GUIやSQLでの変更内容をマイグレーションファイルとして出力する | ローカルDBの編集内容をマイグレーションファイルに起こしたいとき |
+| `supabase db reset`              | `migrations/`の内容をもとにDBを再構築する                    | DBでの編集内容を取り消し、migrations通りの状態に戻したいとき   |
+
 ## 注意点
 
 ### `supabase db diff`の挙動について
@@ -147,23 +155,6 @@ supabase stop
 
 正直なところ、普通に記述したほうが早いことも多いです。
 例えば、テーブル名のリネームを行う場合、`ALTER TABLE ... RENAME TO ...`で済みますが、GUI経由で行うと`DROP TABLE ...`が記述されてしまいます。
-
-### QA
-
-- ローカルDBの編集内容をマイグレーションファイルに起こしたいとき
-
-```bash
-supabase db diff -f "migration-file-name"
-```
-
-- DBでの編集内容を取り消したいとき
-
-```bash
-supabase start
-supabase db reset
-```
-
-これで、migrations/ 通りにDBが再構築される。
 
 ## さいごに
 
