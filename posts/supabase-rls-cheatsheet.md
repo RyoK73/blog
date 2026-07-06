@@ -32,8 +32,8 @@ CREATE POLICY "ポリシー名"
 >
 > - `USING` → 操作する行の条件を指定(どの既存業を対象に選ぶか)
 > - `WITH CHECK` → 追加・更新した行の条件を指定(書き込んだ行が条件を満たしているか)
-> - `USING / WITH CHECK`を使用できない操作に対してしたいした場合、マイグレーション適用時にエラーが出ます。
-> - なんでもかんでも`FOR ALL` は非推奨。最小限の操作に限定してSELECT / INSERT / UPDATE / DELETE を個別に書くのがベストプラクティス
+> - `USING / WITH CHECK`を使用できない操作に対して指定した場合、マイグレーション適用時にエラーが出ます。
+> - すべての操作に対して許可を与えたい場合にのみ`FOR ALL`を使う。*ポリシーの設定が面倒くさいから`FOR ALL`で*はNG
 
 - 大文字・小文字の区別はありません。""で囲む場合を除き、`create policy`も`CREATE POLICY`も同じものとして扱われます。
 
@@ -69,7 +69,7 @@ ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
 | ----------------------- | ------ | --------------------------------- |
 | `auth.uid()`            | UUID   | ログイン中のユーザーID            |
 | `auth.jwt()`            | JSON   | JWTの中身（role・メタデータなど） |
-| `auth.jwt() ->> 'role'` | text   | JWTのroleクロール                 |
+| `auth.jwt() ->> 'role'` | text   | JWTのroleを取得                   |
 | `auth.jwt()->>'email'`  | text   | ユーザーのメールアドレス          |
 
 ---
@@ -264,3 +264,8 @@ ALTER TABLE posts DISABLE ROW LEVEL SECURITY;
 - [Row Level Security - Supabase Docs](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [Securing your API - Supabase Docs](https://supabase.com/docs/guides/api/securing-your-api)
 - [RLS AI Prompt - Supabase Docs](https://supabase.com/docs/guides/getting-started/ai-prompts/database-rls-policies)
+
+## おわりに
+
+今まで触ってきたDB類似システムにはRLS設定などなかったため、今回はかなり挑戦の実装でした。
+PostgreSQLを扱う際は必ずRLSを設定することを忘れないでください！
