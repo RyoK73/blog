@@ -217,10 +217,10 @@ supabase gen types typescript --project-id "コピーしたProject ID" --schema 
 ```
 
 ```ts
-import { createClient } from '@supabase/supabase-js'
-import type { Database } from './database.types'
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
 
-const supabase = createClient<Database>(URL, KEY)}
+const supabase = createClient<Database>(URL, KEY);
 ```
 
 上記コードで以下の恩恵を受けることができます。
