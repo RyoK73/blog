@@ -108,7 +108,9 @@ DOMと異なるのは、DBの状態が複数の手段で変化させられうる
 | RLSの動作テスト      | できない   | ✅ 一択（ユーザー偽装機能） |
 | ER図の生成           | ✅ できる  | ✅ できる                   |
 
-## 0.supabase cliをインストールする
+## 0.supabase cliのセットアップ
+
+### supabase cliのインストール
 
 ローカルでsupabaseの操作を行うために`supabase cli``をインストールする必要があります。
 supabaseが公式にサポートされているパッケージマネージャは、`npm`,`pnpm`,`brew`です。
@@ -125,12 +127,44 @@ supabaseが公式にサポートされているパッケージマネージャは
 brew install supabase
 
 # npm,pnpm
-npm -D supabase
-pnpm -D supabase # 今回はこれ
+npm install -D supabase
+pnpm add -D supabase # 今回はこれ
 
 # 以下のコマンドが通ればインストール完了です
 supabase --version
 ```
+
+### 実行スクリプトの設定
+
+> npm,pnpmでインストールした場合、シェルにPATHが通ってないので実行スクリプトを用意する必要があります。
+
+- 単に実行する場合
+
+```bash
+# pnpm execでnode/moduleにあるパッケージを実行できます
+pnpm exec supabase --version
+```
+
+- 繰り返し使う場合
+  `package.json`にscriptsとして登録します。
+
+  ```json
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @apps/web dev",
+    "db:version": "supabase --version",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "db:push": "supabase db push"
+  }
+  ```
+
+  これで同様に*version*を確認可能です。
+
+  ```bash
+  pnpm db:version
+  ```
 
 ### Dockerの使用について
 
