@@ -110,15 +110,26 @@ DOMと異なるのは、DBの状態が複数の手段で変化させられうる
 
 ## 0.supabase cliをインストールする
 
-ローカルでsupabaseの操作を行うために*supabase cli*をインストールする必要があります。
+ローカルでsupabaseの操作を行うために`supabase cli``をインストールする必要があります。
+supabaseが公式にサポートされているパッケージマネージャは、`npm`,`pnpm`,`brew`です。
+
+> 詳しくは[supabase cli](https://github.com/supabase/cli#installation)
+
+`yay`や`pacman`はコミュニティがサポートしているため、公式ビルドと対応バージョンに差が出ることがあります。
+特に理由がなければ、`npm`,`pnpm`,`brew`でのインストールをおすすめします。
+
+> [`npm`,`pnpm`の場合は、devlopment環境でのインストールが推奨されています。](https://github.com/supabase/cli#installation)
 
 ```bash
-# yay以外にもbrewなどパッケージマネージャでインストールしてください
-yay -S supabase
+# brew
+brew install supabase
+
+# npm,pnpm
+npm -D supabase
+pnpm -D supabase # 今回はこれ
 
 # 以下のコマンドが通ればインストール完了です
 supabase --version
-# 2.108.0
 ```
 
 ### Dockerの使用について
