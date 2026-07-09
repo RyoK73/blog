@@ -16,7 +16,7 @@ published: false
 [supabase/github](https://github.com/supabase/supabase)
 
 ざっくり、データベース管理・ユーザー認証などのバックエンド処理を一括で提供するクラウドサービス BaaSです。
-無料プランでも、
+執筆時点で、無料プランでも、
 
 - 無制限のAPIアクセス
 - 500MBまでのデータベース容量
@@ -108,11 +108,11 @@ DOMと異なるのは、DBの状態が複数の手段で変化させられうる
 | RLSの動作テスト      | できない   | ✅ 一択（ユーザー偽装機能） |
 | ER図の生成           | ✅ できる  | ✅ できる                   |
 
-## 0.supabase cliのセットアップ
+## supabase cliのセットアップ
 
 ### supabase cliのインストール
 
-ローカルでsupabaseの操作を行うために`supabase cli``をインストールする必要があります。
+ローカルでsupabaseの操作を行うために`supabase cli`をインストールする必要があります。
 supabaseが公式にサポートされているパッケージマネージャは、`npm`,`pnpm`,`brew`です。
 
 > 詳しくは[supabase cli](https://github.com/supabase/cli#installation)
@@ -120,7 +120,7 @@ supabaseが公式にサポートされているパッケージマネージャは
 `yay`や`pacman`はコミュニティがサポートしているため、公式ビルドと対応バージョンに差が出ることがあります。
 特に理由がなければ、`npm`,`pnpm`,`brew`でのインストールをおすすめします。
 
-> [`npm`,`pnpm`の場合は、devlopment環境でのインストールが推奨されています。](https://github.com/supabase/cli#installation)
+> [`npm`,`pnpm`の場合は、development環境でのインストールが推奨されています。](https://github.com/supabase/cli#installation)
 
 ```bash
 # brew
@@ -142,7 +142,7 @@ supabase --version
 
 ```bash
 # pnpm execでnode/moduleにあるパッケージを実行できます
-pnpm exec supabase --version
+pnpm exec supabase ...
 ```
 
 - 繰り返し使う場合
@@ -156,15 +156,26 @@ pnpm exec supabase --version
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:status": "supabase status",
-    "db:push": "supabase db push"
+    "db:push": "supabase db push",
+    "db:pull ":"supabase db pull",
+    "db:new": "supabase migration new",
+    "type:gen": "source ./.env.local && supabase gen types typescript --project-id $PROJECTID --schema public > database.types.ts"
   }
   ```
 
-  これで同様に*version*を確認可能です。
+  `.env.local`には`$PROJECTID`を登録します。
+
+  > `.gitignore`でコミットしないよう設定するのをおすすめします。
 
   ```bash
-  pnpm db:version
+  # shellcheck disable=SC2034
+  PROJECTID="your-project-id"
   ```
+
+```bash
+pnpm db:version
+...
+```
 
 ### Dockerの使用について
 
@@ -173,12 +184,9 @@ supabase cliを使って開発するフローは大きく2つあります。
 1. CLIでマイグレーションファイルを作成し、Webで確認する
 2. CLIでマイグレーションファイルを作成し、CLIで確認する
 
-2番目の方法はDockerを使用して、ローカルDBを生成してローカル完結で解決できます。
+今回は1つ目の方法を中心に紹介します。
 
-今回は1の方法を紹介し[次の記事](/tech/beginner-docker-supabase-cli)で2の方法を紹介します。
-個人的にはローカル完結で進めるほうが圧倒的に簡単なので、本記事で基本を抑えたら、次は[Dockerを使ったローカル完結の方法](/tech/beginner-docker-supabase-cli)を試すのをおすすめします。
-
-## 1.data schemaを決める
+## data schemaの決定
 
 テーブルを作成するために、まずはプロジェクトで使用するschemaを設計する必要があります。
 
@@ -196,13 +204,13 @@ supabase cliを使って開発するフローは大きく2つあります。
 データ型についてはこちらの記事で解説しています。
 [Supabaseのデータ型チートシート](/tech/supabase-data-type)
 
-## 2.セットアップ
+## セットアップ
 
 1. 初期化
 
 ```bash
 cd "repository-name"
-supabase init
+pnpm exec supabase init
 ```
 
 `supabase/config.toml`が作成されます。
@@ -210,7 +218,7 @@ supabase init
 2. ログイン
 
 ```bash
-supabase login
+pnpm exec supabase login
 ```
 
 3. リモート(Web)との紐づけ
@@ -219,7 +227,7 @@ supabase login
 `Project Settings > General > General Settings > Project ID`をコピーします。
 
 ```bash
-supabase link --project-ref "コピーしたProject ID"
+pnpm exec supabase link --project-ref "コピーしたProject ID"
 ```
 
 4. リモートの現状をpull(CLIから始める場合は不要です)
@@ -228,15 +236,20 @@ supabase link --project-ref "コピーしたProject ID"
 ※ 結構時間かかります
 
 ```bash
-supabase db pull
+pnpm db:pull
+```
 
+or
+
+```bash
+pnpm exec supabase db pull
 ```
 
 ただし、私はこれで`supabase/migrations/`下にファイルが生成されませんでした。
 そのため、`db dump`からマイグレーションファイルを生成しました。
 
 ```bash
-supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_initial_schema.sql
+pnpm exec supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_initial_schema.sql
 ```
 
 ## 編集
@@ -246,19 +259,29 @@ supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_in
 マイグレーションファイルにテーブル操作やRLSを記述します。
 
 ```bash
-supabase migration new "filename"
+pnpm db:new "filename"
+```
+
+or
+
+```bash
+pnpm exec supabase migration new "filename"
 ```
 
 ### 型定義を生成
 
 schemaを変更するたびに実行する必要があります。
 
-```bash
-# supabase未インストールの場合
-npx supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+supabaseインストール済みの場合
 
-# supabaseインストール済みの場合
-supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+```bash
+pnpm exec supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+```
+
+script登録済みの場合
+
+```bash
+pnpm type:gen
 ```
 
 ```ts
@@ -284,12 +307,14 @@ const supabase = createClient<Database>(URL, KEY);
 1. リモートに反映
 
 ```bash
-supabase db push
+pnpm db:push
 ```
 
 ## よく使うコマンドまとめ
 
 ここまでの手順で登場したコマンドを振り返りつつ、番外編として知っておくと便利なコマンドも紹介します。
+
+> `pnpm exec`を省略して記載しています。実際は`package.json`に登録するか`pnpm exec`に続けて実行してください。
 
 ### 振り返り: これまで登場したコマンド
 
@@ -354,13 +379,11 @@ IssueやREADMEに要件を書いておき壁打ちしました。
 
 ## さいごに
 
-今までDBもどきは色々触ってきました。
-Excel,Access,PowerQuery,pandas...
-
-ただ、ちゃんとDBを触りだした今、これまでが入門編だったことに気付かされました。
-
+今回は、GUIでもCLIでも操作できる`Supabase CLI`の基本的な使い方について紹介しました。
 まだ慣れないものの、直接記述するだけでなくGUIでも操作できるSupabaseの仕組みに非常に助けられています。
 
-次の記事ではそのGUI操作部分、Dockerを使用したSupabase CLIの使い方を紹介したいと思います。
+次の記事ではDockerを使用して、WebのようなGUIをローカル完結で確認できる`Supabase CLI`の使い方を紹介します。
+
+個人的にはローカル完結で進めるほうが圧倒的に簡単なので、本記事で基本を抑えたら、ローカル完結型にも挑戦してみてください！
 
 ここまで読んでいただきありがとうございました！
