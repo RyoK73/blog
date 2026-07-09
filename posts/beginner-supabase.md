@@ -1,0 +1,392 @@
+---
+title: Supabase CLIの基本的な使い方
+createdAt: "2026-07-03"
+category: tech
+published: true
+---
+
+## はじめに
+
+この記事では、supabase初級者の方向けに手順・注意点を中心に解説していきます。
+ここでは基本的なCLI使い方にフォーカスし、スキーマ設計から型定義生成・運用Tipsまでを紹介します。
+
+## supabaseとは
+
+[supabase](https://supabase.com)
+[supabase/github](https://github.com/supabase/supabase)
+
+ざっくり、データベース管理・ユーザー認証などのバックエンド処理を一括で提供するクラウドサービス BaaSです。
+執筆時点で、無料プランでも、
+
+- 無制限のAPIアクセス
+- 500MBまでのデータベース容量
+- 5GBまでの転送データ量
+
+...など十分運用に耐える設計です。
+
+またApache 2.0 ライセンスのため、商用利用も可能です。(商標利用・責任追求は禁止)
+
+Vercelとの公式連携機能もあり、開発初心者の方へおすすめです。
+
+## 基本概念
+
+まずはざっくりSupabaseの基本概念を整理しておきます。
+
+### RLS（Row Level Security）
+
+| 概念                 | 説明                                                                       |
+| -------------------- | -------------------------------------------------------------------------- |
+| RLSとは              | DBの行レベルでアクセス制御する仕組み。PostgreSQLの機能                     |
+| 有効化しないと       | テーブルの全データが誰でも読める状態になる                                 |
+| ポリシーなしで有効化 | 全リクエストがブロックされる（deny all がデフォルト）                      |
+| USING句              | 既存行へのフィルタ。SELECT・UPDATE・DELETE で使う                          |
+| WITH CHECK句         | 書き込むデータの検証。INSERT・UPDATE で使う                                |
+| FOR ALL              | 粒度が荒く、SELECT / INSERT / UPDATE / DELETE を個別管理したい場合は非推奨 |
+
+### TypeScript型定義
+
+| 概念                   | 説明                                                       |
+| ---------------------- | ---------------------------------------------------------- |
+| 型生成の仕組み         | CLIがDBスキーマを読んで `database.types.ts` を自動生成する |
+| 再生成のタイミング     | スキーマを変えるたびに手動で再実行が必要                   |
+| クライアントへの渡し方 | `createClient<Database>(url, key)` に型を渡す              |
+| 自動化                 | `package.json` のスクリプトやGitHub Actionsで自動化できる  |
+
+### マイグレーション
+
+| 概念                     | 説明                                                                   |
+| ------------------------ | ---------------------------------------------------------------------- |
+| マイグレーションファイル | DBへの命令を記録したSQLファイル。`supabase/migrations/` に積み重なる   |
+| 命名規則                 | `{タイムスタンプ}_{説明}.sql`（例: `20240101000000_create_posts.sql`） |
+| 適用の仕組み             | 上から順番に全部実行される。遅延評価・最適化はされない                 |
+| 適用済み管理             | `supabase_migrations.schema_migrations` テーブルで記録される           |
+| 未適用の検出             | `supabase db push` 時にこのテーブルと手元のファイルを照合する          |
+| 鉄則                     | 適用済みのファイルは絶対に編集しない。変更は必ず新しいファイルで       |
+
+マイグレーションファイルがいわゆる**SQLコード**で、それをもとにDBがビルドされます。
+変更毎にファイルを新しく生成します。
+
+### マイグレーションとテーブル定義ファイルの違い
+
+|        | マイグレーションファイル | テーブル定義ファイル        |
+| ------ | ------------------------ | --------------------------- |
+| 場所   | `supabase/migrations/`   | `supabase/schemas/`（任意） |
+| 中身   | 差分のSQL（変更履歴）    | 現在の完全な定義            |
+| 役割   | 実際にDBに適用される     | 設計書的な役割              |
+| 必須か | ✅ 必須                  | ❌ 任意                     |
+
+### なぜマイグレーションシステムが必要なのか
+
+Q. 「マイグレーションファイルを生成せずに直接schemaを編集すればいいのではないか」
+
+A. 「DBが複数の変更手段を持つ**状態**で安易に変更できないからマイグレーションシステムが必要である」
+
+DOMを思い浮かべるとわかりやすいです。
+
+普段扱うコードと違いDBは*schema*と*本番データ*の2つのデータを併せ持っています。
+*schema*は**DOM**にあたり、本番データは**状態**です。
+
+DOMと異なるのは、DBの状態が複数の手段で変化させられうることです。
+
+- *schema*からのビルド
+- 複数のユーザー入力
+
+一方向からの上書きを実行した場合、DBの状態を正しく変換できません。
+
+そのためマイグレーションシステムを用い、**DBへの操作**として**状態変換の手順書**が必要なのです。
+
+### CLIとDashboardの使い分け
+
+| 操作                 | CLI        | Dashboard（Web）            |
+| -------------------- | ---------- | --------------------------- |
+| テーブル作成・変更   | ✅ メイン  | 試作・プロトタイプ時だけ    |
+| RLS・ポリシー設定    | ✅ メイン  | テストやデバッグ時          |
+| マイグレーション実行 | ✅ 一択    | できない                    |
+| 型定義の生成         | ✅ 一択    | できない                    |
+| スキーマ確認         | たまに     | ✅ メイン                   |
+| データの閲覧・編集   | ほぼしない | ✅ 一択                     |
+| RLSの動作テスト      | できない   | ✅ 一択（ユーザー偽装機能） |
+| ER図の生成           | ✅ できる  | ✅ できる                   |
+
+## supabase cliのセットアップ
+
+### supabase cliのインストール
+
+ローカルでsupabaseの操作を行うために`supabase cli`をインストールする必要があります。
+supabaseが公式にサポートされているパッケージマネージャは、`npm`,`pnpm`,`brew`です。
+
+> 詳しくは[supabase cli](https://github.com/supabase/cli#installation)
+
+`yay`や`pacman`はコミュニティがサポートしているため、公式ビルドと対応バージョンに差が出ることがあります。
+特に理由がなければ、`npm`,`pnpm`,`brew`でのインストールをおすすめします。
+
+> [`npm`,`pnpm`の場合は、development環境でのインストールが推奨されています。](https://github.com/supabase/cli#installation)
+
+```bash
+# brew
+brew install supabase
+
+# npm,pnpm
+npm install -D supabase
+pnpm add -D supabase # 今回はこれ
+
+# 以下のコマンドが通ればインストール完了です
+supabase --version
+```
+
+### 実行スクリプトの設定
+
+> npm,pnpmでインストールした場合、シェルにPATHが通ってないので実行スクリプトを用意する必要があります。
+
+- 単に実行する場合
+
+```bash
+# pnpm execでnode/moduleにあるパッケージを実行できます
+pnpm exec supabase ...
+```
+
+- 繰り返し使う場合
+  `package.json`にscriptsとして登録します。
+
+  ```json
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @apps/web dev",
+    "db:version": "supabase --version",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "db:push": "supabase db push",
+    "db:pull":"supabase db pull",
+    "db:new": "supabase migration new",
+    "type:gen": "source ./.env.local && supabase gen types typescript --project-id $PROJECTID --schema public > database.types.ts"
+  }
+  ```
+
+  > `type:gen`に関しては`bash`でのみ動作確認しています。
+  > `$PROJECTID`に`.env.local`の`PROJECTID`が渡される処理であれば動作します。
+
+  `.env.local`には`$PROJECTID`を登録します。
+
+  > `.gitignore`でコミットしないよう設定するのをおすすめします。
+
+  ```bash
+  # shellcheck disable=SC2034
+  PROJECTID="your-project-id"
+  ```
+
+```bash
+pnpm db:version
+...
+```
+
+### Dockerの使用について
+
+supabase cliを使って開発するフローは大きく2つあります。
+
+1. CLIでマイグレーションファイルを作成し、Webで確認する
+2. CLIでマイグレーションファイルを作成し、CLIで確認する
+
+今回は1つ目の方法を中心に紹介します。
+
+## data schemaの決定
+
+テーブルを作成するために、まずはプロジェクトで使用するschemaを設計する必要があります。
+
+私はschemaを決める際に以下の3点に注意しています。
+
+- 動的データと静的データを分けること
+- テーブルごとに責任を分離すること
+- 適切なデータ型を設定すること
+
+例えば、ユーザーが毎日利用するたびに累積するデータと一度設定すればいいだけのデータを同時に持つ必要はありません。
+
+また、そのテーブルが負うデータの責任範囲を最小に保つように設計することも大切です。
+コードではないですが、可読性向上につながります。
+
+データ型についてはこちらの記事で解説しています。
+[Supabaseのデータ型チートシート](/tech/supabase-data-type)
+
+## セットアップ
+
+1. 初期化
+
+```bash
+cd "repository-name"
+pnpm exec supabase init
+```
+
+`supabase/config.toml`が作成されます。
+
+2. ログイン
+
+```bash
+pnpm exec supabase login
+```
+
+3. リモート(Web)との紐づけ
+   Webの任意のプロジェクトに移動します。
+
+`Project Settings > General > General Settings > Project ID`をコピーします。
+
+```bash
+pnpm exec supabase link --project-ref "コピーしたProject ID"
+```
+
+4. リモートの現状をpull(CLIから始める場合は不要です)
+   今回はWebのDashboard上でテーブルを作成済みだったため、この工程を挟みました。
+
+※ 結構時間かかります
+
+```bash
+pnpm db:pull
+```
+
+or
+
+```bash
+pnpm exec supabase db pull
+```
+
+ただし、私はこれで`supabase/migrations/`下にファイルが生成されませんでした。
+そのため、`db dump`からマイグレーションファイルを生成しました。
+
+```bash
+pnpm exec supabase db dump --schema public -f supabase/migrations/$(date +%Y%m%d%H%M%S)_initial_schema.sql
+```
+
+## 編集
+
+### マイグレーションファイルを作成する
+
+マイグレーションファイルにテーブル操作やRLSを記述します。
+
+```bash
+pnpm db:new "filename"
+```
+
+or
+
+```bash
+pnpm exec supabase migration new "filename"
+```
+
+### 型定義を生成
+
+schemaを変更するたびに実行する必要があります。
+
+supabaseインストール済みの場合
+
+```bash
+pnpm exec supabase gen types typescript --project-id "コピーしたProject ID" --schema public > database.types.ts
+```
+
+script登録済みの場合
+
+```bash
+pnpm type:gen
+```
+
+```ts
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
+
+const supabase = createClient<Database>(URL, KEY);
+```
+
+上記コードで以下の恩恵を受けることができます。
+
+1. クエリ結果の型が自動で付く — supabase.from('activity_logs').select()の戻り値が、TypeScript上でRow型として推論される
+2. Insert/Updateの型チェック — .insert({...})するときに、必須カラム（project_id, user_idなど）が抜けていればコンパイルエラーで気づける
+3. リレーションの補完 — Relationships情報があるので、外部キー経由のjoinクエリでも型補完が効く
+4. スキーマ変更の検知 — マイグレーションでカラムを追加/削除した後にこのコマンドを再実行すれば、型が古いままのコードがコンパイルエラーになり、実装漏れを機械的に見つけられる
+
+### Supabase GUIでの編集
+
+[Dockerを使用したSupabase CLI・インテリセンスの設定方法](/tech/beginner-docker-supabase-cli)
+
+## リモートへのアップロード
+
+1. リモートに反映
+
+```bash
+pnpm db:push
+```
+
+## よく使うコマンドまとめ
+
+ここまでの手順で登場したコマンドを振り返りつつ、番外編として知っておくと便利なコマンドも紹介します。
+
+> `pnpm exec`を省略して記載しています。実際は`package.json`に登録するか`pnpm exec`に続けて実行してください。
+
+### 振り返り: これまで登場したコマンド
+
+| コマンド                                                                                         | 説明                                                                                   |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `supabase init`                                                                                  | プロジェクトを初期化し`supabase/config.toml`を生成する                                 |
+| `supabase login`                                                                                 | Supabaseアカウントにログインする                                                       |
+| `supabase link --project-ref "<PROJECT_REF>"`                                                    | ローカルとリモートのプロジェクトを紐づける                                             |
+| `supabase db pull`                                                                               | リモートのスキーマ変更をマイグレーションファイルとして取得する                         |
+| `supabase db dump --schema public -f <path>`                                                     | リモートのスキーマをSQLとしてダンプする（`db pull`でファイルが生成されない場合の代替） |
+| `supabase migration new "<name>"`                                                                | 新しいマイグレーションファイルを作成する                                               |
+| `supabase db push`                                                                               | ローカルのマイグレーションをリモートに適用する                                         |
+| `supabase gen types typescript --project-id "<PROJECT_REF>" --schema public > database.types.ts` | リモートのスキーマからTypeScriptの型定義を生成する                                     |
+
+### 番外編：知っておくと便利なコマンド
+
+| コマンド                     | 説明                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ |
+| `supabase migration list`    | ローカルのマイグレーションファイルとリモート適用済み履歴を照合し一覧表示する。未適用の検出に便利 |
+| `supabase projects list`     | ログイン中アカウントに紐づくプロジェクト一覧とProject IDを確認できる（`link`時のID探しに便利）   |
+| `supabase db push --dry-run` | 実際に適用せず、適用される差分SQLを事前確認できる                                                |
+
+> ローカルでDockerを使い完結させる系のコマンド（`supabase start` / `stop` / `status` / `db reset` など）は、次回のDocker編記事で紹介予定です。
+
+## Tips
+
+### 個人情報を含めない
+
+これは個人的な注意点ですが、このご時世情報漏洩がないとは言い切れません。
+そのため、なるべくDB側で個人情報・プロジェクトの特定につながる情報は持たないようにしています。
+
+### どうやってテーブル設計するの？
+
+これは早い話、AIと壁打ちしながら決めていくといいです。
+IssueやREADMEに要件を書いておき壁打ちしました。
+
+### Supabaseのカラムオプション
+
+- PK：Primary Keyのこと。
+- FK：Foreign Key(外部キー)のこと。別のテーブルのPKを参照するカラム
+
+- Is Primary Key
+  そのカラムがテーブルの主キー。自動的にUNIQUE＋NOT NULLになる。基本的にidカラムに設定する
+
+- Is Unique
+  そのカラムの値が重複不可。FKで参照したいカラムにはこれかPKが必要
+
+- Is Nullable
+  NULLを許容するかどうか。チェックを外すとNOT NULL制約になる
+
+- Is Array
+  PostgreSQL特有。そのカラムを配列型として扱う（例：text[]）
+
+## エラー集
+
+### 外部キーの制約エラー
+
+`Failed to run sql query: ERROR: 42830: there is no unique constraint matching given keys for referenced table "projects"`
+
+- テーブルAの*Primary列*からテーブルBの列に対しRelationを設定したとき、テーブルBの列に`is Unique`を設定し参照列が一意であることを明示したら解決できました。
+- これは*Primary列*が重複可能だったため発生したエラーでした。
+
+## さいごに
+
+今回は、GUIでもCLIでも操作できる`Supabase CLI`の基本的な使い方について紹介しました。
+まだ慣れないものの、直接記述するだけでなくGUIでも操作できるSupabaseの仕組みに非常に助けられています。
+
+次の記事ではDockerを使用して、WebのようなGUIをローカル完結で確認できる`Supabase CLI`の使い方を紹介します。
+
+個人的にはローカル完結で進めるほうが圧倒的に簡単なので、本記事で基本を抑えたら、ローカル完結型にも挑戦してみてください！
+
+ここまで読んでいただきありがとうございました！
