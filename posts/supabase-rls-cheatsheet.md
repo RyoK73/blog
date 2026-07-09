@@ -2,7 +2,7 @@
 title: SupabaseのRLSチートシート
 createdAt: "2026-06-28"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに

@@ -2,7 +2,7 @@
 title: Supabase CLIの基本的な使い方
 createdAt: "2026-07-03"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに
@@ -157,11 +157,14 @@ pnpm exec supabase ...
     "db:stop": "supabase stop",
     "db:status": "supabase status",
     "db:push": "supabase db push",
-    "db:pull ":"supabase db pull",
+    "db:pull":"supabase db pull",
     "db:new": "supabase migration new",
     "type:gen": "source ./.env.local && supabase gen types typescript --project-id $PROJECTID --schema public > database.types.ts"
   }
   ```
+
+  > `type:gen`に関しては`bash`でのみ動作確認しています。
+  > `$PROJECTID`に`.env.local`の`PROJECTID`が渡される処理であれば動作します。
 
   `.env.local`には`$PROJECTID`を登録します。
 
@@ -318,16 +321,16 @@ pnpm db:push
 
 ### 振り返り: これまで登場したコマンド
 
-| コマンド                                                                                             | 説明                                                                                   |
-| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `supabase init`                                                                                      | プロジェクトを初期化し`supabase/config.toml`を生成する                                 |
-| `supabase login`                                                                                     | Supabaseアカウントにログインする                                                       |
-| `supabase link --project-ref "<PROJECT_REF>"`                                                        | ローカルとリモートのプロジェクトを紐づける                                             |
-| `supabase db pull`                                                                                   | リモートのスキーマ変更をマイグレーションファイルとして取得する                         |
-| `supabase db dump --schema public -f <path>`                                                         | リモートのスキーマをSQLとしてダンプする（`db pull`でファイルが生成されない場合の代替） |
-| `supabase migration new "<name>"`                                                                    | 新しいマイグレーションファイルを作成する                                               |
-| `supabase db push`                                                                                   | ローカルのマイグレーションをリモートに適用する                                         |
-| `npx supabase gen types typescript --project-id "<PROJECT_REF>" --schema public > database.types.ts` | リモートのスキーマからTypeScriptの型定義を生成する                                     |
+| コマンド                                                                                         | 説明                                                                                   |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `supabase init`                                                                                  | プロジェクトを初期化し`supabase/config.toml`を生成する                                 |
+| `supabase login`                                                                                 | Supabaseアカウントにログインする                                                       |
+| `supabase link --project-ref "<PROJECT_REF>"`                                                    | ローカルとリモートのプロジェクトを紐づける                                             |
+| `supabase db pull`                                                                               | リモートのスキーマ変更をマイグレーションファイルとして取得する                         |
+| `supabase db dump --schema public -f <path>`                                                     | リモートのスキーマをSQLとしてダンプする（`db pull`でファイルが生成されない場合の代替） |
+| `supabase migration new "<name>"`                                                                | 新しいマイグレーションファイルを作成する                                               |
+| `supabase db push`                                                                               | ローカルのマイグレーションをリモートに適用する                                         |
+| `supabase gen types typescript --project-id "<PROJECT_REF>" --schema public > database.types.ts` | リモートのスキーマからTypeScriptの型定義を生成する                                     |
 
 ### 番外編：知っておくと便利なコマンド
 

@@ -2,7 +2,7 @@
 title: PostgreSQLのDDLチートシート
 createdAt: "2026-07-06"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに

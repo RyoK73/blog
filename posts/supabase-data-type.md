@@ -2,7 +2,7 @@
 title: Supabaseのデータ型チートシート
 createdAt: "2026-06-27"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに

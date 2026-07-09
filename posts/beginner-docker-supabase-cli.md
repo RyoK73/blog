@@ -2,7 +2,7 @@
 title: Dockerを使用したSupabase CLI・インテリセンスの設定方法
 createdAt: "2026-07-03"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに
