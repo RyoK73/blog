@@ -20,13 +20,11 @@ export const Posts = async ({ category }: { category?: string }) => {
             label={`P${(index + 1).toString().padStart(3, "0")}`}
             className="relative hover:border-foreground hover:transition-colors duration-500"
           >
-            <div className="flex gap-5 items-center mb-1">
-              <CustomCategory
-                category={post.category}
-                className="relative z-1 text-sm"
-              />
-              <time>{post.createdAt}</time>
-            </div>
+            <span className="absolute -top-3 right-3 px-1 z-10 bg-background text-vivid font-medium text-sm">
+              {post.updatedAt
+                ? `Updated: ${post.updatedAt}`
+                : `Created: ${post.createdAt}`}
+            </span>
             <Link
               href={path.join("/blog", post.category, post.slug)}
               className="after:absolute after:inset-0"
