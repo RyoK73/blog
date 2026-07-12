@@ -18,6 +18,7 @@ export type PostData = {
   updatedAt?: string;
   charCount: number;
   readingMinutes: number;
+  sortDate: string;
 };
 
 // 読了時間の目安算出に使う日本語の想定読了速度（文字/分）
@@ -93,6 +94,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
     updatedAt: result.data.updatedAt ?? undefined,
     charCount,
     readingMinutes,
+    sortDate: result.data.updatedAt ?? result.data.createdAt,
   };
 };
 

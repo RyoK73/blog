@@ -7,7 +7,7 @@ import path from "path";
 export const Posts = async ({ category }: { category?: string }) => {
   const posts = await getAllPostData();
   const sortedPosts = posts.sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
+    b.sortDate.localeCompare(a.sortDate),
   );
   const filteredPosts = category
     ? sortedPosts.filter((sortedPost) => sortedPost.category === category)
