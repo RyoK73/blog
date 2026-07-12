@@ -29,11 +29,16 @@ export const Posts = async ({ category }: { category?: string }) => {
               href={path.join("/blog", post.category, post.slug)}
               className="after:absolute after:inset-0"
             >
-              <h2 className="text-foreground font-bold text-lg">
+              <h2 className="text-foreground font-extrabold text-lg">
                 {post.title}
               </h2>
             </Link>
             <p>{post.description}</p>
+            <div className="flex gap-3 mt-2">
+              <CustomCategory
+                category={post.category}
+                className="relative z-1 text-sm"
+              />
               <p className="text-xs text-muted-foreground mt-1">
                 約{post.readingMinutes}分で読めます・{post.charCount}文字
               </p>
