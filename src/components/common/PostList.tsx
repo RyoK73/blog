@@ -36,6 +36,10 @@ export const Posts = async ({ category }: { category?: string }) => {
               </h2>
             </Link>
             <p>{post.description}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                約{post.readingMinutes}分で読めます・{post.charCount}文字
+              </p>
+            </div>
           </CustomCard>
         </li>
       ))}

@@ -16,6 +16,22 @@ export type PostData = {
   markdown: string;
   published: boolean;
   updatedAt?: string;
+  charCount: number;
+  readingMinutes: number;
+};
+
+// 読了時間の目安算出に使う日本語の想定読了速度（文字/分）
+const READING_SPEED_CHARS_PER_MINUTE = 500;
+
+const countPlainTextChars = (markdown: string): number => {
+  const plainText = markdown
+    .replace(/```[\s\S]*?```/g, "") // コードブロック
+    .replace(/`[^`]*`/g, "") // インラインコード
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // 画像
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // リンク→テキストだけ残す
+    .replace(/[#>*_~`-]/g, "") // 装飾記号
+    .replace(/\s/g, ""); // 空白・改行
+  return plainText.length;
 };
 
 const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
@@ -60,6 +76,12 @@ export const getPostData = async (slug: string): Promise<PostData> => {
       .trim()
       .slice(0, 120) + "...";
 
+  const charCount = countPlainTextChars(postData.content);
+  const readingMinutes = Math.max(
+    1,
+    Math.ceil(charCount / READING_SPEED_CHARS_PER_MINUTE),
+  );
+
   return {
     slug,
     title: result.data.title,
@@ -69,6 +91,8 @@ export const getPostData = async (slug: string): Promise<PostData> => {
     markdown: postData.content,
     published: result.data.published,
     updatedAt: result.data.updatedAt ?? undefined,
+    charCount,
+    readingMinutes,
   };
 };
 
