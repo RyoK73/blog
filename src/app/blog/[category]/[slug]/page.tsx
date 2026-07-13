@@ -48,6 +48,9 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
         <time>{postData.createdAt}</time>
         {postData.updatedAt && <time>更新日: {postData.updatedAt}</time>}
         <CustomCategory category={postData.category} />
+        <p className="text-sm text-muted-foreground">
+          約{postData.readingMinutes}分で読めます・{postData.charCount}文字
+        </p>
       </header>
       <Markdown
         remarkPlugins={[[remarkGfm]]}
