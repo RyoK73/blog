@@ -23,6 +23,15 @@ const cancel = () => {
     process.exit(0);
 };
 
+const parseTakeaways = (raw: string | undefined): string[] | undefined => {
+    if (!raw) return undefined;
+    const items = raw
+        .split(/[,、]/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+    return items.length > 0 ? items : undefined;
+};
+
 const edit = async () => {
     p.intro("記事編集のセットアップを開始します");
 
@@ -70,6 +79,16 @@ const edit = async () => {
                         ? new Date(parsed.data.updatedAt as string)
                         : new Date(),
                 }),
+
+            takeaways: () =>
+                p.text({
+                    message:
+                        "この記事の要点(takeaways)を「、」または「,」区切りで入力してください（空欄可）",
+                    placeholder: "要点1、要点2、要点3",
+                    initialValue: Array.isArray(parsed.data.takeaways)
+                        ? (parsed.data.takeaways as string[]).join("、")
+                        : "",
+                }),
         },
         {
             onCancel: () => cancel(),
@@ -88,6 +107,13 @@ const edit = async () => {
         published: result.published,
         updatedAt: format(result.updatedAt, "yyyy-MM-dd"),
     };
+
+    const takeaways = parseTakeaways(result.takeaways);
+    if (takeaways) {
+        newFrontmatter.takeaways = takeaways;
+    } else {
+        delete newFrontmatter.takeaways;
+    }
 
     const newContent = matter.stringify(parsed!.content, newFrontmatter);
 
@@ -146,6 +172,13 @@ const create = async () => {
                         },
                     ),
                 }),
+
+            takeaways: () =>
+                p.text({
+                    message:
+                        "この記事の要点(takeaways)を「、」または「,」区切りで入力してください（空欄可）",
+                    placeholder: "要点1、要点2、要点3",
+                }),
         },
         {
             onCancel: () => cancel(),
@@ -165,6 +198,11 @@ const create = async () => {
         category: result.category,
         published: false,
     };
+
+    const takeaways = parseTakeaways(result.takeaways);
+    if (takeaways) {
+        frontmatter.takeaways = takeaways;
+    }
     try {
         await fs.writeFile(postFullPath, matter.stringify("", frontmatter));
     } catch (e) {

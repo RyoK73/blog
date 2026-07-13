@@ -51,6 +51,15 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
         <p className="text-sm text-muted-foreground">
           約{postData.readingMinutes}分で読めます・{postData.charCount}文字
         </p>
+        {postData.takeaways && postData.takeaways.length > 0 && (
+          <ul className="mt-3 border border-border bg-card px-4 py-3 text-sm not-prose">
+            {postData.takeaways.map((takeaway) => (
+              <li key={takeaway} className="list-disc ml-4">
+                {takeaway}
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
       <Markdown
         remarkPlugins={[[remarkGfm]]}

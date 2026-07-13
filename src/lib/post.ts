@@ -19,6 +19,7 @@ export type PostData = {
   charCount: number;
   readingMinutes: number;
   sortDate: string;
+  takeaways?: string[];
 };
 
 // 読了時間の目安算出に使う日本語の想定読了速度（文字/分）
@@ -53,6 +54,7 @@ const frontMatterSchema = z.object({
   createdAt: dateStringSchema,
   published: z.boolean().default(false),
   updatedAt: dateStringSchema.optional(),
+  takeaways: z.array(z.string()).optional(),
 });
 
 export const getPostData = async (slug: string): Promise<PostData> => {
@@ -67,8 +69,11 @@ export const getPostData = async (slug: string): Promise<PostData> => {
     );
   }
 
-  const description =
+  const autoDescription =
     getPlainText(postData.content).trim().slice(0, 120) + "...";
+  const description = result.data.takeaways?.length
+    ? result.data.takeaways.join("。")
+    : autoDescription;
 
   const charCount = getPlainText(postData.content).replace(/\s/g, "").length;
   const readingMinutes = Math.max(
@@ -88,6 +93,7 @@ export const getPostData = async (slug: string): Promise<PostData> => {
     charCount,
     readingMinutes,
     sortDate: result.data.updatedAt ?? result.data.createdAt,
+    takeaways: result.data.takeaways,
   };
 };
 

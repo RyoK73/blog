@@ -34,6 +34,11 @@ export const Posts = async ({ category }: { category?: string }) => {
               </h2>
             </Link>
             <p>{post.description}</p>
+            {post.takeaways && post.takeaways.length > 0 && (
+              <p className="text-xs text-muted-foreground truncate">
+                POINT: {post.takeaways[0]}
+              </p>
+            )}
             <div className="flex gap-3 mt-2">
               <CustomCategory
                 category={post.category}
