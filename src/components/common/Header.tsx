@@ -22,7 +22,7 @@ export const Header = () => {
                         alt="プロフィール画像"
                         height={64}
                         width={64}
-                        className="w-auto mr-4 rounded-full object-cover"
+                        className="w-16 mr-4 rounded-full object-cover"
                     />
                     <div className="text-border flex flex-col justify-center text-[1rem]">
                         <p className="hidden lg:inline">Personal Log</p>

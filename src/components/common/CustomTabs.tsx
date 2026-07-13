@@ -13,7 +13,7 @@ type Tab = {
 const tabStyle = {
     active: "-ml-px relative z-10 border border-vivid text-vivid",
     semiactive: "border-b border-b-vivid text-vivid",
-    inactive: "bg-background/0 text-input",
+    inactive: "bg-background/0 text-muted-foreground",
 };
 
 // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる

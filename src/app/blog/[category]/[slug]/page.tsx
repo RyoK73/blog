@@ -2,6 +2,7 @@ import { getAllPostData, getPostData } from "@/lib/post";
 import { CustomCategory } from "@/components/common/CustomCategory";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { notFound } from "next/navigation";
 import React from "react";
 import CodeBlock from "@/components/common/CodeBlock";
@@ -42,7 +43,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
   if (postData.category !== category) notFound();
 
   return (
-    <article className="prose dark:prose-invert max-w-full border border-border p-5">
+    <article className="prose dark:prose-invert max-w-full border border-border bg-content-background backdrop-blur-sm p-5">
       <header>
         <h1>{postData.title}</h1>
         <time>{postData.createdAt}</time>
@@ -53,7 +54,7 @@ const BlogPage = async ({ params }: { params: Promise<Props> }) => {
         </p>
       </header>
       <Markdown
-        remarkPlugins={[[remarkGfm]]}
+        remarkPlugins={[[remarkGfm], [remarkBreaks]]}
         components={{
           pre: (props) => {
             if (!React.isValidElement(props.children)) {
