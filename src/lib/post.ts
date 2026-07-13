@@ -24,15 +24,14 @@ export type PostData = {
 // 読了時間の目安算出に使う日本語の想定読了速度（文字/分）
 const READING_SPEED_CHARS_PER_MINUTE = 500;
 
-const countPlainTextChars = (markdown: string): number => {
-  const plainText = markdown
+const getPlainText = (markdown: string): string => {
+  return markdown
     .replace(/```[\s\S]*?```/g, "") // コードブロック
     .replace(/`[^`]*`/g, "") // インラインコード
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // 画像
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // リンク→テキストだけ残す
-    .replace(/[#>*_~`-]/g, "") // 装飾記号
-    .replace(/\s/g, ""); // 空白・改行
-  return plainText.length;
+    .replace(/[-#>*_~`]/g, "") // 装飾記号
+    .replace(/^-\s/gm, ""); // マークダウンの箇条書き
 };
 
 const categoryKeys = Object.keys(userCategories) as [string, ...string[]];
@@ -67,17 +66,11 @@ export const getPostData = async (slug: string): Promise<PostData> => {
       `${postData.data.title}のfrontmatterが不正です。${result.error.message}`,
     );
   }
-  const description =
-    postData.content
-      .replace(/^---[\s\S]*?---/, "") // frontmatterを除去
-      .replace(/#+\s.+$/gm, "") // 見出し
-      .replace(/\n{2,}/g, "") // 改行を削除
-      .replace(/\*\*|__|~~|`/g, "") // 装飾
-      .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // リンク→テキストだけ残す
-      .trim()
-      .slice(0, 120) + "...";
 
-  const charCount = countPlainTextChars(postData.content);
+  const description =
+    getPlainText(postData.content).trim().slice(0, 120) + "...";
+
+  const charCount = getPlainText(postData.content).replace(/\s/g, "").length;
   const readingMinutes = Math.max(
     1,
     Math.ceil(charCount / READING_SPEED_CHARS_PER_MINUTE),
