@@ -46,7 +46,7 @@ export default async function RootLayout({
             <Header />
             <div className="flex lg:gap-5">
               <SidebarLayout />
-              <main className="w-full">{children}</main>
+              <main className="flex-1 min-w-0">{children}</main>
             </div>
             <CustomTabs
               navClassName="fixed inset-x-0 z-50 border border-border bg-background bottom-2 w-full h-10 justify-evenly lg:hidden"
