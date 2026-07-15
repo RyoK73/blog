@@ -10,7 +10,7 @@ export const Header = () => {
     <header className="border-border bg-content-background text-input col-span-2 flex h-25 items-center justify-between border">
       <CustomCard
         label="Top"
-        className="m-0 h-full w-auto border-transparent p-0"
+        className="m-0 h-full w-auto bg-transparent border-transparent p-0"
       >
         <Link
           href="/"
@@ -22,7 +22,7 @@ export const Header = () => {
             alt="プロフィール画像"
             height={64}
             width={64}
-            className="mr-4 w-16 rounded-full object-cover"
+            className="mr-4 h-full w-auto rounded-full object-cover"
           />
           <div className="text-border flex flex-col justify-center text-[1rem]">
             <p className="hidden lg:inline">Personal Log</p>
