@@ -13,14 +13,14 @@ export const Posts = async ({ category }: { category?: string }) => {
     ? sortedPosts.filter((sortedPost) => sortedPost.category === category)
     : sortedPosts;
   return (
-    <ul className="w-full flex flex-col gap-5">
+    <ul className="flex w-full flex-col gap-5">
       {filteredPosts.map((post, index) => (
         <li key={post.slug}>
           <CustomCard
             label={`P${(index + 1).toString().padStart(3, "0")}`}
-            className="relative hover:border-foreground hover:transition-colors duration-500"
+            className="hover:border-foreground relative duration-500 hover:transition-colors"
           >
-            <span className="absolute -top-3 right-3 px-1 z-10 bg-background text-vivid font-medium text-sm">
+            <span className="bg-background text-vivid absolute -top-3 right-3 z-10 px-1 text-sm font-medium">
               {post.updatedAt
                 ? `Updated: ${post.updatedAt}`
                 : `Created: ${post.createdAt}`}
@@ -29,17 +29,17 @@ export const Posts = async ({ category }: { category?: string }) => {
               href={path.join("/blog", post.category, post.slug)}
               className="after:absolute after:inset-0"
             >
-              <h2 className="text-foreground font-extrabold text-lg">
+              <h2 className="text-foreground text-lg font-extrabold">
                 {post.title}
               </h2>
             </Link>
             <p>{post.description}</p>
-            <div className="flex gap-3 mt-2">
+            <div className="mt-2 flex gap-3">
               <CustomCategory
                 category={post.category}
                 className="relative z-1 text-sm"
               />
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-xs">
                 約{post.readingMinutes}分で読めます・{post.charCount}文字
               </p>
             </div>
