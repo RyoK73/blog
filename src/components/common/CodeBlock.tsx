@@ -23,7 +23,7 @@ export const CodeBlock = async ({ children }: CodeProps) => {
   const code = String(children.props.children);
   const html = await codeToHtml(code, {
     lang: isValidLanguage(lang) ? lang : "txt",
-    theme: "monokai",
+    theme: "one-dark-pro",
   });
 
   return (
