@@ -4,12 +4,12 @@ import { CustomCard } from "./CustomCard";
 export const Author = () => {
   return (
     <CustomCard label={"Author"} className="p-6">
-      <p className="text-foreground text-left text-sm leading-relaxed">
+      <p className="text-sm text-foreground leading-relaxed text-left">
         Web系ソフトウェアエンジニアを志望
         <br />
         開発記録や個人的な技術に対する思いを綴ります
       </p>
-      <table className="[&_td:last-child]:text-foreground mt-4 w-full border-collapse border-t border-b [&_td]:py-2 [&_td:first-child]:border-r [&_td:first-child]:border-dashed [&_td:last-child]:pl-2 [&_tr]:border-b">
+      <table className="border-t border-b w-full border-collapse [&_tr]:border-b [&_td]:py-2 [&_td:first-child]:border-r [&_td:first-child]:border-dashed [&_td:last-child]:pl-2 [&_td:last-child]:text-foreground mt-4">
         <tbody>
           <tr className="">
             <td>FOCUS</td>
@@ -29,8 +29,8 @@ export const Author = () => {
           </tr>
         </tbody>
       </table>
-      <div className="[&_a:hover]:text-vivid flex items-end">
-        <div className="text-foreground [&_a]:border-border flex w-1/2 justify-evenly gap-2 pt-3 text-3xl transition [&_a]:border [&_a]:shadow-2xl">
+      <div className="flex items-end [&_a:hover]:text-vivid">
+        <div className="flex text-3xl text-foreground pt-3 justify-evenly gap-2 w-1/2 transition [&_a]:border [&_a]:border-border [&_a]:shadow-2xl">
           <ExternalLink
             href="https://x.com/RyoK73EG"
             className="border-flow"
