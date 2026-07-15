@@ -4,10 +4,16 @@ import localImage from "../../../public/topImage.png";
 import { SwitchTheme } from "@/components/common/SwitchTheme";
 import { CustomTabs } from "@/components/common/CustomTabs";
 import { CustomCard } from "./CustomCard";
+import { cn } from "@/lib/utils";
 
-export const Header = () => {
+export const Header = ({ classname }: { classname?: string }) => {
   return (
-    <header className="border-border bg-content-background text-input col-span-2 flex h-25 items-center justify-between border">
+    <header
+      className={cn(
+        "border-border bg-content-background text-input col-span-2 flex h-25 items-center justify-between border",
+        classname,
+      )}
+    >
       <CustomCard
         label="Top"
         className="m-0 h-full w-auto bg-transparent border-transparent p-0"

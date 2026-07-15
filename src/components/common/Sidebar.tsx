@@ -1,12 +1,18 @@
 import { Author } from "./Author";
 import { cn } from "@/lib/utils";
 type SidebarProps = {
-  className?: string;
+  layoutClassName?: string;
+  elementClassName?: string;
 };
-export const Sidebar = ({ className }: SidebarProps) => {
+export const Sidebar = ({
+  layoutClassName,
+  elementClassName,
+}: SidebarProps) => {
   return (
-    <div className={cn("flex shrink-0 flex-col gap-5", className)}>
-      <Author />
+    <div className={layoutClassName}>
+      <div className={cn("flex flex-col gap-5 sticky", elementClassName)}>
+        <Author />
+      </div>
     </div>
   );
 };

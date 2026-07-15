@@ -43,9 +43,9 @@ export default async function RootLayout({
           storage="local"
         >
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 p-5">
-            <Header />
+            <Header classname="sticky top-5 z-50" />
             <div className="flex lg:gap-5">
-              <SidebarLayout />
+              <SidebarLayout className="top-35" />
               <main className="min-w-0 flex-1">{children}</main>
             </div>
             <CustomTabs

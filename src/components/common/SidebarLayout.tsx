@@ -18,11 +18,12 @@ export const SidebarLayout = ({ className }: { className?: string }) => {
       )}
 
       <Sidebar
-        className={cn(
+        layoutClassName={cn(
           "bg-background/80 fixed top-0 left-0 z-50 h-full w-75 overflow-y-auto p-5 transition-transform duration-300",
-          "lg:static lg:z-auto lg:h-auto lg:w-74 lg:translate-x-0 lg:overflow-visible lg:bg-transparent lg:p-0",
+          "lg:sticky lg:z-auto lg:h-auto lg:w-74 lg:translate-x-0 lg:overflow-visible lg:bg-transparent lg:p-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
+        elementClassName={className}
       />
 
       <button
