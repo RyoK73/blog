@@ -64,12 +64,13 @@ body {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --gap-size: 5px;
 }
 
 :root {
   --background: oklch(1 0 276.35 / 98.13%);
   --foreground: oklch(0.3 0.01 0);
-  --content-background: oklch(1 0 276.35 / 98.13% / 0.55);
+  --content-background: oklch(1 0 276.35 / 0.55);
   --grid-line: oklch(18% 0.008 72 / 0.08);
   --grid-subline: oklch(18% 0.008 72 / 0.04);
   --vivid: oklch(80% 0.14 52);
