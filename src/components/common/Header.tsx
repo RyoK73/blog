@@ -6,12 +6,12 @@ import { CustomTabs } from "@/components/common/CustomTabs";
 import { CustomCard } from "./CustomCard";
 import { cn } from "@/lib/utils";
 
-export const Header = ({ classname }: { classname?: string }) => {
+export const Header = ({ className }: { className?: string }) => {
   return (
     <header
       className={cn(
-        "border-border bg-content-background text-input col-span-2 flex h-25 items-center justify-between border",
-        classname,
+        "border-border bg-content-background text-input col-span-2 flex items-center justify-between border",
+        className,
       )}
     >
       <CustomCard

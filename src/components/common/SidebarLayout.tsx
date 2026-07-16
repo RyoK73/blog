@@ -17,6 +17,7 @@ export const SidebarLayout = ({ className }: { className?: string }) => {
         />
       )}
 
+      {/* lg:stickyのoffsetはelementClassName経由でSidebar内部の要素に指定する */}
       <Sidebar
         layoutClassName={cn(
           "bg-background/80 fixed top-0 left-0 z-50 h-full w-75 overflow-y-auto p-5 transition-transform duration-300",

@@ -42,8 +42,9 @@ export default async function RootLayout({
           disableTransitionOnChange
           storage="local"
         >
+          {/* 上padding 20px(p-5) + Header Height 100px(h-25) + gap 20px(gap-5) を考慮してSidebarLayoutにtop-35を指定している */}
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 p-5">
-            <Header classname="sticky top-5 z-50" />
+            <Header className="h-25 sticky top-5 z-50" />
             <div className="flex lg:gap-5">
               <SidebarLayout className="top-35" />
               <main className="min-w-0 flex-1">{children}</main>
