@@ -14,7 +14,7 @@ export const CustomCategory = ({ category, className }: CategoryProps) => {
       <Badge
         variant={"outline"}
         className={cn(
-          "cursor-pointer border-border border-flow hover:text-vivid rounded-none text-card-foreground p-2",
+          "border-border border-flow hover:text-vivid text-card-foreground cursor-pointer rounded-none p-2",
           className,
         )}
       >

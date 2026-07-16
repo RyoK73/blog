@@ -11,7 +11,7 @@ export const CustomButton = ({ children, onClick, className }: ButtonProps) => {
       type="button"
       onClick={onClick}
       className={cn(
-        "text-3xl p-2 transition hover:scale-120 active:scale-95 duration-500",
+        "p-2 text-3xl transition duration-500 hover:scale-120 active:scale-95",
         className,
       )}
     >

@@ -46,6 +46,9 @@ importers:
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.14)(react@19.2.3)
+      remark-breaks:
+        specifier: ^4.0.0
+        version: 4.0.0
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -5109,6 +5112,12 @@ packages:
         integrity: sha512-EcmOpxsZ96CvlP03NghtH1EsLtr0n9Tm4lPUJUBccV9RwUOneqSycg19n5HGzCf+10LozMRSObtVr3ee1WoHtg==,
       }
 
+  mdast-util-newline-to-break@2.0.0:
+    resolution:
+      {
+        integrity: sha512-MbgeFca0hLYIEx/2zGsszCSEJJ1JSCdiY5xQxRcLDDGa8EPvlLPupJ4DSajbMPAnC0je8jfb9TiUATnxxrHUog==,
+      }
+
   mdast-util-phrasing@4.1.0:
     resolution:
       {
@@ -5809,40 +5818,43 @@ packages:
     engines: { node: ">= 0.8.0" }
 
   prettier-plugin-tailwindcss@0.8.0:
-    resolution: {integrity: sha512-V8ITGH87yuBDF6JpEZTOVlUz/saAwqb8f3HRgUj8Lh+tGCcrmorhsLpYqzygwFwK0PE2Ib6Mv3M7T/uE2tZV1g==}
-    engines: {node: '>=20.19'}
+    resolution:
+      {
+        integrity: sha512-V8ITGH87yuBDF6JpEZTOVlUz/saAwqb8f3HRgUj8Lh+tGCcrmorhsLpYqzygwFwK0PE2Ib6Mv3M7T/uE2tZV1g==,
+      }
+    engines: { node: ">=20.19" }
     peerDependencies:
-      '@ianvs/prettier-plugin-sort-imports': '*'
-      '@prettier/plugin-hermes': '*'
-      '@prettier/plugin-oxc': '*'
-      '@prettier/plugin-pug': '*'
-      '@shopify/prettier-plugin-liquid': '*'
-      '@trivago/prettier-plugin-sort-imports': '*'
-      '@zackad/prettier-plugin-twig': '*'
+      "@ianvs/prettier-plugin-sort-imports": "*"
+      "@prettier/plugin-hermes": "*"
+      "@prettier/plugin-oxc": "*"
+      "@prettier/plugin-pug": "*"
+      "@shopify/prettier-plugin-liquid": "*"
+      "@trivago/prettier-plugin-sort-imports": "*"
+      "@zackad/prettier-plugin-twig": "*"
       prettier: ^3.0
-      prettier-plugin-astro: '*'
-      prettier-plugin-css-order: '*'
-      prettier-plugin-jsdoc: '*'
-      prettier-plugin-marko: '*'
-      prettier-plugin-multiline-arrays: '*'
-      prettier-plugin-organize-attributes: '*'
-      prettier-plugin-organize-imports: '*'
-      prettier-plugin-sort-imports: '*'
-      prettier-plugin-svelte: '*'
+      prettier-plugin-astro: "*"
+      prettier-plugin-css-order: "*"
+      prettier-plugin-jsdoc: "*"
+      prettier-plugin-marko: "*"
+      prettier-plugin-multiline-arrays: "*"
+      prettier-plugin-organize-attributes: "*"
+      prettier-plugin-organize-imports: "*"
+      prettier-plugin-sort-imports: "*"
+      prettier-plugin-svelte: "*"
     peerDependenciesMeta:
-      '@ianvs/prettier-plugin-sort-imports':
+      "@ianvs/prettier-plugin-sort-imports":
         optional: true
-      '@prettier/plugin-hermes':
+      "@prettier/plugin-hermes":
         optional: true
-      '@prettier/plugin-oxc':
+      "@prettier/plugin-oxc":
         optional: true
-      '@prettier/plugin-pug':
+      "@prettier/plugin-pug":
         optional: true
-      '@shopify/prettier-plugin-liquid':
+      "@shopify/prettier-plugin-liquid":
         optional: true
-      '@trivago/prettier-plugin-sort-imports':
+      "@trivago/prettier-plugin-sort-imports":
         optional: true
-      '@zackad/prettier-plugin-twig':
+      "@zackad/prettier-plugin-twig":
         optional: true
       prettier-plugin-astro:
         optional: true
@@ -5864,8 +5876,11 @@ packages:
         optional: true
 
   prettier@3.9.5:
-    resolution: {integrity: sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==}
-    engines: {node: '>=14'}
+    resolution:
+      {
+        integrity: sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==,
+      }
+    engines: { node: ">=14" }
     hasBin: true
 
   pretty-ms@9.3.0:
@@ -6066,6 +6081,12 @@ packages:
         integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==,
       }
     engines: { node: ">= 0.4" }
+
+  remark-breaks@4.0.0:
+    resolution:
+      {
+        integrity: sha512-IjEjJOkH4FuJvHZVIW0QCDWxcG96kCq7An/KVH2NfJe6rKZU2AsHeB3OEjPNRxi4QC34Xdx7I2KGYn6IpT7gxQ==,
+      }
 
   remark-gfm@4.0.1:
     resolution:
@@ -9667,6 +9688,7 @@ snapshots:
       vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
+
   extend-shallow@2.0.1:
     dependencies:
       is-extendable: 0.1.1
@@ -10439,6 +10461,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-newline-to-break@2.0.0:
+    dependencies:
+      "@types/mdast": 4.0.4
+      mdast-util-find-and-replace: 3.0.2
+
   mdast-util-phrasing@4.1.0:
     dependencies:
       "@types/mdast": 4.0.4
@@ -11175,6 +11202,12 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       set-function-name: 2.0.2
+
+  remark-breaks@4.0.0:
+    dependencies:
+      "@types/mdast": 4.0.4
+      mdast-util-newline-to-break: 2.0.0
+      unified: 11.0.5
 
   remark-gfm@4.0.1:
     dependencies:

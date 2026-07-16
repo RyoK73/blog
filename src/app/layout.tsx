@@ -33,7 +33,7 @@ export default async function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full grid-bg-light dark:grid-bg-dark`}
+        className={`${geistSans.variable} ${geistMono.variable} grid-bg-light dark:grid-bg-dark w-full antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -42,14 +42,15 @@ export default async function RootLayout({
           disableTransitionOnChange
           storage="local"
         >
-          <div className="max-w-6xl mx-auto w-full flex flex-col gap-5 p-5">
-            <Header />
+          {/* 上padding 20px(p-5) + Header Height 100px(h-25) + gap 20px(gap-5) を考慮してSidebarLayoutにtop-35を指定している */}
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 p-5">
+            <Header className="h-25 sticky top-5 z-50" />
             <div className="flex lg:gap-5">
-              <SidebarLayout />
-              <main className="w-full">{children}</main>
+              <SidebarLayout className="top-35" />
+              <main className="min-w-0 flex-1">{children}</main>
             </div>
             <CustomTabs
-              navClassName="fixed inset-x-0 border border-border bg-background/90 bottom-2 w-full h-10 justify-evenly lg:hidden"
+              navClassName="fixed inset-x-0 z-50 border border-border bg-background bottom-2 w-full h-10 justify-evenly lg:hidden"
               linkClassName="item-center w-full"
             />
           </div>

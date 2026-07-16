@@ -6,36 +6,38 @@ import { cn } from "@/lib/utils";
 import { Sidebar } from "./Sidebar";
 
 export const SidebarLayout = ({ className }: { className?: string }) => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <>
-            {isOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-                    onClick={() => setIsOpen(false)}
-                />
-            )}
+  return (
+    <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
-            <Sidebar
-                className={cn(
-                    "fixed top-0 left-0 h-full w-75 z-50 p-5 overflow-y-auto bg-background/80 transition-transform duration-300",
-                    "lg:static lg:w-74 lg:h-auto lg:p-0 lg:overflow-visible lg:bg-transparent lg:z-auto lg:translate-x-0",
-                    isOpen ? "translate-x-0" : "-translate-x-full",
-                )}
-            />
+      {/* lg:stickyのoffsetはelementClassName経由でSidebar内部の要素に指定する */}
+      <Sidebar
+        layoutClassName={cn(
+          "bg-background/80 fixed top-0 left-0 z-50 h-full w-75 overflow-y-auto p-5 transition-transform duration-300",
+          "lg:sticky lg:z-auto lg:h-auto lg:w-74 lg:translate-x-0 lg:overflow-visible lg:bg-transparent lg:p-0",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+        elementClassName={className}
+      />
 
-            <button
-                className="fixed bottom-15 right-6 z-50 lg:hidden bg-content-background border border-border rounded-full p-3 shadow-lg"
-                onClick={() => setIsOpen((prev) => !prev)}
-                aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
-            >
-                {isOpen ? (
-                    <LuListX className="size-6" />
-                ) : (
-                    <LuListPlus className="size-6" />
-                )}
-            </button>
-        </>
-    );
+      <button
+        className="bg-content-background border-border fixed right-6 bottom-15 z-50 rounded-full border p-3 shadow-lg lg:hidden"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
+      >
+        {isOpen ? (
+          <LuListX className="size-6" />
+        ) : (
+          <LuListPlus className="size-6" />
+        )}
+      </button>
+    </>
+  );
 };

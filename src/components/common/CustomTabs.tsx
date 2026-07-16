@@ -5,64 +5,64 @@ import { cn } from "@/lib/utils";
 import userCategories from "@/user-category.json";
 
 type Tab = {
-    href: string;
-    name: string;
-    prefix: boolean;
+  href: string;
+  name: string;
+  prefix: boolean;
 };
 
 const tabStyle = {
-    active: "-ml-px relative z-10 border border-vivid text-vivid",
-    semiactive: "border-b border-b-vivid text-vivid",
-    inactive: "bg-background/0 text-input",
+  active: "-ml-px relative z-10 border border-vivid text-vivid",
+  semiactive: "border-b border-b-vivid text-vivid",
+  inactive: "bg-background/0 text-muted-foreground",
 };
 
 // aboutのみ特別なタブとして、indexなしの "."のみのタブとなる
 const tabs: Tab[] = [
-    { href: "/", name: "HOME", prefix: true },
-    ...Object.keys(userCategories).map((category) => ({
-        href: `/blog/${category}`,
-        name: category.toUpperCase(),
-        prefix: true,
-    })),
-    { href: "/about", name: "ABOUT", prefix: false },
+  { href: "/", name: "HOME", prefix: true },
+  ...Object.keys(userCategories).map((category) => ({
+    href: `/blog/${category}`,
+    name: category.toUpperCase(),
+    prefix: true,
+  })),
+  { href: "/about", name: "ABOUT", prefix: false },
 ];
 
 export const CustomTabs = ({
-    navClassName,
-    linkClassName,
+  navClassName,
+  linkClassName,
 }: {
-    navClassName?: string;
-    linkClassName?: string;
+  navClassName?: string;
+  linkClassName?: string;
 }) => {
-    const pathName = usePathname();
+  const pathName = usePathname();
 
-    const getTabStyle = (tab: Tab): string => {
-        if (pathName === tab.href) {
-            return tabStyle.active;
-        } else if (tab.href !== "/" && pathName.startsWith(tab.href)) {
-            return tabStyle.semiactive;
-        } else return tabStyle.inactive;
-    };
+  const getTabStyle = (tab: Tab): string => {
+    if (pathName === tab.href) {
+      return tabStyle.active;
+    } else if (tab.href !== "/" && pathName.startsWith(tab.href)) {
+      return tabStyle.semiactive;
+    } else return tabStyle.inactive;
+  };
 
-    // divide-xではなくborder-rで区切り線を表現。タブのアクティブ切り替え時の処理で隣の要素の枠線を制御しないため。
-    return (
-        <nav className={cn("flex h-auto justify-center", navClassName)}>
-            {tabs.map((tab, index) => {
-                const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
-                return (
-                    <Link
-                        key={tab.href}
-                        href={tab.href}
-                        className={cn(
-                            "flex justify-center items-center border-r",
-                            getTabStyle(tab),
-                            linkClassName,
-                        )}
-                    >
-                        {label}
-                    </Link>
-                );
-            })}
-        </nav>
-    );
+  // divide-xではなくborder-rで区切り線を表現。タブのアクティブ切り替え時の処理で隣の要素の枠線を制御しないため。
+  return (
+    <nav className={cn("flex h-auto justify-center", navClassName)}>
+      {tabs.map((tab, index) => {
+        const label = `${tab.prefix ? (index + 1).toString().padStart(2, "0") : ""}.${tab.name}`;
+        return (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={cn(
+              "flex items-center justify-center border-r",
+              getTabStyle(tab),
+              linkClassName,
+            )}
+          >
+            {label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
 };

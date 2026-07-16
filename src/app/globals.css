@@ -54,6 +54,7 @@ body {
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-content-background: var(--content-background);
   --color-vivid: var(--vivid);
   --color-vivid-end: var(--vivid-end);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -68,7 +69,7 @@ body {
 :root {
   --background: oklch(1 0 276.35 / 98.13%);
   --foreground: oklch(0.3 0.01 0);
-  --content-background: oklch(91% 0.013 76 / 0.25);
+  --content-background: oklch(1 0 276.35 / 0.55);
   --grid-line: oklch(18% 0.008 72 / 0.08);
   --grid-subline: oklch(18% 0.008 72 / 0.04);
   --vivid: oklch(80% 0.14 52);
@@ -109,7 +110,7 @@ body {
 .dark {
   --background: oklch(26.033% 0.00003 271.152);
   --foreground: oklch(0.91 0 0);
-  --content-background: oklch(26.033% 0.00003 271.152 / 0.2);
+  --content-background: oklch(26.033% 0.00003 271.152 / 0.55);
   --grid-line: oklch(1 0 0 / 0.08);
   --grid-subline: oklch(1 0 0 / 0.03);
   --vivid: oklch(84.2% 0.1641 145.8);
@@ -161,22 +162,25 @@ body {
 @layer utilities {
   .prose {
     h1 {
-      @apply text-foreground border-b-3 pb-2 text-4xl;
+      @apply text-foreground border-b-3 pb-2 text-2xl md:text-4xl;
     }
     h2 {
       @apply text-foreground border-b-foreground border-b-2 pb-2;
     }
     h3 {
-      @apply text-foreground border-l-4 border-l-foreground pl-3;
+      @apply text-foreground border-l-foreground border-l-4 pl-3;
     }
     h4 {
-      @apply text-foreground font-semibold border-b border-dashed;
+      @apply text-foreground border-b border-dashed font-semibold;
     }
     h5 {
-      @apply text-foreground font-medium text-sm;
+      @apply text-foreground text-sm font-medium;
+    }
+    hr {
+      @apply border-foreground/80;
     }
     code:not(pre code) {
-      @apply bg-(--bg-code) px-2 py-1;
+      @apply bg-(--bg-code) px-2 py-1 wrap-anywhere;
     }
     code:not(pre code)::before {
       content: "";
@@ -185,7 +189,27 @@ body {
       content: "";
     }
     pre {
-      @apply whitespace-pre-wrap wrap-break-word;
+      @apply wrap-break-word whitespace-pre-wrap;
+    }
+    blockquote {
+      @apply border-l-border text-muted-foreground border-l-4 pl-4 italic;
+    }
+    table {
+      @apply border-border block w-full overflow-x-auto border;
+      border-collapse: collapse;
+    }
+    thead {
+      @apply bg-card;
+    }
+    th,
+    td {
+      @apply border-border border px-3 py-2 text-left text-sm whitespace-nowrap;
+    }
+    th {
+      @apply text-foreground font-semibold;
+    }
+    tr:nth-child(even) td {
+      @apply bg-(--content-background);
     }
   }
 }
