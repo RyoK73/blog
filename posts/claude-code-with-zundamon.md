@@ -1,5 +1,5 @@
 ---
-title: ずんだもん報告リポジトリ mcp-simple-voicevoxの紹介
+title: ずんだもんでClaude Codeを通知するMCPリポジトリ mcp-simple-voicevoxの紹介
 createdAt: "2026-07-16"
 category: tech
 published: false
@@ -16,11 +16,11 @@ published: false
 
 ## VOICEVOXのインストール
 
-ローカルのVOICEVOXアプリのAPIを叩く仕組みのため、[VOICEVOXクライアント](https://voicevox.hiroshiba.jp/product/zundamon/)をインストールします。
+ローカルのVOICEVOXアプリのAPIを叩く仕組みのため、[VOICEVOXクライアント](https://voicevox.hiroshiba.jp)をインストールします。
 
 Windows,Mac,Linuxのいずれでも利用可能です。
 
-今回はLinux向けに解説します。
+今回はArch Linux向けに解説します。
 
 > インストール方法はダウンロードしたパッケージに記載されていますが、念の為こちらでも解説します。
 
@@ -72,13 +72,13 @@ claude mcp add "mcp-server-name" [options] -- "command" [args...]
 claude mcp add voicevox -s user -- npx @t09tanaka/mcp-simple-voicevox
 ```
 
-> `~`で`claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox`するのとは挙動が違うので必ず`-s user`が必要です(一敗)
+> `$HOME`で`claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox`するの`-s user`は挙動が違うの違います(一敗)
 
 ### VOICEVOX MCPを有効化する
 
 ```bash
 # Claude Codeを起動する
-claude code
+claude
 
 ```
 
@@ -243,6 +243,6 @@ claude
 個人的に気になって点として、このリポジトリがCLAUDE.mdでしか通知を制御していないので、通知にムラがあることです。
 そのため、実行時のコンテキスト・skillsの内容にも大きく影響を受けます。
 
-> 後日、起動構成をClaude Code Hooksに置き換えるリポジトリをフォークして作ってみようと思います。
+ほとんど発動しないです。
 
-気になった方はぜひ試してみてください！
+> 後日、起動構成をClaude Code Hooksに置き換えるリポジトリをフォークして作ってみようと思います。
