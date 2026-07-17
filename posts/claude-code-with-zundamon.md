@@ -1,5 +1,5 @@
 ---
-title: ずんだもんでClaude Codeを通知するMCPリポジトリ mcp-simple-voicevoxの紹介
+title: ずんだもんでClaude Codeを通知するMCPリポジトリ mcp-simple-voicevoxを試してみた
 createdAt: "2026-07-16"
 category: tech
 published: false
@@ -72,7 +72,8 @@ claude mcp add "mcp-server-name" [options] -- "command" [args...]
 claude mcp add voicevox -s user -- npx @t09tanaka/mcp-simple-voicevox
 ```
 
-> `$HOME`で`claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox`するの`-s user`は挙動が違うの違います(一敗)
+> `$HOME`で`claude mcp add voicevox -- npx @t09tanaka/mcp-simple-voicevox`することと、
+> `-s user`を指定することでは挙動が違うので注意です。(一敗)
 
 ### VOICEVOX MCPを有効化する
 
@@ -236,13 +237,16 @@ claude
 # 正常に動作していれば音声が再生されます。
 ```
 
-## ずんだもん最高
-
-音声で通知されるだけで途端にペアプログラミング感が増してきました。
+## おすすめはできない...
 
 個人的に気になって点として、このリポジトリがCLAUDE.mdでしか通知を制御していないので、通知にムラがあることです。
 そのため、実行時のコンテキスト・skillsの内容にも大きく影響を受けます。
 
-ほとんど発動しないです。
+> 筆者自身の体験として、レビュー作業中のClaude Codeが一度ずんだもんボイスで通知しませんでした。
 
-> 後日、起動構成をClaude Code Hooksに置き換えるリポジトリをフォークして作ってみようと思います。
+私の環境だけなのかはわかりません。
+ただ、Claude.mdに書かれていたとしても、`speak`ツールをつかわなければ達成できないとClaudeが判断しない限り`speak`ツールがつかわれないのでこのような結果になったのかと思います。
+
+後日、必ず起動するリポジトリを作成してみようと思います。
+
+ただ、一度試してみる価値はあると思いますので導入してみてはいかがでしょうか？
