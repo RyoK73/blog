@@ -115,3 +115,111 @@ VOICEVOXで通知するようルールを設定します。
   - 完了時: 「完了です」「修正完了です」
 - **詳しい技術的説明は音声通知に含めず、結果のみを簡潔に報告すること**
 ```
+
+## 補足
+
+### 再生ソフトがインストールされていないと音声が再生されません。
+
+[voicevox-client.ts](https://github.com/t09tanaka/mcp-simple-voicevox/blob/main/src/voicevox-client.ts)のL90では`aplay`で再生するよう記述があります。
+
+これがインストールされていなかったため再生されませんでした。
+
+```bash
+sudo pacman -S alsa-utils
+```
+
+### speakツールの設定
+
+CLAUDE.mdに以下の箇所を編集しましょう。
+
+```md
+- **音声通知の設定: speaker=1, speedScale=1.3, async: trueを使用すること**
+```
+
+speaker IDは以下のコマンドで確認できます。
+
+```bash
+curl http://localhost:50021/speakers | jq .
+
+```
+
+ずんだもんの場合は、
+
+```bash
+curl http://localhost:50021/speakers | jq '.[] | select(.name == "ずんだもん")'
+{
+  "name": "ずんだもん",
+  "speaker_uuid": "388f246b-8c41-4ac1-8e2d-5d79f3ff56d9",
+  "styles": [
+    {
+      "name": "ノーマル",
+      "id": 3,
+      "type": "talk"
+    },
+    {
+      "name": "あまあま",
+      "id": 1,
+      "type": "talk"
+    },
+    {
+      "name": "ツンツン",
+      "id": 7,
+      "type": "talk"
+    },
+    {
+      "name": "セクシー",
+      "id": 5,
+      "type": "talk"
+    },
+    {
+      "name": "ささやき",
+      "id": 22,
+      "type": "talk"
+    },
+    {
+      "name": "ヒソヒソ",
+      "id": 38,
+      "type": "talk"
+    },
+    {
+      "name": "ヘロヘロ",
+      "id": 75,
+      "type": "talk"
+    },
+    {
+      "name": "なみだめ",
+      "id": 76,
+      "type": "talk"
+    }
+  ],
+  "version": "0.16.0",
+  "supported_features": {
+    "permitted_synthesis_morphing": "SELF_ONLY"
+  }
+}
+```
+
+設定の詳細については[公式ドキュメント](https://github.com/t09tanaka/mcp-simple-voicevox/blob/main/docs/specification.md)を確認してください。
+
+## 使用してみる
+
+VOICEVOXを起動しておきます。
+
+以下のコマンドに戻り値があれば起動は完了しています。
+
+```bash
+curl http://localhost:50021/speakers
+```
+
+```bash
+claude
+
+> speakツールを使ってテストして
+# 正常に動作していれば音声が再生されます。
+```
+
+## ずんだもん最高
+
+音声で通知されるだけで途端にペアプログラミング感がましてきました。
+
+気になった方はぜひ試してみてください！
