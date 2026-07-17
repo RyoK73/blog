@@ -2,7 +2,7 @@
 title: ずんだもんでClaude Codeを通知するMCPリポジトリ mcp-simple-voicevoxを試してみた
 createdAt: "2026-07-16"
 category: tech
-published: false
+published: true
 ---
 
 ## はじめに
