@@ -16,7 +16,7 @@ published: false
 
 ### 検証環境
 
-- Archi Linux Omarchy 3.8.2
+- Arch Linux Omarchy 3.8.2
 - Steam
 - java-26-openjdk
 
@@ -86,8 +86,8 @@ unzip GDStash_v182g.zip
 4. `/path/to/GDStash/install/directory/GDStash.jar`を追加する
    ファイルパスはご自分のパスに読み替えてください。
 5. プロパティ > ショートカット > 起動オプション
-6. `java -jar "/path/to/GDStash/install/directory/.gdstash/GDStash.jar" %command%`
-   ここで追加する`/path/to/GDStash/install/directory/.gdstash/GDStash.jar`は*ショートカット > リンク先*をコピーするとよいです。
+6. `java -jar "/path/to/GDStash/install/directory/GDStash.jar" %command%`
+   ここで追加する`/path/to/GDStash/install/directory/GDStash.jar`は*ショートカット > リンク先*をコピーするとよいです。
 7. *プレイ*する
 
 ### 4. GDStashの設定
