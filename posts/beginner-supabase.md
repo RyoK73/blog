@@ -1,8 +1,9 @@
 ---
-title: Supabase CLIの基本的な使い方
+title: Supabaseの基本とCLIの使い方
 createdAt: "2026-07-03"
 category: tech
 published: true
+updatedAt: "2026-08-05"
 ---
 
 ## はじめに
@@ -168,7 +169,9 @@ pnpm exec supabase ...
 
   `.env.local`には`$PROJECTID`を登録します。
 
-  > `.gitignore`でコミットしないよう設定するのをおすすめします。
+  > Project IDは自分の[Supabase Project Dashboard](https://supabase.com/dashboard/)の*Project Settings*からコピーできます。
+
+  `.gitignore`でコミットしないよう設定するのをおすすめします。
 
   ```bash
   # shellcheck disable=SC2034
