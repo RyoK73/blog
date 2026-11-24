@@ -6,3 +6,4 @@
 | 用途    | 参照PATH                        |
 | ------- | ------------------------------- |
 | Git管理 | `./docs/tech/git-management.md` |
+| デザイン | `./DESIGN.md`                   |
